@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/code.js"> </script>
+    <title>Document</title>
+</head>
+
+<body>
+<div class="sing-in">  
+    <form action="" method = "POST">
+        <h1>Форма входа</h1>
+            <label for="login-field">Ваш логин</label>
+            <input type="text" name="login" id="login-field" >
+            <br>
+            <br>
+            <label for="password-field">Ваш пароль</label>
+            <input type="password" name="password" id="password-field">
+            <br>
+            <br>
+            <input type =  "checkbox" checked >Запомнить
+            <button class= "log-in"> Войти</button>
+            <br>
+        <button type = "button" class="log-in"><a href="#win1">Зарегестрироваться</a></button>
+</div>
+<a href="#x" class="overlay" id="win1"></a>
+<div class="popup">
+    <form action="" class ="sing-up" method="POST">
+        <label for="name-field" >ВВедите сове имя</label>
+        <input type="text" name= "name" id= "name-field">
+        <br>
+        <br>
+        <label for="surname-field">Введите вашу фамилию</label>
+        <input type="text" name = "surname" id="surname-field"></label>
+        <br>
+        <br>
+        <label for="email">Введите ваш email</label>
+        <input type="text" name="email" id= "email">
+        <br>
+        <br>
+        <label for="password-field">Введите пароль</label>
+        <input type="password" name ="password" id= "password-field">
+        <br>
+        <br>
+        <input type="checkbox" checked>Войти как админ
+        <button class= "log-in">Зарегестрироваться</button>
+    </form>
+</div>
+</div>
+</body>
+</html> 
