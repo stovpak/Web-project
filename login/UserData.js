@@ -1,3 +1,4 @@
+
 class UserData {
   constructor(roleId, login, password, name, surname, birthday) {
     this.login = login;
