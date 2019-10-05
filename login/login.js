@@ -14,28 +14,68 @@ connection.connect(function(err){
 });
 
 
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize("web", "root", "Edding16", {
+    dialect: "mysql",
+    host: "localhost",
+    logging: false,
+    define: {
+        timestamps: false,
 
-const User  = require("./UserClass.js");
+    }
 
-let user = new  User('Vasya','Vasya123');
+});
+
+
+
+
+const User = sequelize.define("users", {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+    },
+    Name: {
+        type: Sequelize.STRING,
+
+    },
+    Date: {
+        type: Sequelize.DATE,
+
+    },
+    RoleId:{type: Sequelize.INTEGER,},
+    Login:{type: Sequelize.STRING,},
+    Surname:{type: Sequelize.STRING,},
+    Password:{type: Sequelize.STRING,}
+
+});
+
+
+const LoginRequest  = require("./LoginRequest.js");
+const FrontQuery = require("./FrontQuery.js");
+
+let loginRequest = new  LoginRequest('Vasya','Vasya123');
+
 
 function SingIn (Login,Password)
 {
-    connection.query('SELECT * FROM users WHERE Login =  ? and Password = ?' ,[Login,Password], function (err,results,dields) {
-        let userTables = JSON.parse(JSON.stringify(results));
-
-        if (userTables[0] == null) {
-                 console.log("Данные введены неправильно");
-            return;
-        }
-        else {
-            let role = userTables[0]["RoleId"];
-            console.log(role);
-        }
-    });
+    User.findOne({raw:true,where: {Name: Login,Password:Password}})
+        .then(User=>{
+            if(!User){
+                console.log("Данные введены неправильно");
+                return;
+            }
+            else {
+                let userTables = JSON.parse(JSON.stringify(User));
+                console.log(userTables);
+                let frontQuery = new FrontQuery();
+                frontQuery.rankId = userTables["RoleId"];
+                frontQuery.login = userTables["Login"];
+                console.log(frontQuery.rankId, frontQuery.login);
+            }
+            }).catch(err=>console.log(err));
 };
 
 
-SingIn(user.login,user.password);
+SingIn(loginRequest.login,loginRequest.password);
 
 
