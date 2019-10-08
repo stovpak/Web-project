@@ -4,8 +4,11 @@ let connectionConfig = require('./ConfigConnection.json');
 
 const connection = mysql.createConnection(connectionConfig);
 const LoginRequest  = require("./LoginRequest.js");
-const FrontQuery = require("./FrontQuery.js");
+const UserResponse = require("./UserResponse.js");
 const UserData = require("./UserData.js");
+
+
+
 
 
 const Sequelize = require("sequelize");
@@ -17,7 +20,6 @@ const sequelize = new Sequelize("web","root","Edding16", {
         timestamps: false,
     }
 });
-
 
 
 
@@ -80,27 +82,6 @@ const sequelize = new Sequelize("web","root","Edding16", {
 
 
 
-
-/*function addUser(userData,User) {
-
-    User.create({
-        first_name: userData.name,
-        second_name:userData.surname,
-        birthday: userData.birthday,
-        login:userData.login,
-        password: userData.password,
-        role_id:userData.roleId
-    }).then(res=>{
-        console.log(res);
-    }).catch(err=>console.log(err));
-}
-
-let userData = new UserData(1,"Bob2123","Bob123","Jon","Travolta",1999-1-12);
-
-addUser(userData,User);
-*/
-
-
 let loginRequest = new  LoginRequest('Bob123','Bob123');
 
 
@@ -115,7 +96,7 @@ function SingIn (loginRequest)
             else {
                 let userTables = JSON.parse(JSON.stringify(User));
                 console.log(userTables);
-                let frontQuery = new FrontQuery();
+                let frontQuery = new UserResponse();
                 frontQuery.rankId = userTables["role_id"];
                 frontQuery.login = userTables["login"];
                 console.log(frontQuery.rankId, frontQuery.login);

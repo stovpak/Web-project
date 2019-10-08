@@ -1,10 +1,8 @@
 class UserResponse{
-    constructor(login,id,roleId){
+    constructor(login,id,rankId){
         this.login=login;
-        this.roleId=roleId;
+        this.rankId=rankId;
         this.id = id;
     }
 };
-
-
 module.exports = UserResponse;
