@@ -1,7 +1,7 @@
 class UserResponse{
-    constructor(login,id,rankId){
+    constructor(login,id,roleId){
         this.login=login;
-        this.rankId=rankId;
+        this.roleId=roleId;
         this.id = id;
     }
 };
