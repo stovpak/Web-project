@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.1.0",
     "mysql": "^2.17.1",
     "mysql2": "^1.7.0",
+    "node-core-lib": "^0.11.11",
     "sequelize": "^5.19.2",
     "tedious": "^6.4.0"
   }
