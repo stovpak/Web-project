@@ -10,4 +10,3 @@ const sequelize = new Sequelize(process.env.DB_NAME,process.env.DB_USER,process.
     }
 });
 module.exports.sequelize = sequelize;
-module.exports.Sequelize = Sequelize;
