@@ -9,7 +9,8 @@ html
     padding: 6px 24px;
     font-size: 15px;
 }
-#sing-up:hover{
+#sing-up:hover
+{
     display: block;
 }
 .overlay 
