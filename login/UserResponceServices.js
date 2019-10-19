@@ -11,7 +11,7 @@ module.exports.SingIn=function SingIn (loginRequest,request,response)
     })
         .then(User=>{
             if(!User){
-                console.log("Данные введены неправильно");
+                response.send("Данные введены неправильно");
                 return;
             }
             else {
