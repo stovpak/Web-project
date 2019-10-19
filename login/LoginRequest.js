@@ -5,4 +5,4 @@ class LoginRequest{
     }
 };
 
-module.exports = LoginRequest;
+module.exports=LoginRequest;

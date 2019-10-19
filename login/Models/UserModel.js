@@ -1,7 +1,7 @@
-const DataConnection =  require("../DataConnection.js");
-const sequelize = DataConnection.sequelize;
-const Sequelize = sequelize.Sequelize;
-const User = sequelize.define("users", {
+const DataConnection = require("../DataConnection.js");
+const sequelize=DataConnection.sequelize;
+const Sequelize=sequelize.Sequelize;
+const User=sequelize.define("users", {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,

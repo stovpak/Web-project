@@ -1,9 +1,14 @@
-const UserResponse = require("./UserResponse.js");
-const UserModel = require("./Models/UserModel.js");
+const UserResponse=require("./UserResponse.js");
+const UserModel=require("./Models/UserModel.js");
 
-module.exports.SingIn = function SingIn (loginRequest,request,response)
+module.exports.SingIn=function SingIn (loginRequest,request,response)
 {
-    UserModel.User.findOne({raw:true,where: {login: loginRequest.login,password:loginRequest.password}})
+    UserModel.User.findOne({
+        raw:true,where: {
+            login: loginRequest.login,
+            password:loginRequest.password
+        }
+    })
         .then(User=>{
             if(!User){
                 console.log("Данные введены неправильно");
@@ -19,8 +24,3 @@ module.exports.SingIn = function SingIn (loginRequest,request,response)
             }
         }).catch(err=>response.send(err));
 };
-
-
-
-
-
