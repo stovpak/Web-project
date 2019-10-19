@@ -1,10 +1,8 @@
-class UserResponse{
-    constructor(login,id,roleId){
-        this.login=login;
-        this.roleId=roleId;
-        this.id = id;
-    }
-};
-
-
-module.exports = UserResponse;
+class UserResponse {
+  constructor(login, id, roleId) {
+    this.id = id;
+    this.login = login;
+    this.roleId = roleId;
+  }
+}
+module.exports.UserResponse = UserResponse;
