@@ -40,5 +40,4 @@ const User=sequelize.define("users", {
         allowNull: false
     }
 });
-
 module.exports.User = User;
