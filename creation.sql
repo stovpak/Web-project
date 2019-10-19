@@ -1,1 +1,0 @@
-insert users (RoleId, Login, Password, Name, Surname, Date) VALUE (1,'Vasya','Vasya123','Vasya','Petrov','1999-11-12');
