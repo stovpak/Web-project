@@ -1,6 +1,0 @@
-# Default ignored files
-.idea/*
-node_modules/*
-login/node_modules/*
-login/.idea/*
-login/.env
