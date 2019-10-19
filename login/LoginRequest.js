@@ -4,5 +4,4 @@ class LoginRequest{
         this.password=password;
     }
 };
-
 module.exports=LoginRequest;
