@@ -22,5 +22,5 @@ module.exports.SingIn=function SingIn (loginRequest,request,response)
                 userResponce.id = userTables["id"];
                 response.send(userResponce);
             }
-        }).catch(err=>response.send(err));
+        }).catch(err => response.send(err));
 };

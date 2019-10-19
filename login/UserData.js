@@ -8,4 +8,4 @@ class UserData{
         this.birthday=birthday;
     }
 };
-module.exports = UserData;
+module.exports=UserData;

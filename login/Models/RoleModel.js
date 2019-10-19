@@ -1,7 +1,7 @@
-const DataConnection =  require("../DataConnection.js");
-const sequelize = DataConnection .sequelize;
-const Sequelize = sequelize.Sequelize;
-const Roles = sequelize.define("roles", {
+const DataConnection= require("../DataConnection.js");
+const sequelize=DataConnection .sequelize;
+const Sequelize=sequelize.Sequelize;
+const Roles=sequelize.define("roles", {
     id:{type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -12,4 +12,4 @@ const Roles = sequelize.define("roles", {
         allowNull: false
     }
 });
-module.exports.Roles = Roles;
+module.exports.Roles=Roles;
