@@ -3,61 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     <link rel="stylesheet" href="css/style.css">
     <script src="js/code.js"> </script>
-    <title>Document</title>
+    <title>First project</title>
 </head>
 <body>
-<div class="login-form">
-    <form action="#"  method="POST">
-        <h2 class ="text-center">Log In </h2>
+  <div class="body-container" >
+    <div class="login-form">
+      <form action="" method="post">
+        <h2 class="text-center">Log in</h2>       
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Username" required= "required"> 
-            <input type="password" class="form-control" placeholder="Password" required="required">
-            <button type="submit" class="btn btn-primary btn-block">Log in</button>
+          <input type="text" class="form-control" placeholder="Username" required="required"><!--requered = validation pls? check more information about it-->
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" placeholder="Password" required="required">
         </div>
         <div class="clearfix">
-                <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
-                <a href="#popup-message" class="pull-right">Forgot Password?</a>
-            </div>  
-    </form>    
-</div>
-<a href="" class = "overlay" id = "popup-message"></a>
-    <div class="popup" id ="popup-message" >
-            <div class="shadoww-wind">
-            <p>Write  your  email </p>
-            <input type="text" name ="email " id= "email" placeholder="mail@gmail.com" >
+          <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
         </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        </div>
+        <a href="#exampleModal"  data-toggle="modal"  >Create an Account</a>
+      </form>
     </div>
-</a>
-<p id="text-center"><a href="#popup-wind">Create an Account</a></p>
-<a href="#" class="overlay" id="popup-wind"></a>
-<div class="popup" id = "popup-wind">
-    <div class="shadoww-wind">
-        <form action="" class ="sing-up" method="POST">
-            <label for="name-field" >Ведите сове имя</label>
-            <input type="text" name= "name" id= "name-field">
-            <br>
-            <br>
-            <label for="surname-field">Введите вашу фамилию</label>
-            <input type="text" name = "surname" id="surname-field"></label>
-            <br>
-            <br>
-            <label for="email">Введите ваш email</label>
-            <input type="text" name="email" id= "email">
-            <br>
-            <br>
-            <label for="password-field">Введите пароль</label>
-            <input type="password" name ="password" id= "password-field">
-            <br>
-            <br>
-            <input type="checkbox" checked>Войти как админ
-            <button class= "log-in">Зарегестрироваться</button>
-        </form>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <form action="" method="post">
+              <h2 class="text-center">Registration</h2> 
+              <input type="text" class="form-control" placeholder="Username" required="required">
+              <br>
+              <input type="email" class = "form-control" placeholder="Email@gmail.com" required="required">
+              <br>
+              <input type="text" class="form-control" placeholder="Username" required="required">
+              <br>
+              <input type="password" class="form-control" placeholder="Password" required="required">
+              <br>
+              <button type="submit" class="btn btn-primary btn-block">Registration</button>
+              <br>
+            </form>
+          </div>    
+        </div>
+      </div>
     </div>
+  </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html> 
