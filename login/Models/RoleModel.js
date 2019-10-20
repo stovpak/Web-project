@@ -1,7 +1,7 @@
 const DataConnection = require('../DataConnection.js');
 
 const { sequelize } = DataConnection;
-const { Sequelize } = sequelize;
+const { Sequelize } = sequelize.Sequelize;
 const Roles = sequelize.define('roles', {
   id: {
     type: Sequelize.INTEGER,
