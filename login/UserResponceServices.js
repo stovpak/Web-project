@@ -1,6 +1,5 @@
-const UserResponse=require("./UserResponse.js");
 const UserModel=require("./Models/UserModel.js");
-
+const createUserResponce=require("./CreateUserResponce.js");
 module.exports.SingIn=function SingIn (loginRequest,request,response)
 {
     UserModel.User.findOne({
@@ -15,12 +14,8 @@ module.exports.SingIn=function SingIn (loginRequest,request,response)
                 return;
             }
             else {
-                let userTables = JSON.parse(JSON.stringify(User));
-                let userResponce = new UserResponse();
-                userResponce.roleId = userTables["role_id"];
-                userResponce.login = userTables["login"];
-                userResponce.id = userTables["id"];
-                response.send(userResponce);
+                response.send(createUserResponce.CreateUserResponce(User));
+                return;
             }
         }).catch(err => response.send(err));
 };

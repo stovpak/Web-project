@@ -1,5 +1,5 @@
 class UserData{
-    constructor(roleId,login,password,name,surname,birthday){
+    constructor(roleId, login, password, name, surname, birthday){
         this.login=login;
         this.password=password;
         this.name=name;
