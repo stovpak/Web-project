@@ -1,10 +1,13 @@
-const CreateUser=require("./UserResponceServices.js");
-const LoginRequest =require("./LoginRequest.js");
-const express=require("express");
-const app=express();
-const loginRequest=new  LoginRequest('Bob123','Bob123');
+const express = require('express');
+const bodyParser = require('body-parser');
+const CreateUser = require('./UserResponseServices.js');
+const LoginRequest = require('./LoginRequest.js');
+
+const app = express();
 
 app.listen(3000);
-app.get("/SingIn",function(request, response){
-    CreateUser.SingIn(loginRequest, request, response);
+app.use(bodyParser.json());
+app.post('/SignIn', (request, response) => {
+  const loginRequest = new LoginRequest(request.body.login, request.body.password);
+  CreateUser.SignIn(loginRequest, response);
 });
