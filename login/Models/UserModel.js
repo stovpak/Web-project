@@ -1,25 +1,25 @@
 const DataConnection = require('../DataConnection.js');
 
 const { sequelize } = DataConnection;
-const { Sequelize } = sequelize.Sequelize;
+const sequrlizeType = sequelize.Sequelize;
 const User = sequelize.define('users', {
   id: {
-    type: Sequelize.INTEGER,
+    type: sequrlizeType.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
   first_name: {
-    type: Sequelize.STRING,
+    type: sequrlizeType.STRING,
     allowNull: false,
   },
   second_name: {
-    type: Sequelize.STRING,
+    type: sequrlizeType.STRING,
     allowNull: false,
 
   },
   role_id: {
-    type: Sequelize.INTEGER,
+    type: sequrlizeType.INTEGER,
     allowNull: false,
     references: {
       model: 'roles',
@@ -27,17 +27,17 @@ const User = sequelize.define('users', {
     },
   },
   login: {
-    type: Sequelize.STRING,
+    type: sequrlizeType.STRING,
     allowNull: false,
     unique: true,
   },
   password: {
-    type: Sequelize.STRING,
+    type: sequrlizeType.STRING,
     allowNull: false,
     unique: true,
   },
   birthday: {
-    type: Sequelize.DATE,
+    type: sequrlizeType.DATE,
     allowNull: false,
   },
 });

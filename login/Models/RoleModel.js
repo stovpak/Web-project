@@ -1,16 +1,16 @@
 const DataConnection = require('../DataConnection.js');
 
 const { sequelize } = DataConnection;
-const { Sequelize } = sequelize.Sequelize;
+const sequrlizeType = sequelize.Sequelize;
 const Roles = sequelize.define('roles', {
   id: {
-    type: Sequelize.INTEGER,
+    type: sequrlizeType.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
   role_name: {
-    type: Sequelize.STRING,
+    type: sequrlizeType.STRING,
     allowNull: false,
   },
 });
