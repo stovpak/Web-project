@@ -11,16 +11,13 @@ const User = sequelize.define('users', {
   },
   first_name: {
     type: sequrlizeType.STRING,
-    allowNull: false,
   },
   second_name: {
     type: sequrlizeType.STRING,
-    allowNull: false,
-
   },
   role_id: {
     type: sequrlizeType.INTEGER,
-    allowNull: false,
+    default: '1',
     references: {
       model: 'roles',
       key: 'id',
@@ -38,7 +35,11 @@ const User = sequelize.define('users', {
   },
   birthday: {
     type: sequrlizeType.DATE,
+  },
+  mail: {
+    type: sequrlizeType.STRING,
     allowNull: false,
+    unique: true,
   },
 });
 module.exports.User = User;
