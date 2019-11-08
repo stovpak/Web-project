@@ -11,16 +11,19 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "dotenv": "^8.1.0",
+    "dotenv": "^8.2.0",
+    "email-validator": "^2.0.4",
     "express": "^4.17.1",
+    "express-validator": "^6.2.0",
     "expressapp": "^1.0.4",
     "mysql": "^2.17.1",
     "mysql2": "^1.7.0",
-    "sequelize": "^5.21.1",
+    "password-validator": "^5.0.2",
+    "sequelize": "^5.21.2",
     "tedious": "^6.4.0"
   },
   "devDependencies": {
-    "eslint": "^6.5.1",
+    "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2"
   }
