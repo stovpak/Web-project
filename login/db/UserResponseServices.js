@@ -1,4 +1,4 @@
-const UserModel = require('./Models/UserModel.js');
+const UserModel = require('./models/UserModel.js');
 const CreateUserResponce = require('./CreateUserResponce.js');
 
 module.exports.SignIn = function SingIn(request, response) {
