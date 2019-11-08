@@ -1,13 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const CreateUser = require('./UserResponseServices.js');
-const LoginRequest = require('./LoginRequest.js');
 
 const app = express();
+const SignIn = require('./routers/SignIn');
+const SignUp = require('./routers/SignUp');
 
 app.listen(3000);
 app.use(bodyParser.json());
-app.post('/SignIn', (request, response) => {
-  const loginRequest = new LoginRequest(request.body.login, request.body.password);
-  CreateUser.SignIn(loginRequest, response);
-});
+
+
+app.use('/SignIn', SignIn);
+
+app.use('/SignUp', SignUp);
