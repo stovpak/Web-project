@@ -1,3 +1,4 @@
+import React from 'react';
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -24,6 +25,8 @@ export class Login extends React.Component {
 			alert('idi fuksai trabl');
 		}
 		console.log(this.state.username);
+		this.setState({ username: e.target.value });
+		console.log(this.state.username);
 	}
 
 	handlePasswordChange(e) {
@@ -34,6 +37,7 @@ export class Login extends React.Component {
 		this.setState({ isChecked: !this.state.isChecked });
 		console.dir(this.state.isChecked);
 	}
+
 
 	handleSubmit(e) {
 		e.preventDefault();
@@ -63,6 +67,7 @@ export class Login extends React.Component {
 				<div className='content'>
 					<div className='form'>
 						<form onSubmit={e => this.handleSubmit(e)} method='post'>
+						<form onSubmit={(e) => this.handleSubmit(e)}>
 							<div className='form-group'>
 								<label htmlFor='username-field'>Username</label>
 								<input
@@ -73,6 +78,7 @@ export class Login extends React.Component {
 									value={this.state.username}
 									placeholder='username'
 									onChange={e => this.handleUserChange(e)}
+									onChange={(e) => this.handleUserChange(e)}
 								/>
 							</div>
 							<div className='form-group'>
@@ -85,6 +91,7 @@ export class Login extends React.Component {
 									className='form-control'
 									placeholder='password'
 									onChange={e => this.handlePasswordChange(e)}
+									onChange={(e) => this.handlePasswordChange(e)}
 								/>
 							</div>
 							<div className='form-group'>
@@ -110,8 +117,101 @@ export class Login extends React.Component {
 						</form>
 					</div>
 				</div>
+				<div className='footer'>
+					<button type='button' className='btn'>
+						Login
+					</button>
+				</div>
 			</div>
 		);
 	}
 }
 export default Login;
+/*
+// Render Prop
+import React from 'react';
+class MiniFormic extends React.Component {
+	state = {
+		values: this.props.initialValues || {},
+		touched: {},
+		errors: {}
+	};
+	handleChange = event => {
+		const target = event.target;
+		const value = target.type === 'checkbox' ? target.checked : target.value;
+		const name = target.name;
+		event.persist();
+		this.setState(prevState => ({
+			values: { ...prevState.values, [name]: value }
+		}));
+	};
+	handleBlur = event => {
+		const target = event.target;
+		const name = target.name;
+		event.persist();
+		this.setState(prevState => ({
+			touched: { ...prevState.touched, [name]: true }
+		}));
+	};
+	handleSubmit = e => {
+		e.preventDefault();
+	};
+	render() {
+		return this.props.children({
+			...this.state,
+			handleChange: this.handleChange,
+			handleBlur: this.handleBlur
+		});
+	}
+}
+export class Reservation extends React.Component {
+	render() {
+		return (
+			<MiniFormic
+				initialValues={{
+					isGoing: true,
+					numberOfGuests: 2
+				}}
+				onSubmit={values => alert(JSON.stringify(values, null, 2))}>
+				{props => {
+					const {
+						values,
+						errors,
+						touched,
+						handleBlur,
+						handleSubmit,
+						handleChange
+					} = props;
+					return (
+						<form onSubmit={handleSubmit}>
+							<input
+								name='isGoing'
+								type='checkbox'
+								className='checkbox'
+								checked={values.isGoing}
+								onChange={handleChange}
+								onBlur={handleBlur}
+							/>
+							<label>Is going:</label>
+							<br />
+							<label>
+								Number of guests:
+								<input
+									name='numberOfGuests'
+									type='number'
+									value={values.numberOfGuests}
+									onChange={handleChange}
+									onBlur={handleBlur}
+								/>
+							</label>
+							<pre>{JSON.stringify(props, null, 2)}</pre>
+						</form>
+					</div>
+				</div>
+			</div>
+		);
+	}
+}
+export default Login;
+
+*/
