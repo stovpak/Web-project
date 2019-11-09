@@ -8,5 +8,3 @@ login/.eslintrc.json
 pictures/*
 
 gello-world/.vscode/*
-gello-world/node_modules/*
-gello-world/build/*
