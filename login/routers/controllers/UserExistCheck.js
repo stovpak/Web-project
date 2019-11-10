@@ -4,11 +4,11 @@ const SequelizeOperators = Sequelize.Op;
 const UserModel = require('../../db/models/UserModel.js');
 const createUserAccount = require('../../db/CreateUserAccount.js');
 
-function CopyCheck(registrationRequest, response) {
+function UserExist(registrationRequest, response) {
   UserModel.User.findOne({
     raw: true,
     where: {
-      [SequelizeOperators.or]: [{ login: registrationRequest.login }, { mail: registrationRequest.mail }],
+      [SequelizeOperators.or]: [{ login: registrationRequest.login }, { email: registrationRequest.email }],
     },
   })
     .then((User) => {
@@ -16,7 +16,7 @@ function CopyCheck(registrationRequest, response) {
         createUserAccount.createUserAccount(registrationRequest, response);
         return;
       }
-      response.send('Такой пользователь уже есть');
+      response.status(400).send('Такой пользователь уже есть');
     });
 }
-module.exports.CopyCheck = CopyCheck;
+module.exports.UserExist = UserExist;

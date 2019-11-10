@@ -17,7 +17,7 @@ const User = sequelize.define('users', {
   },
   role_id: {
     type: sequrlizeType.INTEGER,
-    default: '1',
+    defaultValue: 1,
     references: {
       model: 'roles',
       key: 'id',
@@ -36,10 +36,11 @@ const User = sequelize.define('users', {
   birthday: {
     type: sequrlizeType.DATE,
   },
-  mail: {
+  email: {
     type: sequrlizeType.STRING,
     allowNull: false,
     unique: true,
   },
 });
 module.exports.User = User;
+
