@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "email-validator": "^2.0.4",
@@ -17,7 +18,7 @@
     "expressapp": "^1.0.4",
     "mysql": "^2.17.1",
     "mysql2": "^1.7.0",
-    "password-validator": "^5.0.2",
+    "password-validator": "^5.0.3",
     "sequelize": "^5.21.2",
     "tedious": "^6.4.0"
   },
