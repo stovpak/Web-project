@@ -1,4 +1,5 @@
 import React from 'react';
+
 export class Register extends React.Component {
 	render() {
 		return (
@@ -29,3 +30,4 @@ export class Register extends React.Component {
 		);
 	}
 }
+export default Register;
