@@ -1,8 +1,8 @@
-const DataConnection = require('../DataConnection.js');
+const dataConnection = require('../DataConnection.js');
 
-const { sequelize } = DataConnection;
-const sequrlizeType = sequelize.Sequelize;
-const User = sequelize.define('users', {
+const { sequelizeConnection } = dataConnection;
+const sequrlizeType = sequelizeConnection.Sequelize;
+const user = sequelizeConnection.define('users', {
   id: {
     type: sequrlizeType.INTEGER,
     primaryKey: true,
@@ -42,4 +42,4 @@ const User = sequelize.define('users', {
     unique: true,
   },
 });
-module.exports.User = User;
+module.exports.user = user;

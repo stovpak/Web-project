@@ -1,6 +1,6 @@
-const PasswordValidator = require('password-validator');
+const passwordValidator = require('password-validator');
 
-const schema = new PasswordValidator();
+const schema = new passwordValidator();
 schema
   .is().min(8)
   .is().max(100)
@@ -16,10 +16,10 @@ schema
   .has()
   .not()
   .symbols();
-function PasswordValidation(password) {
+function validatePassword(password) {
   if (password.match(/([а-я])/gi) === null && schema.validate(password)) {
     return true;
   }
   return false;
 }
-module.exports.PasswordValidation = PasswordValidation;
+module.exports.validatePassword = validatePassword;

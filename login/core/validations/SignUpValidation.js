@@ -2,10 +2,10 @@ const emailValidation = require('./EmailValidation.js');
 const passValidation = require('./PasswordValidation.js');
 const loginValidation = require('./LoginValidation.js');
 
-function SignUpValidation(registrationRequest) {
-  if (emailValidation.MailValidation(registrationRequest.email) && passValidation.PasswordValidation(registrationRequest.password) && loginValidation.LoginValidation(registrationRequest.login)) {
+function validateSignUp(registrationRequest) {
+  if (emailValidation.validateEmail(registrationRequest.email) && passValidation.validatePassword(registrationRequest.password) && loginValidation.validateLogin(registrationRequest.login)) {
     return true;
   }
   return false;
 }
-module.exports.SignUpValidation = SignUpValidation;
+module.exports.validateSignUp = validateSignUp;

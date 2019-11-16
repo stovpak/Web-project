@@ -1,14 +1,14 @@
 const bcrypt = require('bcrypt');
-const UserModel = require('./models/UserModel.js');
+const userModel = require('./models/UserModel.js');
 
 const salt = bcrypt.genSaltSync(10);
 
 function createUserAccount(registrationRequest, response) {
-  const passwordToSave = bcrypt.hashSync(registrationRequest.password, salt);
-  UserModel.User.create({
+  const password = bcrypt.hashSync(registrationRequest.password, salt);
+  userModel.user.create({
     login: registrationRequest.login,
     email: registrationRequest.email,
-    password: passwordToSave,
+    password: password,
   });
   response.status(200).send('Вы успешно зарегестрировались');
 }

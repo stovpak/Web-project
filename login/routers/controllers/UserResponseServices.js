@@ -1,15 +1,15 @@
-const Sequelize = require('sequelize');
+const sequelize = require('sequelizeConnection');
 const bcrypt = require('bcrypt');
-const UserModel = require('../../db/models/UserModel.js');
-const CreateUserResponce = require('../../db/CreateUserResponce.js');
+const userModel = require('../../db/models/UserModel.js');
+const createUserResponce = require('../../db/CreateUserResponce.js');
 
-const SequelizeOperators = Sequelize.Op;
+const sequelizeOperators = sequelize.Op;
 
-module.exports.SignIn = function SingIn(request, response) {
-  UserModel.User.findOne({
+module.exports.signIn = function singIn(request, response) {
+  userModel.user.findOne({
     raw: true,
     where: {
-      [SequelizeOperators.or]: [{ login: request.login }, { email: request.login }],
+      [sequelizeOperators.or]: [{ login: request.login }, { email: request.login }],
     },
   })
     .then((User) => {
@@ -18,7 +18,7 @@ module.exports.SignIn = function SingIn(request, response) {
       } else {
         bcrypt.compare(request.password, User.password, (err, res) => {
           if (res) {
-            response.status(200).send(CreateUserResponce.CreateUserResponce(User));
+            response.status(200).send(createUserResponce.createUserResponce(User));
           } else {
             response.status(400).send('Данные введены неправильно');
           }

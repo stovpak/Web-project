@@ -1,6 +1,6 @@
 const mailValidator = require('email-validator');
 
-function EmailValidation(email) {
+function validateEmail(email) {
   return mailValidator.validate(email);
 }
-module.exports.MailValidation = EmailValidation;
+module.exports.validateEmail = validateEmail;

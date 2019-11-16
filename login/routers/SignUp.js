@@ -1,12 +1,12 @@
 const express = require('express');
 
 const router = express.Router();
-const RegistrationRequest = require('../db/db_objects/RegestrationRequest.js');
-const UserExistCheck = require('./controllers/UserExistCheck.js');
+const registrationRequest = require('../db/db_objects/RegestrationRequest.js');
+const userService = require('./controllers/UserRegistrationServices.js');
 
 
 router.post('/', (request, response) => {
-  const registrationRequest = new RegistrationRequest(request.body.login, request.body.email, request.body.password);
-  UserExistCheck.UserExist(registrationRequest, response);
+  const registrationRequestData = new registrationRequest(request.body.login, request.body.email, request.body.password);
+  userService.signUp(registrationRequestData, response);
 });
 module.exports = router;

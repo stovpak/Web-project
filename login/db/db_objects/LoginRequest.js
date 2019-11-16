@@ -1,7 +1,7 @@
-class LoginRequest {
+class loginRequest {
   constructor(login, password) {
     this.login = login;
     this.password = password;
   }
 }
-module.exports = LoginRequest;
+module.exports = loginRequest;

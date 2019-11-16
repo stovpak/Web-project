@@ -1,11 +1,11 @@
 const express = require('express');
 
 const router = express.Router();
-const LoginRequest = require('../db/db_objects/LoginRequest.js');
-const UserResponseServices = require('./controllers/UserResponseServices.js');
+const loginRequest = require('../db/db_objects/LoginRequest.js');
+const userResponseServices = require('./controllers/UserResponseServices.js');
 
-router.post('/', (request, response,next) => {
-  const loginRequest = new LoginRequest(request.body.login, request.body.password);
-  UserResponseServices.SignIn(loginRequest, response);
+router.post('/', (request, response) => {
+  const loginRequestData = new loginRequest(request.body.login, request.body.password);
+  userResponseServices.signIn(loginRequestData, response);
 });
 module.exports = router;
