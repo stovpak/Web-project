@@ -1,8 +1,8 @@
-const DataConnection = require('../DataConnection.js');
+const dataConnection = require('../DataConnection.js');
 
-const { sequelize } = DataConnection;
-const sequrlizeType = sequelize.Sequelize;
-const Roles = sequelize.define('roles', {
+const { sequelizeConnection } = dataConnection;
+const sequrlizeType = sequelizeConnection.Sequelize;
+const roles = sequelizeConnection.define('roles', {
   id: {
     type: sequrlizeType.INTEGER,
     primaryKey: true,
@@ -14,4 +14,4 @@ const Roles = sequelize.define('roles', {
     allowNull: false,
   },
 });
-module.exports.Roles = Roles;
+module.exports.roles = roles;

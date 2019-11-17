@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize');
+const sequelize = require('sequelizeConnection');
 require('dotenv').config();
 
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
+const sequelizeConnection = new sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
   dialect: 'mysql',
   host: 'localhost',
   logging: false,
@@ -9,4 +9,4 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
     timestamps: false,
   },
 });
-module.exports.sequelize = sequelize;
+module.exports.sequelizeConnection = sequelizeConnection;

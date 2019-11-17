@@ -1,8 +1,8 @@
-class RegistrationRequest {
-  constructor(login, mail, password) {
+class legistrationRequest {
+  constructor(login, email, password) {
     this.login = login;
     this.password = password;
-    this.mail = mail;
+    this.email = email;
   }
 }
-module.exports = RegistrationRequest;
+module.exports = legistrationRequest;

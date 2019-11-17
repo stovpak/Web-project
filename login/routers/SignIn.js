@@ -1,12 +1,11 @@
 const express = require('express');
 
 const router = express.Router();
-const LoginRequest = require('../db/db_objects/LoginRequest.js');
-const signInValidation = require('../core/validations/SignInValidation.js');
-
+const loginRequest = require('../db/db_objects/LoginRequest.js');
+const userResponseServices = require('./controllers/UserResponseServices.js');
 
 router.post('/', (request, response) => {
-  const loginRequest = new LoginRequest(request.body.login, request.body.password);
-  signInValidation.SignInValidation(loginRequest, response);
+  const loginRequestData = new loginRequest(request.body.login, request.body.password);
+  userResponseServices.signIn(loginRequestData, response);
 });
 module.exports = router;

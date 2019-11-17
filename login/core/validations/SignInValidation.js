@@ -1,14 +1,12 @@
-const mailValidation = require('./MailValidation.js');
+const mailValidation = require('./EmailValidation.js');
 const passValidation = require('./PasswordValidation.js');
 const loginValidation = require('./LoginValidation.js');
-const CreateUser = require('../../db/UserResponseServices.js');
 
 
-function SignInValidation(loginRequest, response) {
-  if ((mailValidation.MailValidation(loginRequest.login) || loginValidation.LoginValidation(loginRequest.login)) && passValidation.PasswordValidation(loginRequest.password)) {
-    CreateUser.SignIn(loginRequest, response);
-  } else {
-    response.send('Данные введены неправильно');
+function validateSignIn(loginRequest) {
+  if ((mailValidation.validateEmail(loginRequest.login) || loginValidation.validateLogin(loginRequest.login)) && passValidation.validatePassword(loginRequest.password)) {
+    return true;
   }
+  return false;
 }
-module.exports.SignInValidation = SignInValidation;
+module.exports.validateSignIn = validateSignIn;

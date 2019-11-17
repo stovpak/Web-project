@@ -1,4 +1,4 @@
-class UserData {
+class userData {
   constructor(roleId, login, password, name, surname, birthday) {
     this.login = login;
     this.password = password;
@@ -8,4 +8,4 @@ class UserData {
     this.birthday = birthday;
   }
 }
-module.exports = UserData;
+module.exports = userData;

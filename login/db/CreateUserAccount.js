@@ -1,11 +1,15 @@
-const UserModel = require('./models/UserModel.js');
+const bcrypt = require('bcrypt');
+const userModel = require('./models/UserModel.js');
+
+const salt = bcrypt.genSaltSync(10);
 
 function createUserAccount(registrationRequest, response) {
-  UserModel.User.create({
+  const password = bcrypt.hashSync(registrationRequest.password, salt);
+  userModel.user.create({
     login: registrationRequest.login,
-    mail: registrationRequest.mail,
-    password: registrationRequest.password,
+    email: registrationRequest.email,
+    password: password,
   });
-  response.send('Вы успешно зарегестрировались');
+  response.status(200).send('Вы успешно зарегестрировались');
 }
 module.exports.createUserAccount = createUserAccount;
