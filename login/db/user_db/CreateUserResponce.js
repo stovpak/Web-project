@@ -1,6 +1,6 @@
-const userResponse = require('./db_objects/UserResponse.js');
+const userResponse = require('../db_objects/user_db_objects/UserResponse.js');
 
-const userResponce = new userResponse.userResponse();
+const userResponce = new userResponse.UserResponse();
 
 function createUserResponse(User) {
   const userTables = JSON.parse(JSON.stringify(User));

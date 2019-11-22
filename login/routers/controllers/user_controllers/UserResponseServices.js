@@ -1,7 +1,7 @@
-const sequelize = require('sequelizeConnection');
+const sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
-const userModel = require('../../db/models/UserModel.js');
-const createUserResponce = require('../../db/CreateUserResponce.js');
+const userModel = require('../../../db/models/user_models/UserModel.js');
+const createUserResponce = require('../../../db/user_db/CreateUserResponce.js');
 
 const sequelizeOperators = sequelize.Op;
 
@@ -24,5 +24,5 @@ module.exports.signIn = function singIn(request, response) {
           }
         });
       }
-    }).catch((err) => response.send(err));
+    }).catch((err) => response.status(500).send(err));
 };

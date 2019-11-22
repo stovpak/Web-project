@@ -1,4 +1,4 @@
-const dataConnection = require('../DataConnection.js');
+const dataConnection = require('../../user_db/DataConnection.js');
 
 const { sequelizeConnection } = dataConnection;
 const sequrlizeType = sequelizeConnection.Sequelize;

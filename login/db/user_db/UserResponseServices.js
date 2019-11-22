@@ -1,4 +1,4 @@
-const UserModel = require('./models/UserModel.js');
+const UserModel = require('../models/user_models/UserModel.js');
 const CreateUserResponce = require('./CreateUserResponce.js');
 
 module.exports.SignIn = function SingIn(request, response) {
@@ -11,9 +11,9 @@ module.exports.SignIn = function SingIn(request, response) {
   })
     .then((User) => {
       if (!User) {
-        response.send('Данные введены неправильно');
+        response.status(400).send('Данные введены неправильно');
       } else {
-        response.send(CreateUserResponce.CreateUserResponce(User));
+        response.status(200).send(CreateUserResponce.CreateUserResponce(User));
       }
-    }).catch((err) => response.send(err));
+    }).catch((err) => response.status(500).send(err));
 };

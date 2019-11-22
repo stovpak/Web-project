@@ -1,8 +1,8 @@
-const sequelize = require('sequelizeConnection');
+const sequelize = require('sequelize');
 
 const sequelizeOperators = sequelize.Op;
-const userModel = require('../../db/models/UserModel.js');
-const createUserAccount = require('../../db/CreateUserAccount.js');
+const userModel = require('../../../db/models/user_models/UserModel.js');
+const createUserAccount = require('../../../db/user_db/CreateUserAccount.js');
 
 function signUp(registrationRequest, response) {
   userModel.user.findOne({
@@ -16,7 +16,7 @@ function signUp(registrationRequest, response) {
         createUserAccount.createUserAccount(registrationRequest, response);
         return;
       }
-      response.status(400).send('Такой пользователь уже есть');
+      response.status(409).send('Такой пользователь уже есть');
     });
 }
 module.exports.signUp = signUp;

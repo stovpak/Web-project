@@ -1,6 +1,6 @@
-const passwordValidator = require('password-validator');
+const PasswordValidator = require('password-validator');
 
-const schema = new passwordValidator();
+const schema = new PasswordValidator();
 schema
   .is().min(8)
   .is().max(100)
