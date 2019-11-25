@@ -44,15 +44,15 @@ export class Register extends React.Component {
 				emailValid = value.match(
 					/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 				);
-				fieldValidationErrors.email = emailValid ? "" : "is invalid";
+				fieldValidationErrors.email = emailValid ? "" : " неправильный ";
 				break;
 			case "username":
 				usernameValid = value.match(/^[a-zA-Z0-9]+$/);
-				fieldValidationErrors.username = usernameValid ? "" : "is invalid";
+				fieldValidationErrors.username = usernameValid ? "" : " используйте только a-z A-Z 0-9";
 				break;
 			case "password":
 				passwordValid = value.length >= 6;
-				fieldValidationErrors.password = passwordValid ? "" : "is too short";
+				fieldValidationErrors.password = passwordValid ? "" : "слишком короткий";
 				break;
 			default:
 				break;
@@ -114,7 +114,7 @@ export class Register extends React.Component {
 						required
 						className="form-control"
 						name="email"
-						placeholder="email"
+						placeholder="Почта"
 						value={this.state.email}
 						id={"email-field"}
 						onChange={this.handleUserInput}
@@ -130,7 +130,7 @@ export class Register extends React.Component {
 						type="username"
 						className="form-control"
 						name="username"
-						placeholder="username"
+						placeholder="Логин"
 						value={this.state.username}
 						onChange={this.handleUserInput}
 					/>
@@ -145,7 +145,7 @@ export class Register extends React.Component {
 						type="password"
 						className="form-control"
 						name="password"
-						placeholder="Password"
+						placeholder="Пароль"
 						value={this.state.password}
 						onChange={this.handleUserInput}
 					/>

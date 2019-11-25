@@ -1,8 +1,6 @@
 # Default ignored files
 gello-world/.vscode/*
 gello-world/node_modules/*
-
-gello-world/node_modules/*
 gello-world/build/*
 .idea/*
 pictures/*

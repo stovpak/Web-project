@@ -38,12 +38,12 @@ export class Login extends React.Component {
 				usernameValid = value.match(/^[a-zA-Z0-9]+$/);
 				fieldValidationErrors.username = usernameValid
 					? ""
-					: " is invalid use only a-z A-Z 0-9";
+					: " используйте только a-z A-Z 0-9";
 
 				break;
 			case "password":
 				passwordValid = value.length >= 6;
-				fieldValidationErrors.password = passwordValid ? "" : " is too short";
+				fieldValidationErrors.password = passwordValid ? "" : " слишком короткий";
 
 				break;
 			default:
