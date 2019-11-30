@@ -1,11 +1,29 @@
 const sequelize = require('sequelize');
-const bcrypt = require('bcrypt');
-const userModel = require('../../../db/models/user_models/UserModel.js');
-const createUserResponce = require('../../../db/user_db/CreateUserResponce.js');
 
 const sequelizeOperators = sequelize.Op;
+const bcrypt = require('bcrypt');
+const userModel = require('../../../db/models/user_models/UserModel.js');
+const createUserAccount = require('./UserServices.js');
+const createUserResponce = require('../../../db/user_db/CreateUserResponce.js');
 
-module.exports.signIn = function singIn(request, response) {
+
+function signUp(registrationRequest, response) {
+  userModel.user.findOne({
+    raw: true,
+    where: {
+      [sequelizeOperators.or]: [{ login: registrationRequest.login }, { email: registrationRequest.email }],
+    },
+  })
+    .then((User) => {
+      if (!User) {
+        createUserAccount.createUserAccount(registrationRequest, response);
+        return;
+      }
+      response.status(409).send('Такой пользователь уже есть');
+    });
+}
+
+function signIn(request, response) {
   userModel.user.findOne({
     raw: true,
     where: {
@@ -25,4 +43,6 @@ module.exports.signIn = function singIn(request, response) {
         });
       }
     }).catch((err) => response.status(500).send(err));
-};
+}
+module.exports.signUp = signUp;
+module.exports.signIn = signIn;

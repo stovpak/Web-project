@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const userModel = require('../models/user_models/UserModel.js');
+const userModel = require('../../../db/models/user_models/UserModel.js');
 
 const salt = bcrypt.genSaltSync(10);
 
