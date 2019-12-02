@@ -3,7 +3,7 @@ const sequelize = require('sequelize');
 const sequelizeOperators = sequelize.Op;
 const bcrypt = require('bcrypt');
 const userModel = require('../../../db/models/user_models/UserModel.js');
-const createUserAccount = require('./UserServices.js');
+const userService = require('./UserService.js');
 const createUserResponce = require('../../../db/user_db/CreateUserResponce.js');
 
 
@@ -16,7 +16,7 @@ function signUp(registrationRequest, response) {
   })
     .then((User) => {
       if (!User) {
-        createUserAccount.createUserAccount(registrationRequest, response);
+        userService.createUserAccount(registrationRequest, response);
         return;
       }
       response.status(409).send('Такой пользователь уже есть');
