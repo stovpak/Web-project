@@ -12,7 +12,7 @@ export class Register extends React.Component {
 				username: "",
 				password: "",
 				email: "",
-				/*isChecked: false,*/
+				isChecked: false,
 				usernameValid: false,
 				emailValid: false,
 				passwordValid: false,
@@ -20,7 +20,7 @@ export class Register extends React.Component {
 			}
 		};
 		this.handleUserInput = this.handleUserInput.bind(this);
-		/* this.handleChecked = this.handleChecked.bind(this);*/
+		this.handleChecked = this.handleChecked.bind(this);
 	}
 	handleUserInput = e => {
 		const name = e.target.name;
@@ -29,10 +29,10 @@ export class Register extends React.Component {
 			this.validateField(name, value);
 		});
 	};
-	/*handleChecked(e) {
+	handleChecked(e) {
       this.setState({ isChecked: !this.state.isChecked });
       console.log(this.state.isChecked);
-    }*/
+    }
 	validateField(fieldName, value) {
 		let fieldValidationErrors = this.state.formErrors;
 		let usernameValid = this.state.usernameValid;
@@ -78,10 +78,10 @@ export class Register extends React.Component {
 	errorClass(error) {
 		return error.length === 0 ? "" : "has-error";
 	}
-	sing() {
+	PostSend() {
 		console.dir(this.setState());
 		axios
-			.post("/", {
+			.post("/User/SignUP", {
 				username: this.state.username,
 				passsword: this.state.password,
 				email: this.state.email
@@ -98,8 +98,8 @@ export class Register extends React.Component {
 	}
 	render() {
 		return (
-			<form className="body-container" method="post">
-				<h2 class="Login-form">Sign up</h2>
+			<form className="shadow container w-25 p-3 mt-3" method="post">
+				<h2 className="text-center">Регестрация</h2>
 				<div className="panel panel-default">
 					<FormErrors formErrors={this.state.formErrors} />
 				</div>
@@ -108,7 +108,7 @@ export class Register extends React.Component {
 						this.state.formErrors.email
 					)}`}
 				>
-					<label htmlFor="email-field">email address</label>
+					<label htmlFor="email-field">Почта</label>
 					<input
 						type="email"
 						required
@@ -125,7 +125,7 @@ export class Register extends React.Component {
 						this.state.formErrors.username
 					)}`}
 				>
-					<label htmlFor="username">Create your username</label>
+					<label htmlFor="username">Логин</label>
 					<input
 						type="username"
 						className="form-control"
@@ -140,7 +140,7 @@ export class Register extends React.Component {
 						this.state.formErrors.password
 					)}`}
 				>
-					<label htmlFor="password">Password</label>
+					<label htmlFor="password">Пароль</label>
 					<input
 						type="password"
 						className="form-control"
@@ -152,16 +152,17 @@ export class Register extends React.Component {
 				</div>
 				<button
 					type="submit"
-					className="btn btn-primary"
+					className="btn btn-warning
+					"
 					onClick={e => {
-						this.signup();
+						this.PostSend();
 					}}
 					disabled={!this.state.formValid}
 				>
-					Sign up
+					Зарегестрироваться
 				</button>
 				<div className="form-group">
-					<Link to="/">I'm already member</Link>
+					<Link to="/">Я уже зарегестрирован</Link>
 				</div>
 			</form>
 		);

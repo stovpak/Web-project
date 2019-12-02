@@ -11,7 +11,7 @@ class App extends React.Component {
         <div className="App">
           <div className="login">
             <Route exact path="/" component={Login}></Route>
-            <Route path="/sign-in" component={Register}></Route>
+            <Route path="/SignUp " component={Register}></Route>
           </div>
         </div>
       </Router>
