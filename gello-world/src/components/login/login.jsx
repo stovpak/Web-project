@@ -80,6 +80,8 @@ export class Login extends React.Component {
 	}
 	render() {
 		return (
+			<form className="body-container" method="post">
+				<h2 className="Login-form">Вход</h2>
 			<form className="shadow container w-25 p-3 mt-3 " method="post">
 				<h2 className="text-center">Вход</h2>
 
@@ -125,6 +127,8 @@ export class Login extends React.Component {
 						onChange={e => this.handleChecked(e)}
 					/></label>
 
+					Запомнить меня
+					/>
 					Запомнить меня
 				</div>
 				<button
