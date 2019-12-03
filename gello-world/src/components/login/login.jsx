@@ -1,217 +1,146 @@
-import React from 'react';
-import React, { Component } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-
+import React, { Component } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { FormErrors } from "./FormErrors.js";
 export class Login extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username: '',
-			password: '',
-			isChecked: false
+			username: "",
+			password: "",
+			isChecked: true,
+			formErrors: { username: "", password: "" },
+			usernameValid: false,
+			passwordValid: false,
+			formValid: false
 		};
-		this.handlePasswordChange = this.handlePasswordChange.bind(this);
-		this.handleUserChange = this.handleUserChange.bind(this);
-		this.handleChecked = this.handleChecked.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
 	}
-
-	handleUserChange(e) {
-		this.setState({ username: e.target.value });
-		if (this.state.username === 'admin') {
-			alert('vitayu');
-		} else {
-			alert('idi fuksai trabl');
-		}
-		console.log(this.state.username);
-		this.setState({ username: e.target.value });
-		console.log(this.state.username);
-	}
-
-	handlePasswordChange(e) {
-		this.setState({ password: e.target.value });
-		console.log(this.state.password);
-	}
-	handleChecked() {
+	handleUserInput = e => {
+		const name = e.target.name;
+		const value = e.target.value;
+		this.setState({ [name]: value }, () => {
+			this.validateField(name, value);
+		});
+	};
+	handleChecked(e) {
 		this.setState({ isChecked: !this.state.isChecked });
-		console.dir(this.state.isChecked);
+		console.log(this.state.isChecked);
 	}
+	validateField(fieldName, value) {
+		let fieldValidationErrors = this.state.formErrors;
+		let usernameValid = this.state.usernameValid;
+		let passwordValid = this.state.passwordValid;
+		switch (fieldName) {
+			case "username":
+				usernameValid = value.match(/^[a-zA-Z0-9]+$/);
+				fieldValidationErrors.username = usernameValid
+					? ""
+					: " используйте только a-z A-Z 0-9";
+				break;
+			case "password":
+				passwordValid = value.length >= 6;
+				fieldValidationErrors.password = passwordValid ? "" : " слишком короткий";
 
-
-	handleSubmit(e) {
-		e.preventDefault();
-		console.dir(this.state);
+				break;
+			default:
+				break;
+		}
+		this.setState(
+			{
+				formErrors: fieldValidationErrors,
+				usernameValid: usernameValid,
+				passwordValid: passwordValid
+			},
+			this.validateForm
+		);
 	}
-
-	signin() {
+	validateForm() {
+		this.setState({
+			formValid: this.state.usernameValid && this.state.passwordValid
+		});
+	}
+	errorClass(error) {
+		return error.length === 0 ? "" : "has-error";
+	}
+	PostSend() {
 		axios
-			.post('/', {
+			.post("/", {
 				username: this.state.username,
 				passsword: this.state.password
 			})
 			.then(
 				response => {
-					console.log(response);
+					console.dir(response);
+					console.dir(this.state.username);
 				},
 				error => {
-					console.log(error);
+					console.dir(error);
 				}
 			);
 	}
-
 	render() {
 		return (
-			<div className='body-container'>
-				<h2 className='login-form'>Sing In</h2>
-				<div className='content'>
-					<div className='form'>
-						<form onSubmit={e => this.handleSubmit(e)} method='post'>
-						<form onSubmit={(e) => this.handleSubmit(e)}>
-							<div className='form-group'>
-								<label htmlFor='username-field'>Username</label>
-								<input
-									type='text'
-									name='username'
-									className='form-control'
-									id='username-field'
-									value={this.state.username}
-									placeholder='username'
-									onChange={e => this.handleUserChange(e)}
-									onChange={(e) => this.handleUserChange(e)}
-								/>
-							</div>
-							<div className='form-group'>
-								<label htmlFor='password-field'>Password</label>
-								<input
-									type='password'
-									name='password'
-									id='password-field'
-									value={this.state.password}
-									className='form-control'
-									placeholder='password'
-									onChange={e => this.handlePasswordChange(e)}
-									onChange={(e) => this.handlePasswordChange(e)}
-								/>
-							</div>
-							<div className='form-group'>
-								<input
-									type='checkbox'
-									name='checkbox'
-									id='checkbox-field'
-									onChange={this.handleChecked}
-								/>
-								Remember me
-							</div>
-							<div className='form-group'>
-								<button
-									type='button'
-									onClick={e => this.signin()}
-									className='btn btn-primary btn-block'>
-									Sign in
-								</button>
-							</div>
-							<div className='form-group'>
-								<Link to='/sign-in'>Create an account</Link>
-							</div>
-						</form>
-					</div>
+			<form className="shadow container w-25 p-3 mt-3 " method="post">
+				<h2 className="text-center">Вход</h2>
+
+				<div className="panel panel-default">
+					<FormErrors formErrors={this.state.formErrors} />
 				</div>
-				<div className='footer'>
-					<button type='button' className='btn'>
-						Login
-					</button>
+				<div
+					className={`form-group ${this.errorClass(
+						this.state.formErrors.username
+					)}`}
+				>
+					<label htmlFor="username">Логин</label>
+					<input
+						type="username"
+						required
+						className="form-control"
+						name="username"
+						placeholder="Логин"
+						value={this.state.username}
+						onChange={this.handleUserInput}
+					/>
 				</div>
-			</div>
+				<div
+					className={`form-group ${this.errorClass(
+						this.state.formErrors.password
+					)}`}
+				>
+					<label htmlFor="password">Пароль</label>
+					<input
+						type="password"
+						className="form-control"
+						name="password"
+						placeholder="Пароль"
+						value={this.state.password}
+						onChange={this.handleUserInput}
+					/>
+				</div>
+				<div className="form-group">
+					<label for="checkbox-field"><input
+						type="checkbox"
+						name="checkbox"
+						id="checkbox-field"
+						onChange={e => this.handleChecked(e)}
+					/></label>
+					Запомнить меня
+					/>
+				</div>
+				<button
+					type="submit"
+					className="btn btn-warning"
+					onClick={e => {
+						this.PostSend();
+					}}
+					disabled={!this.state.formValid}
+				>Войти
+				</button>
+				<div className="form-group">
+					<Link to="/SignUp ">Созать аккаунт</Link>
+				</div>
+			</form>
 		);
 	}
 }
 export default Login;
-/*
-// Render Prop
-import React from 'react';
-class MiniFormic extends React.Component {
-	state = {
-		values: this.props.initialValues || {},
-		touched: {},
-		errors: {}
-	};
-	handleChange = event => {
-		const target = event.target;
-		const value = target.type === 'checkbox' ? target.checked : target.value;
-		const name = target.name;
-		event.persist();
-		this.setState(prevState => ({
-			values: { ...prevState.values, [name]: value }
-		}));
-	};
-	handleBlur = event => {
-		const target = event.target;
-		const name = target.name;
-		event.persist();
-		this.setState(prevState => ({
-			touched: { ...prevState.touched, [name]: true }
-		}));
-	};
-	handleSubmit = e => {
-		e.preventDefault();
-	};
-	render() {
-		return this.props.children({
-			...this.state,
-			handleChange: this.handleChange,
-			handleBlur: this.handleBlur
-		});
-	}
-}
-export class Reservation extends React.Component {
-	render() {
-		return (
-			<MiniFormic
-				initialValues={{
-					isGoing: true,
-					numberOfGuests: 2
-				}}
-				onSubmit={values => alert(JSON.stringify(values, null, 2))}>
-				{props => {
-					const {
-						values,
-						errors,
-						touched,
-						handleBlur,
-						handleSubmit,
-						handleChange
-					} = props;
-					return (
-						<form onSubmit={handleSubmit}>
-							<input
-								name='isGoing'
-								type='checkbox'
-								className='checkbox'
-								checked={values.isGoing}
-								onChange={handleChange}
-								onBlur={handleBlur}
-							/>
-							<label>Is going:</label>
-							<br />
-							<label>
-								Number of guests:
-								<input
-									name='numberOfGuests'
-									type='number'
-									value={values.numberOfGuests}
-									onChange={handleChange}
-									onBlur={handleBlur}
-								/>
-							</label>
-							<pre>{JSON.stringify(props, null, 2)}</pre>
-						</form>
-					</div>
-				</div>
-			</div>
-		);
-	}
-}
-export default Login;
-
-*/

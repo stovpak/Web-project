@@ -1,3 +1,4 @@
+
 const DataConnection = require('../DataConnection.js');
 
 const { sequelize } = DataConnection;

@@ -1,3 +1,4 @@
+
 class UserResponse {
   constructor(login, id, roleId) {
     this.id = id;
