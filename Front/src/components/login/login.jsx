@@ -123,9 +123,7 @@ export class Login extends React.Component {
 						name="checkbox"
 						id="checkbox-field"
 						onChange={e => this.handleChecked(e)}
-					/></label>
-					Запомнить меня
-					/>
+					/> Запомнить меня</label>
 				</div>
 				<button
 					type="submit"

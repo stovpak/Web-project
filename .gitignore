@@ -1,18 +1,14 @@
 # Default ignored files
-gello-world/.vscode/*
-gello-world/node_modules/*
-gello-world/build/*
-.idea/*
+Front/.vscode/*
+Front/node_modules/*
+Front/build/*
+Front/.idea/*
 pictures/*
 node_modules/*
 login/node_modules/*
 login/.idea/*
 login/.env
 login/.eslintrc.json
-pictures/*
-
-gello-world/.vscode/*
 gello-world/node_modules/*
-gello-world/build/*
-
-
+gello-world/*
+.idea/*
