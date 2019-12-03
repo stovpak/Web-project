@@ -1,35 +1,21 @@
-const sequelize = require('sequelize');
-
-const sequelizeOperators = sequelize.Op;
 const bcrypt = require('bcrypt');
-const userModel = require('../../../db/models/user_models/UserModel.js');
 const userService = require('./UserService.js');
 const createUserResponce = require('../../../db/user_db/CreateUserResponce.js');
 
 
-function signUp(registrationRequest, response) {
-  userModel.user.findOne({
-    raw: true,
-    where: {
-      [sequelizeOperators.or]: [{ login: registrationRequest.login }, { email: registrationRequest.email }],
-    },
-  })
+function signUp(request, response) {
+  userService.exists(request.login, request.email)
     .then((User) => {
       if (!User) {
-        userService.createUserAccount(registrationRequest, response);
+        userService.createUserAccount(request, response);
         return;
       }
       response.status(409).send('Такой пользователь уже есть');
-    });
+    }).catch((err) => response.status(500).send(err));
 }
 
 function signIn(request, response) {
-  userModel.user.findOne({
-    raw: true,
-    where: {
-      [sequelizeOperators.or]: [{ login: request.login }, { email: request.login }],
-    },
-  })
+  userService.exists(request.login, request.login)
     .then((User) => {
       if (!User) {
         response.status(400).send('Данные введены неправильно');
