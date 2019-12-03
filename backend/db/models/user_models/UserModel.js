@@ -31,7 +31,7 @@ const user = sequelizeConnection.define('users', {
   password: {
     type: sequrlizeType.STRING,
     allowNull: false,
-    unique: true,
+    unique: false,
   },
   birthday: {
     type: sequrlizeType.DATE,
