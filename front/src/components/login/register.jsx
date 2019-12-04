@@ -85,7 +85,7 @@ export class Register extends React.Component {
   PostSend() {
     console.dir(this.setState());
     axios
-      .post("/User/SignUP", {
+      .post("/user/sign-up", {
         username: this.state.username,
         passsword: this.state.password,
         email: this.state.email
