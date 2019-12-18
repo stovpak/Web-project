@@ -7,7 +7,7 @@ const chaiHttp = require('chai-http');
 
 const chai = require('chai');
 const userModel = require('../db/models/user_models/UserModel.js');
-const user = require('../user/User');
+const user = require('../routers/user_routers/UserRoute');
 
 const { expect } = chai;
 
@@ -20,7 +20,7 @@ describe('user', () => {
         const request = { login: 'Piska@ad.erd', password: 'A1267ddc' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(200);
@@ -31,7 +31,7 @@ describe('user', () => {
         const request = { login: 'Darina', password: 'A1267ddc' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(200);
@@ -44,7 +44,7 @@ describe('user', () => {
         const request = { login: 'Darina', password: '' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -55,7 +55,7 @@ describe('user', () => {
         const request = { login: 'Piska@ad.erd', password: 'Password' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -66,7 +66,7 @@ describe('user', () => {
         const request = { login: 'Piska@ad.erd', password: 'password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -77,7 +77,7 @@ describe('user', () => {
         const request = { login: 'Piska@ad.erd', password: 'пассворд123' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -88,7 +88,7 @@ describe('user', () => {
         const request = { login: 'Piska@ad.erd', password: 'Password!123' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -99,7 +99,7 @@ describe('user', () => {
         const request = { login: 'Piska@ad.erd', password: 'Password12' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -110,7 +110,7 @@ describe('user', () => {
         const request = { login: 'Piska@ad.erd', password: 'Password 123' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -121,7 +121,7 @@ describe('user', () => {
         const request = { login: 'Piska@ad.erd', password: 'password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -132,7 +132,7 @@ describe('user', () => {
         const request = { login: 'Pisk!a@ad.erd', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -143,7 +143,7 @@ describe('user', () => {
         const request = { login: 'Piska@aderd', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -154,7 +154,7 @@ describe('user', () => {
         const request = { login: '@ad.erd', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -165,7 +165,7 @@ describe('user', () => {
         const request = { login: 'Писка@ad.erd', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -176,7 +176,7 @@ describe('user', () => {
         const request = { login: 'Дарина', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -187,7 +187,7 @@ describe('user', () => {
         const request = { login: 'Dari na', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -198,7 +198,7 @@ describe('user', () => {
         const request = { login: '', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignIn')
+          .post('/sign-in')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -207,7 +207,7 @@ describe('user', () => {
       });
     });
   });
-  describe('SignUp', (done) => {
+  describe('sign-Up', (done) => {
     before(() => {
       userModel.user.destroy({
         where: {
@@ -227,7 +227,7 @@ describe('user', () => {
         const request = { login: 'Nita', email: 'Nta@ad.erd', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(200);
@@ -240,7 +240,7 @@ describe('user', () => {
         const request = { login: 'Darina', email: 'Niita@ad.erd', password: '' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -251,7 +251,7 @@ describe('user', () => {
         const request = { login: 'Piska', email: 'Niita@ad.erd', password: 'Password' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -262,7 +262,7 @@ describe('user', () => {
         const request = { login: 'Piska', email: 'Niita@ad.erd', password: 'password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -273,7 +273,7 @@ describe('user', () => {
         const request = { login: 'Piska', email: 'Niita@ad.erd', password: 'пассворд123' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -284,7 +284,7 @@ describe('user', () => {
         const request = { login: 'Piska', email: 'Niita@ad.erd', password: 'Password!123' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -295,7 +295,7 @@ describe('user', () => {
         const request = { login: 'Piska', email: 'Niita@ad.erd', password: 'Password12' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -306,7 +306,7 @@ describe('user', () => {
         const request = { login: 'Piska', email: 'Niita@ad.erd', password: 'Password 123' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -317,7 +317,7 @@ describe('user', () => {
         const request = { login: 'Piska', email: 'Piska@ad.erd', password: 'password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -328,7 +328,7 @@ describe('user', () => {
         const request = { login: 'Niita', email: 'Piskaad.erd', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -339,7 +339,7 @@ describe('user', () => {
         const request = { login: 'Niita', email: 'Pisk!a@ad.erd', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -350,7 +350,7 @@ describe('user', () => {
         const request = { login: 'Niita', email: 'Piska@aderd', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -361,7 +361,7 @@ describe('user', () => {
         const request = { login: 'Niita', email: '@.erd', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -372,7 +372,7 @@ describe('user', () => {
         const request = { login: 'Niita', email: 'Niita@ad.erd', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -383,7 +383,7 @@ describe('user', () => {
         const request = { login: 'Дарина', email: 'Niita@ad.erd', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -394,7 +394,7 @@ describe('user', () => {
         const request = { login: 'Dari na', email: 'Niita@ad.erd', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -405,7 +405,7 @@ describe('user', () => {
         const request = { login: '', email: 'Niita@ad.erd', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
@@ -416,7 +416,7 @@ describe('user', () => {
         const request = { login: 'Login123', email: '', password: 'Password123' };
         chai
           .request(app.use('/', user))
-          .post('/SignUp')
+          .post('/sign-Up')
           .send(request)
           .end((err, res) => {
             expect(res).to.have.status(400);
