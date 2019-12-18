@@ -7,7 +7,7 @@ const sequelizeOperators = sequelize.Op;
 
 const salt = bcrypt.genSaltSync(10);
 
-function createUserAccount(registrationRequest, response) {
+function createAccount(registrationRequest, response) {
   const password = bcrypt.hashSync(registrationRequest.password, salt);
   userModel.user.create({
     login: registrationRequest.login,
@@ -24,5 +24,5 @@ function exists(login, email) {
     },
   });
 }
-module.exports.createUserAccount = createUserAccount;
+module.exports.createAccount = createAccount;
 module.exports.exists = exists;
