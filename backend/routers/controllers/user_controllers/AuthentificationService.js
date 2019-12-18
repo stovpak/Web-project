@@ -7,10 +7,10 @@ function signUp(request, response) {
   userService.exists(request.login, request.email)
     .then((User) => {
       if (!User) {
-        userService.createAccount(request, response);
+        userService.createUserAccount(request, response);
         return;
       }
-      response.status(409).send('Такой пользователь уже существует');
+      response.status(409).send('Такой пользователь уже есть');
     }).catch((err) => response.status(500).send(err));
 }
 
