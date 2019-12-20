@@ -5,9 +5,8 @@ front/build/*
 front/.idea/*
 pictures/*
 node_modules/*
-login/node_modules/*
-login/.idea/*
-login/.env
-login/.eslintrc.json
-
 .idea/*
+backend/node_modules/*
+backend/.idea/*
+backend/.env
+backend/.eslintrc.json
