@@ -1,6 +1,11 @@
 # Default ignored files
-.idea/*
+front/.vscode/*
+front/node_modules/*
+front/build/*
+front/.idea/*
+pictures/*
 node_modules/*
+.idea/*
 backend/node_modules/*
 backend/.idea/*
 backend/.env
