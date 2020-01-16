@@ -1,14 +1,14 @@
 'use strict';
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10);
-const password = bcrypt.hashSync("Password123", salt);
+const password = bcrypt.hashSync("A1267ddc", salt);
 
 module.exports = {
   up: (queryInterface) => {
     return queryInterface.bulkInsert('Users', [{
-      login: 'Nita',
+      login: 'Darina',
       password: password,
-      email: 'Nta@ad.erd',
+      email: 'Piska@ad.erd',
     }], {});
   },
 

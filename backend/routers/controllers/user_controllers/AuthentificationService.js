@@ -15,12 +15,12 @@ function signUp(request, response) {
 }
 
 function signIn(request, response) {
-  userService.exists(request.login, request.login)
+    userService.exists(request.login, request.login)
     .then((User) => {
-      if (!User) {
-        response.status(400).send('Данные введены неправильно');
+        if (!User) {
+          response.status(400).send('Данные введены неправильно');
       } else {
-        bcrypt.compare(request.password, User.password, (err, res) => {
+          bcrypt.compare(request.password, User.password, (err, res) => {
           if (res) {
             response.status(200).send(createUserResponce.createUserResponce(User));
           } else {

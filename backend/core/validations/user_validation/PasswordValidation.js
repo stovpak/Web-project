@@ -17,7 +17,7 @@ schema
   .not()
   .symbols();
 function validatePassword(password) {
-  if (password.match(/([а-я])/gi) === null && schema.validate(password)) {
+  if(password.match(/([^a-z0-9])/gi) === null && schema.validate(password)) {
     return true;
   }
   return false;
