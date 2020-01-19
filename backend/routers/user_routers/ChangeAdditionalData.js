@@ -5,6 +5,6 @@ const userServices = require('../controllers/user_controllers/UserService.js');
 
 
 router.post('/', (request, response) => {
-    userServices.changeAdditionalData(request,response);
+    userServices.updatePersonalData(request,response);
 });
 module.exports = router;

@@ -26,7 +26,7 @@ function exists(login, email) {
     },
   });
 }
-function changeAdditionalData(request, response){
+function updatePersonalData(request, response){
        userModel.user.update({first_name : request.body.first_name,second_name:request.body.second_name,birthday:request.body.birthday},{
            where : {
                login: request.body.login
@@ -70,6 +70,6 @@ function changeEmail(request,response){
 
 module.exports.createAccount = createAccount;
 module.exports.exists = exists;
-module.exports.changeAdditionalData = changeAdditionalData;
+module.exports.updatePersonalData = updatePersonalData;
 module.exports.changePassword = changePassword;
 module.exports.changeEmail = changeEmail;
