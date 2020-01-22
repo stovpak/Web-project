@@ -1,10 +1,14 @@
 import React, { Component } from "react";
-import axios from "axios";
+//import axios from "axios";
 import { Link } from "react-router-dom";
 import { FormErrors } from "./FormErrors.js";
+import { authHeader } from "../helpers/auth-header";
+import { authenticationServise } from "../helpers/athentication";
+
 export class Login extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       username: "",
       password: "",
@@ -14,6 +18,9 @@ export class Login extends React.Component {
       passwordValid: false,
       formValid: false
     };
+    if (authHeader.currentUserValue) {
+      this.props.history.push("/");
+    }
   }
   handleUserInput = e => {
     const name = e.target.name;
@@ -65,21 +72,21 @@ export class Login extends React.Component {
     return error.length === 0 ? "" : "has-error";
   }
   PostSend() {
-    axios
-      .post("/", {
-        username: this.state.username,
-        passsword: this.state.password
-      })
-      .then(
-        response => {
-          console.dir(response);
-          console.dir(this.state.username);
-        },
-        error => {
-          console.dir(error);
-        }
-      );
+    authenticationServise.login(this.state.username, this.state.password).then(
+      user => {
+        const { from } = this.props.location.state || {
+          from: { pathname: "/" }
+        };
+        alert("all good");
+        this.props.history.push(from);
+      },
+      error => {
+        console.log(error);
+        alert("errooor");
+      }
+    );
   }
+
   render() {
     return (
       <form className="shadow container w-25 p-3 mt-3 " method="post">
@@ -136,7 +143,6 @@ export class Login extends React.Component {
           onClick={e => {
             this.PostSend();
           }}
-          disabled={!this.state.formValid}
         >
           Войти
         </button>

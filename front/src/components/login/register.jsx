@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { FormErrors } from "./FormErrors";
+import {authenticationServise} from "../helpers/athentication";
 export class Register extends React.Component {
   constructor(props) {
     super(props);
@@ -83,6 +84,19 @@ export class Register extends React.Component {
     return error.length === 0 ? "" : "has-error";
   }
   PostSend() {
+    authenticationServise.login(this.state.username, this.state.password).then(
+      user => {
+        const { from } = this.props.location.state || {
+          from: { pathname: "/" }
+        };
+        this.props.history.push(from);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+  /*PostSend() {
     console.dir(this.setState());
     axios
       .post("/user/sign-up", {
@@ -99,7 +113,7 @@ export class Register extends React.Component {
           window.alert(error);
         }
       );
-  }
+  }*/
   render() {
     return (
       <form className="shadow container w-25 p-3 mt-3" method="post">
