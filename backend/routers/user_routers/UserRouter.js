@@ -8,7 +8,7 @@ const signUpValidator = require('../middlewares/user_middlewares/ValidateSignUpM
 const updateUserPersonalData = require('./ChangeAdditionalData.js');
 const userPersonalDataValidator = require('../middlewares/user_middlewares/ValidateUserPersonalDataMiddleware.js');
 const changePassword = require('./ChangePassword.js');
-const changeEmail = require ('./ChangeEmail.js');
+const changeEmail = require('./ChangeEmail.js');
 
 router.use('/sign-in', signInValidator);
 
@@ -18,12 +18,12 @@ router.use('/sign-up', signUpValidator);
 
 router.use('/sign-up', signUp);
 
-router.use('/profile/change-data/send',userPersonalDataValidator);
+router.use('/profile/change-data/send', userPersonalDataValidator);
 
-router.use('/profile/change-data/send',updateUserPersonalData);
+router.use('/profile/change-data/send', updateUserPersonalData);
 
-router.use('/profile/change-pass/send',changePassword);
+router.use('/profile/change-pass/send', changePassword);
 
-router.use('/profile/change-email/send',changeEmail);
+router.use('/profile/change-email/send', changeEmail);
 
 module.exports = router;

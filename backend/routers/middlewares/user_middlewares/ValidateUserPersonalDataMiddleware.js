@@ -6,10 +6,10 @@ const userPersonalDataValidation = require('../../../core/validations/user_valid
 
 
 router.post('/', (request, response, next) => {
-    const PersonalData = new UserPersonalData(request.body.first_name,request.body.second_name,request.body.birthday);
-    if (userPersonalDataValidation(PersonalData)){
-        return next();
-    }
-    response.status(400).send('Данные введены неправильно');
+  const PersonalData = new UserPersonalData(request.body.first_name, request.body.second_name, request.body.birthday);
+  if (userPersonalDataValidation(PersonalData)) {
+    return next();
+  }
+  response.status(400).send('Данные введены неправильно');
 });
 module.exports = router;

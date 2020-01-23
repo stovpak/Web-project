@@ -19,53 +19,48 @@ function createAccount(registrationRequest, response) {
   response.status(200).send('Вы успешно зарегестрировались');
 }
 function exists(login, email) {
-    return userModel.user.findOne({
+  return userModel.user.findOne({
     raw: true,
     where: {
       [sequelizeOperators.or]: [{ login }, { email }],
     },
   });
 }
-function updatePersonalData(request, response){
-       userModel.user.update({first_name : request.body.first_name,second_name:request.body.second_name,birthday:request.body.birthday},{
-           where : {
-               login: request.body.login
-           }
-           });
-       response.status(200).send('Данные обновлены');
+function updatePersonalData(request, response) {
+  userModel.user.update({ first_name: request.body.first_name, second_name: request.body.second_name, birthday: request.body.birthday }, {
+    where: {
+      login: request.body.login,
+    },
+  });
+  response.status(200).send('Данные обновлены');
 }
-function changePassword(request,response){
-    const password = request.body.password;
-    if (passwordValidator.validatePassword(password)) {
-        const passwordToWrite = bcrypt.hashSync(password, salt);
-        userModel.user.update({password: passwordToWrite}, {
-            where: {
-                login: request.body.login
-            }
-        });
-        response.status(200).send('Данные обновлены');
-        return;
-    }
-    else{
-        response.status(400).send('Неправильные данные');
-        return
-    }
+function changePassword(request, response) {
+  const { password } = request.body;
+  if (passwordValidator.validatePassword(password)) {
+    const passwordToWrite = bcrypt.hashSync(password, salt);
+    userModel.user.update({ password: passwordToWrite }, {
+      where: {
+        login: request.body.login,
+      },
+    });
+    response.status(200).send('Данные обновлены');
+  } else {
+    response.status(400).send('Неправильные данные');
+  }
 }
-function changeEmail(request,response){
-    const email = request.body.email;
-    if (emailValidation(email)) {
-        userModel.user.update({email:email}, {
-            where: {
-                login: request.body.login
-            }
-        });
-        response.status(200).send('Данные обновлены');
-        return;
-    }
-    else{
-        response.status(400).send('Неправильные данные');
-        return
-    }
+function changeEmail(request, response) {
+  const { email } = request.body;
+  if (emailValidation(email)) {
+    userModel.user.update({ email }, {
+      where: {
+        login: request.body.login,
+      },
+    });
+    response.status(200).send('Данные обновлены');
+    return;
+  }
+
+  response.status(400).send('Неправильные данные');
 }
 
 module.exports.createAccount = createAccount;
