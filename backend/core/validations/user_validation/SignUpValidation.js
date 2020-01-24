@@ -3,9 +3,6 @@ const passValidation = require('./PasswordValidation.js');
 const loginValidation = require('./LoginValidation.js');
 
 function validateSignUp(registrationRequest) {
-  if (emailValidation.validateEmail(registrationRequest.email) && passValidation.validatePassword(registrationRequest.password) && loginValidation.validateLogin(registrationRequest.login)) {
-    return true;
-  }
-  return false;
+  return !!(emailValidation.validateEmail(registrationRequest.email) && passValidation.validatePassword(registrationRequest.password) && loginValidation.validateLogin(registrationRequest.login));
 }
 module.exports.validateSignUp = validateSignUp;

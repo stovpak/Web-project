@@ -1,7 +1,4 @@
 function validateLogin(login) {
-  if (login.match(/[^a-z0-9]/gi) === null && login.length !== 0) {
-    return true;
-  }
-  return false;
+  return login.match(/[^a-z0-9]/gi) === null && login.length !== 0;
 }
 module.exports.validateLogin = validateLogin;

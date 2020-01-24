@@ -1,11 +1,7 @@
-const namesValidation = require('./NameValidation.js');
+const nameValidation = require('./NameValidation.js');
 const dateValidator = require('./DateValidator.js');
 
 function validateUserPersonalData(userPersonalData) {
-  if (namesValidation(userPersonalData.first_name, userPersonalData.second_name) && dateValidator(userPersonalData.birthday)) {
-    return true;
-  }
-
-  return false;
+  return !!(nameValidation(userPersonalData.first_name) && nameValidation(userPersonalData.second_name) && dateValidator(userPersonalData.birthday));
 }
 module.exports = validateUserPersonalData;
