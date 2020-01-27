@@ -17,7 +17,7 @@ describe('user', () => {
   describe('sign-in', () => {
     describe('Correct', () => {
       it('Sign In correct request with email and password', (done) => {
-        const request = { login: 'Piska@ad.erd', password: 'A1267ddc' };
+        const request = { login: 'Darina@ad.erd', password: 'A1267ddc' };
         chai
           .request(app.use('/', user))
           .post('/sign-in')
@@ -52,7 +52,7 @@ describe('user', () => {
           });
       });
       it('Sign in with no number at password', (done) => {
-        const request = { login: 'Piska@ad.erd', password: 'Password' };
+        const request = { login: 'Darina@ad.erd', password: 'Password' };
         chai
           .request(app.use('/', user))
           .post('/sign-in')
@@ -63,7 +63,7 @@ describe('user', () => {
           });
       });
       it('Sign in with no capital letter at password', (done) => {
-        const request = { login: 'Piska@ad.erd', password: 'password123' };
+        const request = { login: 'Darina@ad.erd', password: 'password123' };
         chai
           .request(app.use('/', user))
           .post('/sign-in')
@@ -74,7 +74,7 @@ describe('user', () => {
           });
       });
       it('Sign in with cyrillic at password', (done) => {
-        const request = { login: 'Piska@ad.erd', password: 'пассворд123' };
+        const request = { login: 'Darina@ad.erd', password: 'пассворд123' };
         chai
           .request(app.use('/', user))
           .post('/sign-in')
@@ -85,7 +85,7 @@ describe('user', () => {
           });
       });
       it('Sign in with symbols at password', (done) => {
-        const request = { login: 'Piska@ad.erd', password: 'Password!123' };
+        const request = { login: 'Darina@ad.erd', password: 'Password!123' };
         chai
           .request(app.use('/', user))
           .post('/sign-in')
@@ -96,7 +96,7 @@ describe('user', () => {
           });
       });
       it('Sign in with short password', (done) => {
-        const request = { login: 'Piska@ad.erd', password: 'Password12' };
+        const request = { login: 'Darina@ad.erd', password: 'Password12' };
         chai
           .request(app.use('/', user))
           .post('/sign-in')
@@ -107,7 +107,7 @@ describe('user', () => {
           });
       });
       it('Sign in with spaces in password', (done) => {
-        const request = { login: 'Piska@ad.erd', password: 'Password 123' };
+        const request = { login: 'Darina@ad.erd', password: 'Password 123' };
         chai
           .request(app.use('/', user))
           .post('/sign-in')
@@ -118,7 +118,7 @@ describe('user', () => {
           });
       });
       it('Sign in with no lowercase letter password', (done) => {
-        const request = { login: 'Piska@ad.erd', password: 'password123' };
+        const request = { login: 'Darina@ad.erd', password: 'password123' };
         chai
           .request(app.use('/', user))
           .post('/sign-in')
@@ -129,7 +129,7 @@ describe('user', () => {
           });
       });
       it('Sign in with no `.` after `@` in email', (done) => {
-        const request = { login: 'Piska@aderd', password: 'Password123' };
+        const request = { login: 'Darina@aderd', password: 'Password123' };
         chai
           .request(app.use('/', user))
           .post('/sign-in')
@@ -151,7 +151,7 @@ describe('user', () => {
           });
       });
       it('Sign in with cyrillic in email', (done) => {
-        const request = { login: 'Писка@ad.erd', password: 'Password123' };
+        const request = { login: 'Darina@ad.erd', password: 'Password123' };
         chai
           .request(app.use('/', user))
           .post('/sign-in')
@@ -237,7 +237,7 @@ describe('user', () => {
           });
       });
       it('Sign up with no number at password', (done) => {
-        const request = { login: 'Piska', email: 'Niita@ad.erd', password: 'Password' };
+        const request = { login: 'Darina', email: 'Niita@ad.erd', password: 'Password' };
         chai
           .request(app.use('/', user))
           .post('/sign-Up')
@@ -248,7 +248,7 @@ describe('user', () => {
           });
       });
       it('Sign up with no capital letter at password', (done) => {
-        const request = { login: 'Piska', email: 'Niita@ad.erd', password: 'password123' };
+        const request = { login: 'Darina', email: 'Niita@ad.erd', password: 'password123' };
         chai
           .request(app.use('/', user))
           .post('/sign-Up')
@@ -259,7 +259,7 @@ describe('user', () => {
           });
       });
       it('Sign up with cyrillic at password', (done) => {
-        const request = { login: 'Piska', email: 'Niita@ad.erd', password: 'пассворд123' };
+        const request = { login: 'Darina', email: 'Niita@ad.erd', password: 'пассворд123' };
         chai
           .request(app.use('/', user))
           .post('/sign-Up')
@@ -270,7 +270,7 @@ describe('user', () => {
           });
       });
       it('Sign up with symbols at password', (done) => {
-        const request = { login: 'Piska', email: 'Niita@ad.erd', password: 'Password!123' };
+        const request = { login: 'Darina', email: 'Niita@ad.erd', password: 'Password!123' };
         chai
           .request(app.use('/', user))
           .post('/sign-Up')
@@ -281,7 +281,7 @@ describe('user', () => {
           });
       });
       it('Sign up with short password', (done) => {
-        const request = { login: 'Piska', email: 'Niita@ad.erd', password: 'Password' };
+        const request = { login: 'Darina', email: 'Niita@ad.erd', password: 'Password' };
         chai
           .request(app.use('/', user))
           .post('/sign-Up')
@@ -292,7 +292,7 @@ describe('user', () => {
           });
       });
       it('Sign up with spaces in password', (done) => {
-        const request = { login: 'Piska', email: 'Niita@ad.erd', password: 'Password 123' };
+        const request = { login: 'Darina', email: 'Niita@ad.erd', password: 'Password 123' };
         chai
           .request(app.use('/', user))
           .post('/sign-Up')
@@ -303,7 +303,7 @@ describe('user', () => {
           });
       });
       it('Sign up with no lowercase letter password', (done) => {
-        const request = { login: 'Piska', email: 'Piska@ad.erd', password: 'password123' };
+        const request = { login: 'Darina', email: 'Darina@ad.erd', password: 'password123' };
         chai
           .request(app.use('/', user))
           .post('/sign-Up')
@@ -314,7 +314,7 @@ describe('user', () => {
           });
       });
       it('Sign up with no `@` in email', (done) => {
-        const request = { login: 'Niita', email: 'Piskaad.erd', password: 'Password123' };
+        const request = { login: 'Niita', email: 'Darinaaqad.erd', password: 'Password123' };
         chai
           .request(app.use('/', user))
           .post('/sign-Up')
@@ -325,7 +325,7 @@ describe('user', () => {
           });
       });
       it('Sign up with no `.` after `@` in email', (done) => {
-        const request = { login: 'Niita', email: 'Piska@aderd', password: 'Password123' };
+        const request = { login: 'Niita', email: 'Darinaa@aderd', password: 'Password123' };
         chai
           .request(app.use('/', user))
           .post('/sign-Up')

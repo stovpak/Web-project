@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const userService = require('./UserService.js');
-const createUserResponce = require('../../../db/user_db/CreateUserResponce.js');
-
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 function signUp(request, response) {
   userService.exists(request.login, request.email)
@@ -22,7 +22,9 @@ function signIn(request, response) {
       } else {
         bcrypt.compare(request.password, User.password, (err, res) => {
           if (res) {
-            response.status(200).send(createUserResponce.createUserResponce(User));
+              const responseStr = User.login + " " + User.role_id.toString();
+              const token = jwt.sign(responseStr,process.env.JWT_KEY);
+              response.status(200).send(token);
           } else {
             response.status(400).send('Данные введены неправильно');
           }

@@ -19,7 +19,7 @@ server.on('connection', (ws) => {
         }
       });
     } else if (messageType === 'Connect') {
-      messageService.findTopicId(JSON.parse(message).topic_name).then((topic) => {
+      messageService.findTopic(JSON.parse(message).topic_name).then((topic) => {
         messageService.showOldMessages(topic.id).then((messageResponce) => {
           server.clients.forEach((client) => {
             if (client.readyState === WebSocket.OPEN) { client.send(messageResponce); }

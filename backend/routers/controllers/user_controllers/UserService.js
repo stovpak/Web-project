@@ -62,9 +62,17 @@ function changeEmail(request, response) {
 
   response.status(400).send('Неправильные данные');
 }
-
+function findUser(userLogin) {
+  return userModel.user.findOne({
+    raw: true,
+    where: {
+      login: userLogin,
+    },
+  });
+}
 module.exports.createAccount = createAccount;
 module.exports.exists = exists;
 module.exports.updatePersonalData = updatePersonalData;
 module.exports.changePassword = changePassword;
 module.exports.changeEmail = changeEmail;
+module.exports.findUser = findUser;

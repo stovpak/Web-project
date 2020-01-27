@@ -8,7 +8,7 @@ module.exports = {
   up: (queryInterface) => queryInterface.bulkInsert('Users', [{
     login: 'Darina',
     password,
-    email: 'Piska@ad.erd',
+    email: 'Darina@ad.erd',
   }], {}),
 
   down: (queryInterface) => queryInterface.bulkDelete('Users', null, {}),
