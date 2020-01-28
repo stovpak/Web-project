@@ -1,5 +1,5 @@
 
-const roles = require('../models/user_models/RoleModel');
+const roles = require('../models/user_models/role-model');
 
 module.exports = {
   up: () => roles.roles.sync({ force: true }),

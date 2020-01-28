@@ -1,5 +1,5 @@
 
-const users = require('../models/user_models/UserModel');
+const users = require('../models/user_models/user-model');
 
 module.exports = {
   up: () => users.user.sync({ force: true }),

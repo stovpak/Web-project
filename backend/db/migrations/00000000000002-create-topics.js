@@ -1,5 +1,5 @@
 
-const topics = require('../models/message_models/TopicModel');
+const topics = require('../models/message_models/topic-model');
 
 module.exports = {
   up: () => topics.sync({ force: true }),
