@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { FormErrors } from "./FormErrors";
+//import { FormErrors } from "./FormErrors";
 import {authenticationServise} from "../helpers/athentication";
 export class Register extends React.Component {
   constructor(props) {
@@ -119,7 +119,6 @@ export class Register extends React.Component {
       <form className="shadow container w-25 p-3 mt-3" method="post">
         <h2 className="text-center">Регестрация</h2>
         <div className="panel panel-default">
-          <FormErrors formErrors={this.state.formErrors} />
         </div>
         <div
           className={`form-group ${this.errorClass(

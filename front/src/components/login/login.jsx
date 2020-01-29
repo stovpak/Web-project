@@ -4,153 +4,55 @@ import { Link } from "react-router-dom";
 import { FormErrors } from "./FormErrors.js";
 import { authHeader } from "../helpers/auth-header";
 import { authenticationServise } from "../helpers/athentication";
-
-export class Login extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      username: "",
-      password: "",
-      isChecked: true,
-      formErrors: { username: "", password: "" },
-      usernameValid: false,
-      passwordValid: false,
-      formValid: false
-    };
-    if (authHeader.currentUserValue) {
-      this.props.history.push("/");
-    }
-  }
-  handleUserInput = e => {
-    const name = e.target.name;
-    const value = e.target.value;
-    this.setState({ [name]: value }, () => {
-      this.validateField(name, value);
-    });
-  };
-  handleChecked(e) {
-    this.setState({ isChecked: !this.state.isChecked });
-    console.log(this.state.isChecked);
-  }
-  validateField(fieldName, value) {
-    let fieldValidationErrors = this.state.formErrors;
-    let usernameValid = this.state.usernameValid;
-    let passwordValid = this.state.passwordValid;
-    switch (fieldName) {
-      case "username":
-        usernameValid = value.match(/^[a-zA-Z0-9]+$/);
-        fieldValidationErrors.username = usernameValid
-          ? ""
-          : " используйте только a-z A-Z 0-9";
-        break;
-      case "password":
-        passwordValid = value.length >= 6;
-        fieldValidationErrors.password = passwordValid
-          ? ""
-          : " слишком короткий";
-
-        break;
-      default:
-        break;
-    }
-    this.setState(
-      {
-        formErrors: fieldValidationErrors,
-        usernameValid: usernameValid,
-        passwordValid: passwordValid
-      },
-      this.validateForm
+import {Formik, useFormik,Form,ErrorMessage, Field} from 'formik';
+import * as Yup from 'yup';
+const SignupSchema = Yup.object().shape({
+    username: Yup.string()
+        .min(2, "Слишком короткий логин")
+        .max(50, "Логин слишком длинный")
+        .required("Поле логин должно быть зполнено"),
+    password: Yup.string()
+        .min(2, "Пароль короткий")
+        .max(50, "Пароль слишком длинный")
+        .required("Поле пароль должно быть заполнено")
+});
+const Login=()=>{
+    return(
+    <Formik
+        initialValues={{
+            username: "",
+            password: ""
+        }}
+        validationSchema={SignupSchema}
+        onSubmit={(values, { setStatus, setSubmitting }) => {
+            console.log(values);
+            setTimeout(() => {
+                alert(JSON.stringify(values, null, 2));
+                setSubmitting(false);
+            }, 400);
+        }}
+    >
+        {formik => (
+            <form onSubmit={formik.handleSubmit}>
+                <label htmlFor="firstName">First Name</label>
+                <input id="firstName" {...formik.getFieldProps('firstName')} />
+                {formik.touched.firstName && formik.errors.firstName ? (
+                    <div>{formik.errors.firstName}</div>
+                ) : null}
+                <label htmlFor="lastName">Last Name</label>
+                <input id="lastName" {...formik.getFieldProps('lastName')} />
+                {formik.touched.lastName && formik.errors.lastName ? (
+                    <div>{formik.errors.lastName}</div>
+                ) : null}
+                <label htmlFor="email">Email Address</label>
+                <input id="email" {...formik.getFieldProps('email')} />
+                {formik.touched.email && formik.errors.email ? (
+                    <div>{formik.errors.email}</div>
+                ) : null}
+                <button type="submit">Submit</button>
+            </form>
+        )}
+    </Formik>
     );
-  }
-  validateForm() {
-    this.setState({
-      formValid: this.state.usernameValid && this.state.passwordValid
-    });
-  }
-  errorClass(error) {
-    return error.length === 0 ? "" : "has-error";
-  }
-  PostSend() {
-    authenticationServise.login(this.state.username, this.state.password).then(
-      user => {
-        const { from } = this.props.location.state || {
-          from: { pathname: "/" }
-        };
-        alert("all good");
-        this.props.history.push(from);
-      },
-      error => {
-        console.log(error);
-        alert("errooor");
-      }
-    );
-  }
-
-  render() {
-    return (
-      <form className="shadow container w-25 p-3 mt-3 " method="post">
-        <h2 className="text-center">Вход</h2>
-
-        <div className="panel panel-default">
-          <FormErrors formErrors={this.state.formErrors} />
-        </div>
-        <div
-          className={`form-group ${this.errorClass(
-            this.state.formErrors.username
-          )}`}
-        >
-          <label htmlFor="username">Логин</label>
-          <input
-            type="username"
-            required
-            className="form-control"
-            name="username"
-            placeholder="Логин"
-            value={this.state.username}
-            onChange={this.handleUserInput}
-          />
-        </div>
-        <div
-          className={`form-group ${this.errorClass(
-            this.state.formErrors.password
-          )}`}
-        >
-          <label htmlFor="password">Пароль</label>
-          <input
-            type="password"
-            className="form-control"
-            name="password"
-            placeholder="Пароль"
-            value={this.state.password}
-            onChange={this.handleUserInput}
-          />
-        </div>
-        <div className="form-group">
-          <label for="checkbox-field">
-            <input
-              type="checkbox"
-              name="checkbox"
-              id="checkbox-field"
-              onChange={e => this.handleChecked(e)}
-            />{" "}
-            Запомнить меня
-          </label>
-        </div>
-        <button
-          type="submit"
-          className="btn btn-warning"
-          onClick={e => {
-            this.PostSend();
-          }}
-        >
-          Войти
-        </button>
-        <div className="form-group">
-          <Link to="/SignUp ">Созать аккаунт</Link>
-        </div>
-      </form>
-    );
-  }
-}
+};
 export default Login;
