@@ -4,8 +4,9 @@ const topicModel = require('../../../db/models/message_models/topic-model.js');
 function createMessage(message, response) {
   messageModel.create({
     author_name: message.author_name,
-    topic_id: message.topic_id,
+    topic_id: message.topicId,
     date: message.creationDate,
+    text: message.text
   });
   response.status(200).send('Сообщение добавлено');
 }
@@ -48,8 +49,9 @@ function deleteMessage(messageToDeleteId, responce) {
   });
   responce.status(200);
 }
-function updateMessage(messageToUpdateId, responce) {
+function updateMessage(messageToUpdateId,messageText) {
   messageModel.update({
+    text:messageText,
     raw: true,
     where: {
       id: messageToUpdateId,
