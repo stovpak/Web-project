@@ -2,7 +2,7 @@
 const roles = require('../models/user_models/role-model');
 
 module.exports = {
-  up: () => roles.roles.sync({ force: true }),
+  up: () => roles.roles.sync({force: true}),
   down: (queryInterface) => dropTables(queryInterface),
 };
 function dropTables(queryInterface) {

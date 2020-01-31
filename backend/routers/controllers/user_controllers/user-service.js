@@ -3,9 +3,9 @@ const sequelize = require('sequelize');
 const userModel = require('../../../db/models/user_models/user-model.js');
 const passwordValidator = require('../../../core/validations/user_validation/password-validation.js');
 const emailValidation = require('../../../core/validations/user_validation/email-validation.js');
+const jwtService = require('../user_controllers/jwt-service.js');
 
 const sequelizeOperators = sequelize.Op;
-
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -22,12 +22,12 @@ function exists(login, email) {
   return userModel.user.findOne({
     raw: true,
     where: {
-      [sequelizeOperators.or]: [{ login }, { email }],
+      [sequelizeOperators.or]: [{login}, {email}],
     },
   });
 }
 function updatePersonalData(request, response) {
-  userModel.user.update({ first_name: request.body.firstName, second_name: request.body.secondName, birthday: request.body.birthday }, {
+  userModel.user.update({first_name: request.body.firstName, second_name: request.body.secondName, birthday: request.body.birthday}, {
     where: {
       login: request.body.login,
     },
@@ -35,12 +35,14 @@ function updatePersonalData(request, response) {
   response.status(200).send('Данные обновлены');
 }
 function changePassword(request, response) {
-  const { password } = request.body;
+  const autHeader = request.get('Token');
+  const login = jwtService.getLogin(autHeader);
+  const {password} = request.body;
   if (passwordValidator.validatePassword(password)) {
     const passwordToWrite = bcrypt.hashSync(password, salt);
-    userModel.user.update({ password: passwordToWrite }, {
+    userModel.user.update({password: passwordToWrite}, {
       where: {
-        login: request.body.login,
+        login,
       },
     });
     response.status(200).send('Данные обновлены');
@@ -49,11 +51,13 @@ function changePassword(request, response) {
   }
 }
 function changeEmail(request, response) {
-  const { email } = request.body;
+  const autHeader = request.get('Token');
+  const login = jwtService.getLogin(autHeader);
+  const {email} = request.body;
   if (emailValidation(email)) {
-    userModel.user.update({ email }, {
+    userModel.user.update({email}, {
       where: {
-        login: request.body.login,
+        login,
       },
     });
     response.status(200).send('Данные обновлены');

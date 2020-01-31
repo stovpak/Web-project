@@ -1,14 +1,13 @@
 const messageModel = require('../../../db/models/message_models/message-model.js');
 const topicModel = require('../../../db/models/message_models/topic-model.js');
 
-function createMessage(message, response) {
+function createMessage(message) {
   messageModel.create({
     author_name: message.author_name,
     topic_id: message.topicId,
     date: message.creationDate,
-    text: message.text
+    text: message.text,
   });
-  response.status(200).send('Сообщение добавлено');
 }
 function showOldMessages(topicId) {
   return messageModel.findAll({
@@ -40,24 +39,22 @@ function findTopic(topicId) {
     },
   });
 }
-function deleteMessage(messageToDeleteId, responce) {
+function deleteMessage(messageToDeleteId) {
   messageModel.destroy({
     raw: true,
     where: {
       id: messageToDeleteId,
     },
   });
-  responce.status(200);
 }
-function updateMessage(messageToUpdateId,messageText) {
+function updateMessage(messageToUpdateId, messageText) {
   messageModel.update({
-    text:messageText,
+    text: messageText,
     raw: true,
     where: {
       id: messageToUpdateId,
     },
   });
-  responce.status(200);
 }
 function deleteTopic(topicToDeleteId) {
   topicModel.destroy({

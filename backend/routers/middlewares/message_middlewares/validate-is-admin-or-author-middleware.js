@@ -6,7 +6,6 @@ const adminValidator = require('../../../core/validations/user_validation/is-adm
 const authorValidator = require('../../../core/validations/message_validation/is-author-validation.js');
 const messageService = require('../../controllers/message_controllers/message-service.js');
 
-
 router.use('/', (request, response, next) => {
   const autHeader = request.get('Token');
   const token = jwt.decode(autHeader);
