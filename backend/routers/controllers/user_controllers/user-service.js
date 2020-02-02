@@ -4,10 +4,20 @@ const userModel = require('../../../db/models/user_models/user-model.js');
 const passwordValidator = require('../../../core/validations/user_validation/password-validation.js');
 const emailValidation = require('../../../core/validations/user_validation/email-validation.js');
 const jwtService = require('../user_controllers/jwt-service.js');
+const nodemailer = require('nodemailer');
+const restorePasswordKeyModel = require('../../../db/models/user_models/restore-password-key-model.js');
+require('dotenv').config();
 
 const sequelizeOperators = sequelize.Op;
 
 const salt = bcrypt.genSaltSync(10);
+const transport = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_NAME,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+});
 
 function createAccount(registrationRequest, response) {
   const password = bcrypt.hashSync(registrationRequest.password, salt);
@@ -74,6 +84,54 @@ function findUser(userLogin) {
     },
   });
 }
+function restorePassword(request, response) {
+  if (passwordValidator(request.body.password)) {
+    userModel.user.update({password: request.body.password}, {
+      raw: true,
+      where: {
+        email: request.body.email,
+      },
+    });
+    deleteRestoreKey(request.body.email);
+    response.status(200).send('Пароль обновлен');
+  } else {
+    response.status(400).send('Неправильно введнный пароль');
+  }
+}
+function sendEmail(addressee, subject, text) {
+  const message = {
+    from: process.env.EMAIL_NAME, // Sender address
+    to: addressee, // List of recipients
+    subject: subject, // Subject line
+    text: text, // Plain text body
+  };
+  transport.sendMail(message, function(err, info) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(info);
+    }
+  });
+}
+function createRestoreKey(email) {
+  const key = bcrypt.hashSync(email, salt);
+  restorePasswordKeyModel.create({
+    key: key,
+    email: email,
+  });
+  return key;
+}
+function deleteRestoreKey(email) {
+  restorePasswordKeyModel.destroy({
+    where: {
+      email: email,
+    },
+  });
+}
+module.exports.deleteRestoreKey = deleteRestoreKey;
+module.exports.createRestoreKey = createRestoreKey;
+module.exports.sendEmail = sendEmail;
+module.exports.restorePassword = restorePassword;
 module.exports.createAccount = createAccount;
 module.exports.exists = exists;
 module.exports.updatePersonalData = updatePersonalData;

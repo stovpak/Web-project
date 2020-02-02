@@ -10,6 +10,9 @@ const userPersonalDataValidator = require('../middlewares/user_middlewares/valid
 const changePassword = require('./change-password.js');
 const changeEmail = require('./change-email.js');
 const authorizationMiddleware = require('../middlewares/user_middlewares/authorization-middleware.js');
+const restorePassword = require('./restore-password.js');
+const sendRestorePasswordCode = require('./send-restore-password-key.js');
+const restoreKeyMiddleware = require('../middlewares/user_middlewares/validate-is-restore-key-does-exist-middleware');
 
 router.use('/sign-in', signInValidator);
 
@@ -27,5 +30,9 @@ router.use('/profile/change-pass/send', authorizationMiddleware);
 router.use('/profile/change-pass/send', changePassword);
 router.use('/profile/change-email/send', authorizationMiddleware);
 router.use('/profile/change-email/send', changeEmail);
+
+router.use('/sign-in/forget-password', sendRestorePasswordCode);
+router.use('/sign-in/restore-password/send-key', restoreKeyMiddleware);
+router.use('/sign-in/restore-password/send-key', restorePassword);
 
 module.exports = router;

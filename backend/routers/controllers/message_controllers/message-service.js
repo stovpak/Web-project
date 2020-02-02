@@ -48,8 +48,7 @@ function deleteMessage(messageToDeleteId) {
   });
 }
 function updateMessage(messageToUpdateId, messageText) {
-  messageModel.update({
-    text: messageText,
+  messageModel.update({text: messageText}, {
     raw: true,
     where: {
       id: messageToUpdateId,
