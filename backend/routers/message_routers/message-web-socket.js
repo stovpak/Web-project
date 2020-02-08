@@ -21,7 +21,11 @@ server.on('connection', (ws) => {
   ws.on('message', (message) => {
     const messageType = JSON.parse(message).type;
     const autHeader = JSON.parse(message).token;
-    if (authorizationService(autHeader)) {
+    if (messageType === 'Connect') {
+      messageService.showOldMessages(JSON.parse(message).topicId).then((responseMessage) => {
+        responseToClient(JSON.stringify(responseMessage), server);
+      });
+    } else if (authorizationService(autHeader)) {
       const login = jwtService.getLogin(autHeader);
       const role = jwtService.getRole(autHeader);
       switch (messageType) {
@@ -29,11 +33,6 @@ server.on('connection', (ws) => {
           const messageObject = new Message(JSON.parse(message).topicId, login, JSON.parse(message).date, JSON.parse(message).text);
           messageService.createMessage(messageObject);
           responseToClient(message, server);
-          break;
-        case 'Connect':
-          messageService.showOldMessages(JSON.parse(message).topicId).then((responseMessage) => {
-            responseToClient(responseMessage, server);
-          });
           break;
         case 'Update':
           messageService.findMessage(JSON.parse(message).messageId).then((mgs) => {
@@ -55,6 +54,12 @@ server.on('connection', (ws) => {
             } else {
               responseToClient('Ошибка', server);
             }
+          });
+          break;
+        case 'Like':
+          messageService.likeTopic(JSON.parse(message).topicId, login);
+          messageService.countLikes(JSON.parse(message).topicId).then((topic) => {
+            responseToClient(topic.likes, server);
           });
           break;
         default:

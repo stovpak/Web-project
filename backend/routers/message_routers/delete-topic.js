@@ -6,6 +6,7 @@ const messageService = require('../controllers/message_controllers/message-servi
 router.delete('/', (request, response) => {
   const {topicId} = request.body;
   messageService.clearingTopic(topicId);
+  messageService.deleteLikes(topicId);
   messageService.deleteTopic(topicId);
   response.status(200);
 });

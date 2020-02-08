@@ -2,33 +2,20 @@ const dataConnection = require('../../user_db/data-connection.js');
 
 const {sequelizeConnection} = dataConnection;
 const sequrlizeType = sequelizeConnection.Sequelize;
-
-const topic = sequelizeConnection.define('topics', {
+const topicLike = sequelizeConnection.define('topic-likes', {
   id: {
     type: sequrlizeType.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
-  topic_name: {
+  topic_id: {
     type: sequrlizeType.STRING,
     allowNull: false,
   },
-  creator_name: {
+  user_login: {
     type: sequrlizeType.STRING,
     allowNull: false,
-  },
-  likes: {
-    type: sequrlizeType.INTEGER,
-    default: 0,
-  },
-  weekly_likes_counter: {
-    type: sequrlizeType.INTEGER,
-    default: 0,
-  },
-  monthly_likes_counter: {
-    type: sequrlizeType.INTEGER,
-    default: 0,
   },
 });
-module.exports = topic;
+module.exports = topicLike;

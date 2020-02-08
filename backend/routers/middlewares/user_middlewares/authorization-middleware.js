@@ -1,5 +1,5 @@
 const express = require('express');
-const authorizationService = require('../../controllers/user_controllers/authentification-service.js');
+const authorizationService = require('../../controllers/user_controllers/authorization-service.js');
 require('dotenv').config();
 
 const router = express.Router();
