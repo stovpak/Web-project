@@ -7,7 +7,8 @@ const validateIsAdminOrAuthor = require('../middlewares/message_middlewares/vali
 const createTopic = require('./create-topic.js');
 const authorizationMiddleware = require('../middlewares/user_middlewares/authorization-middleware.js');
 const likeTopic = require('../message_routers/like-topic.js');
-const messageService = require('../controllers/message_controllers/message-service.js');
+const topicLikeService = require('../controllers/message_controllers/topic-like-service.js');
+const userTopics = require('../message_routers/user-topics.js');
 
 router.use('/', showTopics);
 router.use('/create-topic', authorizationMiddleware);
@@ -17,8 +18,10 @@ router.use('/delete-topic', validateIsAdminOrAuthor);
 router.use('/delete-topic', deleteTopic);
 router.use('/like', authorizationMiddleware);
 router.use('/like', likeTopic);
+router.use('/my-topics', authorizationMiddleware);
+router.use('/my-topics', userTopics);
 
-messageService.setWeeklyInterval();
-messageService.setMonthlyInterval();
+topicLikeService.setWeeklyInterval();
+topicLikeService.setMonthlyInterval();
 
 module.exports = router;

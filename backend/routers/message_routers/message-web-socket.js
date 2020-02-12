@@ -4,6 +4,7 @@ const authorizationService = require('../controllers/user_controllers/authorizat
 const port = 8080;
 const server = new WebSocket.Server({port});
 const messageService = require('../controllers/message_controllers/message-service.js');
+const topicLikeService = require('../controllers/message_controllers/topic-like-service.js');
 const authorValidator = require('../../core/validations/message_validation/is-author-validation.js');
 const adminValidator = require('../../core/validations/user_validation/is-admin-validation.js');
 const Message = require('../../db/db_objects/message_db_objects/message.js');
@@ -57,8 +58,8 @@ server.on('connection', (ws) => {
           });
           break;
         case 'Like':
-          messageService.likeTopic(JSON.parse(message).topicId, login);
-          messageService.countLikes(JSON.parse(message).topicId).then((topic) => {
+          topicLikeService.likeTopic(JSON.parse(message).topicId, login);
+          topicLikeService.countLikes(JSON.parse(message).topicId).then((topic) => {
             responseToClient(topic.likes, server);
           });
           break;

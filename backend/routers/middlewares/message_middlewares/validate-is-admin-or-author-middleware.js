@@ -5,6 +5,7 @@ const router = express.Router();
 const adminValidator = require('../../../core/validations/user_validation/is-admin-validation.js');
 const authorValidator = require('../../../core/validations/message_validation/is-author-validation.js');
 const messageService = require('../../controllers/message_controllers/message-service.js');
+const topicService = require('../../controllers/message_controllers/topic-service.js');
 
 router.use('/', (request, response, next) => {
   const autHeader = request.get('Token');
@@ -21,7 +22,7 @@ router.use('/', (request, response, next) => {
       }
     });
   } else if (request.body.type === 'Topic') {
-    messageService.findTopic(request.body.topicId).then((Topic) => {
+    topicService.findTopic(request.body.topicId).then((Topic) => {
       if (authorValidator(login, Topic.creator_name)) {
         return next();
       }
