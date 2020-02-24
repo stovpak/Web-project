@@ -17,5 +17,13 @@ const topicLike = sequelizeConnection.define('topic-likes', {
     type: sequrlizeType.STRING,
     allowNull: false,
   },
+  is_weekly: {
+    type: sequrlizeType.BOOLEAN,
+    defaultValue: true,
+  },
+  is_monthly: {
+    type: sequrlizeType.BOOLEAN,
+    defaultValue: true,
+  },
 });
 module.exports = topicLike;

@@ -1,6 +1,7 @@
 const topicLikeModel = require('../../../db/models/message_models/topic-likes-model.js');
 const topicModel = require('../../../db/models/message_models/topic-model.js');
 const topicService = require('./topic-service.js');
+
 function findLikes(userLogin) {
   return topicLikeModel.findAll({
     where: {
@@ -10,25 +11,74 @@ function findLikes(userLogin) {
 }
 function countWeeklyLikes() {
   topicService.findAllTopics().then((topics) => {
-    for (i = 0; i < topics.length; i++) {
-      topicModel.increment('weekly_likes_counter', {by: -topics[i].likes,
+    for (let i=0; i<topics.length; i++) {
+      const topicId = topics[i].id;
+      topicLikeModel.findAll({
+        raw: true,
         where: {
           topic_id: topics[i].id,
+          is_weekly: true,
         },
+      }).then((Likes)=>{
+        if (Likes[0]) {
+          topicModel.update({weekly_likes_counter: Likes.length}, {
+            where: {
+              id: topicId,
+            },
+          });
+          for (let j=0; j<Likes.length; j++) {
+            topicLikeModel.update({is_weekly: false}, {
+              raw: true,
+              where: {
+                id: Likes[j].id,
+              },
+            });
+          }
+        } else {
+          topicModel.update({weekly_likes_counter: 0}, {
+            where: {
+              id: topicId,
+            },
+          });
+        }
       });
     }
   });
 }
 function countMonthlyLikes() {
   const date = new Date();
-  if (console.log( date.getDate() === 1)) {
-    topicService.findAllTopics().then((topics) =>{
-      for (i = 0; i < topics.length; i++) {
-        topicModel.increment('monthly_likes_counter', {
-          by: -topics[i].likes,
+  if (date.getDate() === 1) {
+    topicService.findAllTopics().then((topics) => {
+      for (let i=0; i<topics.length; i++) {
+        const topicId = topics[i].id;
+        topicLikeModel.findAll({
+          raw: true,
           where: {
             topic_id: topics[i].id,
+            is_monthly: true,
           },
+        }).then((Likes)=>{
+          if (Likes[0]) {
+            topicModel.update({monthly_likes_counter: Likes.length}, {
+              where: {
+                id: topicId,
+              },
+            });
+            for (let j=0; j<Likes.length; j++) {
+              topicLikeModel.update({is_monthly: false}, {
+                raw: true,
+                where: {
+                  id: Likes[j].id,
+                },
+              });
+            }
+          } else {
+            topicModel.update({weekly_likes_counter: 0}, {
+              where: {
+                id: topicId,
+              },
+            });
+          }
         });
       }
     });
@@ -62,7 +112,7 @@ function likeTopic(topicId, userLogin) {
         user_login: userLogin,
       });
       topicModel.increment('likes', {
-        by: 1,
+        by: +1,
         where: {
           id: topicId,
         },
