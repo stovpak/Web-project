@@ -20,15 +20,15 @@ const topic = sequelizeConnection.define('topics', {
   },
   likes: {
     type: sequrlizeType.INTEGER,
-    default: 0,
+    defaultValue: 0,
   },
   weekly_likes_counter: {
     type: sequrlizeType.INTEGER,
-    default: 0,
+    defaultValue: 0,
   },
   monthly_likes_counter: {
     type: sequrlizeType.INTEGER,
-    default: 0,
+    defaultValue: 0,
   },
 });
 module.exports = topic;

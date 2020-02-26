@@ -1,4 +1,5 @@
 const topicModel = require('../../../db/models/message_models/topic-model.js');
+const messageModel = require('../../../db/models/message_models/message-model');
 
 function createTopic(topic, response) {
   topicModel.create({
@@ -44,6 +45,26 @@ function findUserTopics(userLogin) {
     },
   });
 }
+function findTopicsOnPage(page) {
+  const limit = 10;
+  const offset = (page-1) * limit;
+  return topicModel.findAll({
+    offset,
+    limit,
+    raw: true,
+  });
+}
+function findTopTopics(type) {
+  const limit = 10;
+  return topicModel.findAll({
+    limit,
+    order: [[
+      type, 'DESC'],
+    ],
+  });
+}
+module.exports.findTopTopics = findTopTopics;
+module.exports.findTopicsOnPage = findTopicsOnPage;
 module.exports.findUserTopics = findUserTopics;
 module.exports.createTopic = createTopic;
 module.exports.findAllTopics = findAllTopics;

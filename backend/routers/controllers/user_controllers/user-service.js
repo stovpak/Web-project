@@ -37,7 +37,9 @@ function exists(login, email) {
   });
 }
 function updatePersonalData(request, response) {
-  userModel.user.update({first_name: request.body.firstName, second_name: request.body.secondName, birthday: request.body.birthday}, {
+  userModel.user.update({first_name: request.body.firstName,
+    second_name: request.body.secondName,
+    birthday: request.body.birthday}, {
     where: {
       login: request.body.login,
     },
@@ -100,10 +102,10 @@ function restorePassword(request, response) {
 }
 function sendEmail(addressee, subject, text) {
   const message = {
-    from: process.env.EMAIL_NAME, // Sender address
-    to: addressee, // List of recipients
-    subject: subject, // Subject line
-    text: text, // Plain text body
+    from: process.env.EMAIL_NAME,
+    to: addressee,
+    subject: subject,
+    text: text,
   };
   transport.sendMail(message, function(err, info) {
     if (err) {

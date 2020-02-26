@@ -10,11 +10,15 @@ const topicLike = sequelizeConnection.define('topic-likes', {
     allowNull: false,
   },
   topic_id: {
-    type: sequrlizeType.STRING,
+    type: sequrlizeType.INTEGER,
     allowNull: false,
   },
   user_login: {
     type: sequrlizeType.STRING,
+    allowNull: false,
+  },
+  date: {
+    type: sequrlizeType.DATE,
     allowNull: false,
   },
 });

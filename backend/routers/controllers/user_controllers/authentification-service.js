@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const userService = require('./user-service.js');
+const topicLikeService = require('../message_controllers/topic-like-service.js');
+
 require('dotenv').config();
 
 function signUp(request, response) {
@@ -24,7 +26,9 @@ function signIn(request, response) {
             if (res) {
               const responseStr = `${User.login} ${User.role_id.toString()}`;
               const token = jwt.sign(responseStr, process.env.JWT_KEY);
-              response.status(200).send(token);
+              topicLikeService.findLikes(User.login).then((likes) =>{
+                response.status(200).json({token: token, likes: likes});
+              });
             } else {
               response.status(400).send('Данные введены неправильно');
             }

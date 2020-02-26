@@ -9,8 +9,10 @@ const authorizationMiddleware = require('../middlewares/user_middlewares/authori
 const likeTopic = require('../message_routers/like-topic.js');
 const topicLikeService = require('../controllers/message_controllers/topic-like-service.js');
 const userTopics = require('../message_routers/user-topics.js');
+const showTopicTop = require('./show-topic-top');
 
 router.use('/', showTopics);
+router.use('/top', showTopicTop);
 router.use('/create-topic', authorizationMiddleware);
 router.use('/create-topic', createTopic);
 router.use('/delete-topic', authorizationMiddleware);
