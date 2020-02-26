@@ -10,7 +10,7 @@ const topicLike = sequelizeConnection.define('topic-likes', {
     allowNull: false,
   },
   topic_id: {
-    type: sequrlizeType.STRING,
+    type: sequrlizeType.INTEGER,
     allowNull: false,
   },
   user_login: {

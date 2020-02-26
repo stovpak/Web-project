@@ -24,8 +24,11 @@ function findMonthlyOrWeeklyTopicLikes(searchingType, searchingValue, topics, i)
     },
   });
 }
+function isLikesExist(Likes) {
+  return !!Likes[0];
+}
 function updateTopTopicLikes(Likes, topicId, type) {
-  if (Likes[0]) {
+  if (isLikesExist(Likes)) {
     topicModel.update({[type]: Likes.length}, {
       where: {
         id: topicId,
@@ -50,9 +53,12 @@ function countWeeklyLikes() {
     }
   });
 }
-function countMonthlyLikes() {
+function isThisFirstDayOfTheMonth() {
   const date = new Date();
-  if (date.getDate() === 1) {
+  return (date.getDate() === 1);
+}
+function countMonthlyLikes() {
+  if (isThisFirstDayOfTheMonth()) {
     const type = 'monthly_likes_counter';
     topicService.findAllTopics().then((topics) => {
       for (let i=0; i<topics.length; i++) {
