@@ -6,6 +6,13 @@ const sequelizeOperators = sequelize.Op;
 
 const moment = require('moment');
 
+function isFirstDayOfTheMonth() {
+  const date = new Date();
+  return (date.getDate() === 1);
+}
+function doesLikesExist(Likes) {
+  return !!Likes[0];
+}
 function findLikes(userLogin) {
   return topicLikeModel.findAll({
     where: {
@@ -24,11 +31,8 @@ function findMonthlyOrWeeklyTopicLikes(searchingType, searchingValue, topics, i)
     },
   });
 }
-function isLikesExist(Likes) {
-  return !!Likes[0];
-}
 function updateTopTopicLikes(Likes, topicId, type) {
-  if (isLikesExist(Likes)) {
+  if (doesLikesExist(Likes)) {
     topicModel.update({[type]: Likes.length}, {
       where: {
         id: topicId,
@@ -53,12 +57,8 @@ function countWeeklyLikes() {
     }
   });
 }
-function isThisFirstDayOfTheMonth() {
-  const date = new Date();
-  return (date.getDate() === 1);
-}
 function countMonthlyLikes() {
-  if (isThisFirstDayOfTheMonth()) {
+  if (isFirstDayOfTheMonth()) {
     const type = 'monthly_likes_counter';
     topicService.findAllTopics().then((topics) => {
       for (let i=0; i<topics.length; i++) {
@@ -71,18 +71,6 @@ function countMonthlyLikes() {
   } else {
     return;
   }
-}
-function setWeeklyInterval() {
-  setInterval(
-      () => countWeeklyLikes(),
-      604800000,
-  );
-}
-function setMonthlyInterval() {
-  setInterval(
-      () => countMonthlyLikes(),
-      86400000,
-  );
 }
 function likeTopic(topicId, userLogin) {
   topicLikeModel.findOne({
@@ -136,6 +124,18 @@ function deleteLikes(topicId) {
       topic_id: topicId,
     },
   });
+}
+function setWeeklyInterval() {
+  setInterval(
+      () => countWeeklyLikes(),
+      604800000,
+  );
+}
+function setMonthlyInterval() {
+  setInterval(
+      () => countMonthlyLikes(),
+      86400000,
+  );
 }
 module.exports.setMonthlyInterval = setMonthlyInterval;
 module.exports.setWeeklyInterval = setWeeklyInterval;
