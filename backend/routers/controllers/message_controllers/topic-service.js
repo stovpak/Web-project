@@ -1,4 +1,5 @@
 const topicModel = require('../../../db/models/message_models/topic-model.js');
+const messageModel = require('../../../db/models/message_models/message-model');
 
 function createTopic(topic, response) {
   topicModel.create({
