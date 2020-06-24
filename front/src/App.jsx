@@ -1,72 +1,36 @@
-import React from "react";
-import "./App.css";
-import Login from "./components/login/login";
-import { HashRouter as Router, Route, Link, NavLink } from "react-router-dom";
-import Register from "./components/login/register";
-import HomePage from "./components/homePage/HomePage";
-import { Role } from "./components/helpers/role";
-import { authenticationServise } from "./components/helpers/athentication";
-import PrivateRoute from "./components/components/PrivateRouter";
-import AdminPage from "./components/adminPage/AdminPage";
+import React,{Component}from "react";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+    Link
+} from "react-router-dom";
+import SignIn from "./components/Sign-In";
+import SignUp from "./components/signUp";
+import MainPage from "./components/Main-Page/HomePage";
+import Cookies from "universal-cookie";
+import CreateTopic from "./components/topics/createTopic";
+import Profile from "./components/userProfile/Profile";
+import ChangeEmail from "./components/changeData/ChangeEmail";
+const cookies = new Cookies();
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentUser: null,
-      isAdmin: false
-    };
-  }
-  componentDidMount() {
-    authenticationServise.currentUser.subscribe(x =>
-      this.setState({
-        currentUser: x,
-        isAdmin: x && x.role === Role.Admin
-      })
-    );
-  }
-  logout() {
-    authenticationServise.logout();
-    window.history.push("/login");
-  }
-
-  render() {
-    const { currentUser, isAdmin } = this.state;
-    return (
-      <Router history={window.history}>
-        <div>
-          {currentUser && (
-            <nav>
-              <div>
-                <Link to="/home" className="nav-item nav-link">
-                  Home
-                </Link>
-                {isAdmin && (
-                  <Link to="/admin" className="nav-item nav-link">
-                    Admin
-                  </Link>
-                )}
-                <a onClick={this.logout} className="nav-item nav-link">
-                  Logout
-                </a>
-              </div>
-            </nav>
-          )}
-            <div>
-            <Route exact path="/" component={Login}></Route>
-            <Route path="/sign-in" component={Register}></Route>
-          <Route path = '/home-page' component={HomePage}></Route>
-          </div>
-        </div>
-      </Router>
-    );
-  }
+export default class App extends Component{
+    render() {
+        const isAuth=cookies.get('sessionToken');
+        return(
+            <Router >
+                <Switch>
+                    {/*<Route exact path="/" component={() => isAuth?<Redirect to={"/homePage"}/>:<Redirect to={"/sign-in"}/>}/>*/}
+                <Route path={"/sign-up"} component={SignUp}/>
+                <Route path={"/sign-in"} component={SignIn}/>
+                    <Route path={"/topic"} component={MainPage}/>
+                    <Route path={'/create-topic'} component={CreateTopic}/>
+                    <Route path={'/create-topic'} component={() => isAuth?<Redirect to={"/create"}/>:<Redirect to={"/sign-in"}/>}/>
+                    <Route exact  path={"/profile"} component={Profile} />
+                    <Route path={"/profile/change-email"} component={ChangeEmail}/>
+                </Switch>
+            </Router>
+        )
+    }
 }
-
-export default App;
-/*<PrivateRoute exact path="/homePage" component={HomePage} />
-            <PrivateRoute
-              path="/admin"
-              roles={[Role.Admin]}
-              component={AdminPage}
-            />*/
