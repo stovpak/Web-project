@@ -16,19 +16,31 @@
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "expressapp": "^1.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
     "mysql": "^2.17.1",
     "mysql2": "^1.7.0",
+    "nodemailer": "^6.4.2",
     "password-validator": "^5.0.3",
     "sequelize": "^5.21.3",
+    "sequelize-auto-migrations": "^1.0.3",
+    "sequelize-cli": "^5.5.1",
     "sequelizeConnection": "^5.21.2",
-    "tedious": "^6.4.0"
+    "tedious": "^6.4.0",
+    "ws": "^7.2.1"
   },
   "devDependencies": {
+    "babel-register": "^6.26.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "eslint": "^6.7.2",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "mocha": "^6.2.2"
   }
 }

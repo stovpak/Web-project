@@ -1,0 +1,25 @@
+.count-likes{font-size: 19px;
+padding-top: 0.5%;}
+.btn-likes{
+    text-decoration: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.active{
+    color: red;
+}
+.onclick-heart{
+    color: #fff;
+    background: #000;
+    padding: 1.2rem 2rem;
+    cursor: pointer;
+    user-select: none;
+    border: none;
+    outline: none;
+    transition: background 9999999s;
+}
+.onclick-heart:active{
+    background: red;
+    transition: background 0s;
+}
