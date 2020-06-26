@@ -12,6 +12,7 @@ import MainPage from "./components/Main-Page/HomePage";
 import Cookies from "universal-cookie";
 import CreateTopic from "./components/topics/createTopic";
 import Profile from "./components/userProfile/Profile";
+import ChangeEmail from "./components/changeData/ChangeEmail";
 const cookies = new Cookies();
 
 export default class App extends Component{
@@ -26,7 +27,8 @@ export default class App extends Component{
                     <Route path={"/topic"} component={MainPage}/>
                     <Route path={'/create-topic'} component={CreateTopic}/>
                     <Route path={'/create-topic'} component={() => isAuth?<Redirect to={"/create"}/>:<Redirect to={"/sign-in"}/>}/>
-                    <Route path={"/profile"} component={Profile}/>
+                    <Route exact  path={"/profile"} component={Profile} />
+                    <Route path={"/profile/change-email"} component={ChangeEmail}/>
                 </Switch>
             </Router>
         )
