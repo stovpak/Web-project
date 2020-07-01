@@ -5,6 +5,9 @@ import axios from "axios";
 import "./home-page.css";
 import { withRouter } from "react-router-dom";
 import Paginate from "../helpers/paginate";
+import { getData } from "../helpers/dataSave";
+import { urlTopics } from "../helpers/baseAPI";
+import { getJwt } from "../helpers/getJwt";
 const cookies = new Cookies();
 
 class HomePage extends Component {
@@ -21,35 +24,44 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
-    cookies.get("sessionToken")
+    getJwt()
       ? this.setState({ isAuth: !this.state.isAuth })
       : this.setState({ isAuth: this.state.isAuth });
-    axios
-      .get("http://localhost:3001/topics/" + this.state.page, {
-        Token: cookies.get("sessionToken")
-      })
+    getData(urlTopics, getJwt)
       .then(res => {
-        this.setState({ topicList: res.data ,totalResult:res.data.length });
+        this.setState({ topicList: res.data, totalResult: res.data.length });
       })
       .catch(err => console.log(err));
+    /*   axios
+        .get("http://localhost:3001/topics/" + this.state.page, {
+          Token: cookies.get("sessionToken")
+        })
+        .then(res => {
+          this.setState({ topicList: res.data ,totalResult:res.data.length });
+        })
+        .catch(err => console.log(err));*/
   }
-  nextPage = (value) => {
+  nextPage = value => {
     axios
       .get("http://localhost:3001/topics/" + value, {
         Token: cookies.get("sessionToken")
       })
       .then(res => {
-          if(this.state.totalResult<10){
-              this.setState({ topicList: res.data, page: value });
-              console.log(this.state.page, "page");
-          }
-          else{
-        this.setState({ topicList: res.data, page: value,totalResult:res.data.length });}
+        if (this.state.totalResult < 10) {
+          this.setState({ topicList: res.data, page: value });
+          console.log(this.state.page, "page");
+        } else {
+          this.setState({
+            topicList: res.data,
+            page: value,
+            totalResult: res.data.length
+          });
+        }
       })
       .catch(err => console.log(err));
   };
   render() {
-    const { topicList, isAuth, isActiveButton, page,totalResult } = this.state;
+    const { topicList, isAuth, isActiveButton, page, totalResult } = this.state;
     let renderel = topicList.map(topic => {
       return (
         <div className="media">
@@ -91,7 +103,11 @@ class HomePage extends Component {
             <div className="col-md-8 order-md-1 cc_cursor">{renderel}</div>
           </div>
         </div>
-          <Paginate nextPage={this.nextPage} pages={page+1}  currentPage={page}/>
+        <Paginate
+          nextPage={this.nextPage}
+          pages={page + 1}
+          currentPage={page}
+        />
       </div>
     );
   }

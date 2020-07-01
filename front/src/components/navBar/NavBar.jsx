@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import UserNameLabel from "../UserName/UserNameLabel";
+import UserNameLabel from "../userName/UserNameLabel";
 import "./navBar.css";
 import Cookies from "universal-cookie";
-import { reditectUrl } from "../helpers/baseAPI";
+import { redirectToUrl } from "../helpers/baseAPI";
 const cookies = new Cookies();
 export default class NavBar extends Component {
   state = {
@@ -13,31 +13,35 @@ export default class NavBar extends Component {
     let name = cookies.get("username");
     this.setState({ username: name });
   };
-  onLogOut = () => {
+  onClick = () => {
     cookies.remove("username");
     cookies.remove("sessionToken");
-    window.location.replace("/sign-in");
+    redirectToUrl("/sign-in");
   };
   onUserInfo = e => {
     e.preventDefault();
-    reditectUrl("profile");
+    redirectToUrl("profile");
   };
   onClickPage = e => {
     e.preventDefault();
-    reditectUrl("sign-in");
+    redirectToUrl("sign-in");
   };
   addTopic = e => {
     e.preventDefault();
-    if (cookies.get("username") == null) {
-      reditectUrl("sign-in");
+    if (
+      cookies.get("username") === null ||
+      cookies.get("username") === undefined
+    ) {
+      redirectToUrl("sign-in");
     } else {
-      reditectUrl("create-topic");
+      redirectToUrl("create-topic");
     }
   };
 
   render() {
     const { name } = this.state;
     let userName;
+
     if (cookies.get("sessionToken")) {
       userName = (
         <div className="input-group mb-3">
@@ -58,7 +62,7 @@ export default class NavBar extends Component {
               Профиль
             </a>
             <div role="separator" className="dropdown-divider"></div>
-            <a className="dropdown-item" onClick={this.onLogOut}>
+            <a className="dropdown-item" onClick={this.onClick}>
               Выход
             </a>
           </div>
@@ -116,6 +120,10 @@ export default class NavBar extends Component {
                 Добавить тему
               </button>
               {userName}
+
+              {/*<button name="logOut" className="ml-auto btn btn-warning " onClick={this.onClick}>
+                Выход
+              </button>*/}
             </form>
           </div>
         </nav>
