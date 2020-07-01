@@ -4,7 +4,7 @@ import "./signin-style.css";
 import { setData } from "../helpers/dataSave";
 import Cookies from "universal-cookie";
 import { validateForm, validatePassword } from "../validateCheck/validateForm";
-import { urlUserApi, reditectUrl } from "../helpers/baseAPI";
+import { urlUserApi, redirectToUrl } from "../helpers/baseAPI";
 
 const cookies = new Cookies();
 
@@ -36,7 +36,7 @@ export default class SignIn extends Component {
   };
   onClickSignUP = e => {
     e.preventDefault();
-    reditectUrl("sign-up");
+    redirectToUrl("sign-up");
   };
   onClick = e => {
     e.preventDefault();
@@ -56,7 +56,7 @@ export default class SignIn extends Component {
           cookies.set("username", this.state.login);
           this.setState({ userToken: res.data.token });
           cookies.set("sessionToken", this.state.userToken);
-          reditectUrl("topic");
+          redirectToUrl("topic");
         })
         .catch(error => {
           if (error.response.status === 400) {

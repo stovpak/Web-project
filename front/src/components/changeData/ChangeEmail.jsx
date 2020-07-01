@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import { getJwt } from "../helpers/getJwt";
-import NavBar from "../navBar";
+import NavBar from "../navBar/NavBar";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const token=getJwt();

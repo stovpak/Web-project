@@ -7,7 +7,10 @@ import {
   validateEmail,
   validateForm,
   validatePassword
-} from "../ValidateCheck/validateForm";
+} from "../validateCheck/validateForm";
+import { postData } from "../helpers/httpClient";
+import { redirectToUrl, urlUserApi } from "../helpers/baseAPI";
+import ErrorIndicator from "../errorIndicator/ErrorIndicator";
 const cookies = new Cookies();
 export default class SignUp extends Component {
   state = {
@@ -20,57 +23,67 @@ export default class SignUp extends Component {
     validateEmail: null,
     alertMessage: null
   };
+  onError=()=><ErrorIndicator/>;
   handleChange = e => {
     e.preventDefault();
     const { name, value } = e.target;
     this.setState({ [name]: value, group: e.target.value });
-    console.log(name, value);
     switch (name) {
       case "login": {
         validateForm(value);
         this.setState({ validateLogin: validateForm(value) });
-        console.log("login ", value);
         break;
       }
       case "password": {
         validatePassword(value);
         this.setState({ validatePassword: validatePassword(value) });
-        console.log("password ", value);
         break;
       }
       case "email": {
         validateEmail(value);
         this.setState({ validateEmail: validateEmail(value) });
-        console.log("email ", value);
         break;
       }
     }
   };
-  /*handleChecked = e => {
-    this.setState({
-      isAdmin: !this.state.isAdmin
-    });
-    console.log(this.state.isAdmin);
-    console.log(this.state.isAdmin ? 1 : 2);
-  };*/
+
   onClick = e => {
     e.preventDefault();
     if (
-      this.state.validateLogin === null ||
-      this.state.validatePassword === null ||
-      this.state.validateLogin === undefined ||
-      this.state.validatePassword === undefined ||
-      this.state.validateEmail === undefined ||
-      this.state.validateEmail === null
+      this.state.validateLogin == null ||
+      this.state.validatePassword == null ||
+      this.state.validateEmail == null
     ) {
       this.setState({ alertMessage: "Все поля должны быть заполнены" });
     } else {
+     /* postData(urlUserApi("sign-up"), {
+        login: this.state.login,
+        email: this.state.email,
+        password: this.state.password
+      })
+        .then(res => {
+          cookies.set("username", this.state.login);
+          redirectToUrl("topic");
+        })
+        .catch(error => {
+          if (error.response.status === 409) {
+            this.setState({
+              alertMessage: "Такой пользователь уже зарегистрирован"
+            });
+          } else if (error.response.status === 400) {
+            this.setState({
+              alertMessage: "Проверьте правильность введенных данных"
+            });
+          } else {
+            this.onError()
+
+          }
+        });*/
       axios
         .post("http://localhost:3001/user/sign-up", {
           login: this.state.login,
           email: this.state.email,
-          password: this.state.password,
-          role_id: this.state.isAdmin
+          password: this.state.password
         })
         .then(res => {
           cookies.set("username", this.state.login);

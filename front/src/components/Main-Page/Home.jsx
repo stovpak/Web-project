@@ -5,50 +5,41 @@ import axios from "axios";
 import "./home-page.css";
 import { withRouter } from "react-router-dom";
 import Paginate from "../helpers/paginate";
-import ErrorIndicator from "../errorIndicator/ErrorIndicator";
-import Loading from "../loading/Loading";
+import { getData } from "../helpers/dataSave";
+import { urlTopics } from "../helpers/baseAPI";
+import { getJwt } from "../helpers/getJwt";
 const cookies = new Cookies();
 
-class Home extends Component {
+class HomePage extends Component {
   state = {
-    topics: [],
+    topicList: [],
     page: 1,
     totalResult: 0,
     isAuth: false,
-    isActiveButton: false,
-    error: false,
-    loading: true
+    isActiveButton: false
   };
   onClickLike = e => {
     e.preventDefault();
     this.setState({ isActiveButton: true });
   };
-  onError = () => {
-    this.setState({ error: true, loading: false });
-  };
+
   componentDidMount() {
-    cookies.get("sessionToken")
+    getJwt()
       ? this.setState({ isAuth: !this.state.isAuth })
       : this.setState({ isAuth: this.state.isAuth });
-    axios
-      .get("http://localhost:3001/topics/" + this.state.page, {
-        Token: cookies.get("sessionToken")
-      })
+    getData(urlTopics, getJwt)
       .then(res => {
-        this.setState({
-          topics: res.data,
-          totalResult: res.data.length,
-          loading: false,
-          error: false
-        });
+        this.setState({ topicList: res.data, totalResult: res.data.length });
       })
-      .catch(err => {
-        if (!err.request.status) {
-          this.onError(err);
-        } else {
-          console.log(err);
-        }
-      });
+      .catch(err => console.log(err));
+    /*   axios
+        .get("http://localhost:3001/topics/" + this.state.page, {
+          Token: cookies.get("sessionToken")
+        })
+        .then(res => {
+          this.setState({ topicList: res.data ,totalResult:res.data.length });
+        })
+        .catch(err => console.log(err));*/
   }
   nextPage = value => {
     axios
@@ -57,39 +48,21 @@ class Home extends Component {
       })
       .then(res => {
         if (this.state.totalResult < 10) {
-          this.setState({ topics: res.data, page: value });
+          this.setState({ topicList: res.data, page: value });
           console.log(this.state.page, "page");
         } else {
           this.setState({
-            topics: res.data,
+            topicList: res.data,
             page: value,
             totalResult: res.data.length
           });
         }
       })
-      .catch(err => {
-        this.onError(err);
-      });
+      .catch(err => console.log(err));
   };
-
   render() {
-    const { topics, page, error, loading } = this.state;
-    console.log(error,"error")
-    const hasData = !(loading || error);
-    if (loading) {
-      return (
-        <div>
-          <NavBar />
-          <Loading />
-        </div>
-      );
-    }
-    const errorMessage = error ? <ErrorIndicator /> : null;
-    const content = hasData ? (
-      <Paginate nextPage={this.nextPage} pages={page + 1} currentPage={page} />
-    ) : null;
-
-    let renderel = topics.map(topic => {
+    const { topicList, isAuth, isActiveButton, page, totalResult } = this.state;
+    let renderel = topicList.map(topic => {
       return (
         <div className="media">
           <div className="media-body card">
@@ -100,7 +73,10 @@ class Home extends Component {
                 <button className="float-right btn-likes">
                   <svg
                     className=" bi-heart float-right"
+                    width="0.5em"
+                    height="1em"
                     viewBox="0 0 16 16"
+                    fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
@@ -127,13 +103,15 @@ class Home extends Component {
             <div className="col-md-8 order-md-1 cc_cursor">{renderel}</div>
           </div>
         </div>
-        {Loading}
-        {errorMessage}
-        {content}
+        <Paginate
+          nextPage={this.nextPage}
+          pages={page + 1}
+          currentPage={page}
+        />
       </div>
     );
   }
 }
-export default withRouter(Home);
+export default withRouter(HomePage);
 
 

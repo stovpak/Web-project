@@ -6,9 +6,9 @@ import {
     Redirect,
     Link
 } from "react-router-dom";
-import SignIn from "./components/Sign-In";
-import SignUp from "./components/signUp";
-import MainPage from "./components/Main-Page/HomePage";
+import SignIn from "./components/signIn/SignIn";
+import SignUp from "./components/signUp/SignUp";
+import MainPage from "./components/Main-Page/Home";
 import Cookies from "universal-cookie";
 import CreateTopic from "./components/topics/createTopic";
 import Profile from "./components/userProfile/Profile";
@@ -26,7 +26,6 @@ export default class App extends Component{
                 <Route path={"/sign-in"} component={SignIn}/>
                     <Route path={"/topic"} component={MainPage}/>
                     <Route path={'/create-topic'} component={CreateTopic}/>
-                    <Route path={'/create-topic'} component={() => isAuth?<Redirect to={"/create"}/>:<Redirect to={"/sign-in"}/>}/>
                     <Route exact  path={"/profile"} component={Profile} />
                     <Route path={"/profile/change-email"} component={ChangeEmail}/>
                 </Switch>

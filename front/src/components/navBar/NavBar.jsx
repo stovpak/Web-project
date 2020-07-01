@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import UserNameLabel from "../userName/UserNameLabel";
 import "./navBar.css";
 import Cookies from "universal-cookie";
+import { redirectToUrl } from "../helpers/baseAPI";
 const cookies = new Cookies();
 export default class NavBar extends Component {
   state = {
@@ -15,55 +16,64 @@ export default class NavBar extends Component {
   onClick = () => {
     cookies.remove("username");
     cookies.remove("sessionToken");
-    window.location.replace('/sign-in')
-    
+    redirectToUrl("/sign-in");
   };
-  onUserInfo=(e)=>{
+  onUserInfo = e => {
     e.preventDefault();
-    window.location.href='http://localhost:3000/profile';
-  }
-  onClickPage=(e)=>{
+    redirectToUrl("profile");
+  };
+  onClickPage = e => {
     e.preventDefault();
-    window.location.href='http://localhost:3000/sign-in';
-  }
-  addTopic=(e)=>{
+    redirectToUrl("sign-in");
+  };
+  addTopic = e => {
     e.preventDefault();
-    if(cookies.get('username')===null ||cookies.get('username')===undefined){
-      window.location.href='http://localhost:3000/sign-in'
-    }else{
-    window.location.href='http://localhost:3000/create-topic'}}
-  
+    if (
+      cookies.get("username") === null ||
+      cookies.get("username") === undefined
+    ) {
+      redirectToUrl("sign-in");
+    } else {
+      redirectToUrl("create-topic");
+    }
+  };
 
   render() {
-    const {name}=this.state;
+    const { name } = this.state;
     let userName;
-    
-    if(cookies.get("sessionToken")){
-      userName=<div className="input-group mb-3">
-        <button
+
+    if (cookies.get("sessionToken")) {
+      userName = (
+        <div className="input-group mb-3">
+          <button
             className="btn btn-outline-secondary dropdown-toggle"
             type="button"
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
-        >
-          <UserNameLabel
+          >
+            <UserNameLabel
               name={this.state.username}
               className="form-control"
-          />
-        </button>
-        <div className="dropdown-menu">
-          <a className="dropdown-item" onClick={this.onUserInfo}>
-            Профиль
-          </a>
-          <div role="separator" className="dropdown-divider"></div>
-          <a className="dropdown-item" onClick={this.onClick}>
-            Выход
-          </a>
+            />
+          </button>
+          <div className="dropdown-menu">
+            <a className="dropdown-item" onClick={this.onUserInfo}>
+              Профиль
+            </a>
+            <div role="separator" className="dropdown-divider"></div>
+            <a className="dropdown-item" onClick={this.onClick}>
+              Выход
+            </a>
+          </div>
         </div>
-      </div>
-    }else {
-      userName=<button className="btn btn-warning m-1" onClick={this.onClickPage}>Войти</button>
+      );
+    } else {
+      userName = (
+        <button className="btn btn-warning m-1" onClick={this.onClickPage}>
+          Войти
+        </button>
+      );
     }
     return (
       <div>
@@ -102,11 +112,15 @@ export default class NavBar extends Component {
                   Поиск
                 </button>
               </div>
-              <button name="addTopic" className="ml-auto btn btn-warning m-50" onClick={this.addTopic}>
+              <button
+                name="addTopic"
+                className="ml-auto btn btn-warning m-50"
+                onClick={this.addTopic}
+              >
                 Добавить тему
               </button>
               {userName}
-              
+
               {/*<button name="logOut" className="ml-auto btn btn-warning " onClick={this.onClick}>
                 Выход
               </button>*/}
