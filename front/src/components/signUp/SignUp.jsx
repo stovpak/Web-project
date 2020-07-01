@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "../Sign-Up/signup-style.css";
+import ".//signup-style.css";
 import Cookies from "universal-cookie";
 import {
   validateEmail,
   validateForm,
   validatePassword
-} from "../ValidateCheck/validateForm";
+} from "../validateCheck/validateForm";
+import { reditectUrl, urlApi, urlUserApi } from "../helpers/baseAPI";
+
 const cookies = new Cookies();
 export default class SignUp extends Component {
   state = {
@@ -46,27 +48,18 @@ export default class SignUp extends Component {
       }
     }
   };
-  /*handleChecked = e => {
-    this.setState({
-      isAdmin: !this.state.isAdmin
-    });
-    console.log(this.state.isAdmin);
-    console.log(this.state.isAdmin ? 1 : 2);
-  };*/
+
   onClick = e => {
     e.preventDefault();
     if (
-      this.state.validateLogin === null ||
-      this.state.validatePassword === null ||
-      this.state.validateLogin === undefined ||
-      this.state.validatePassword === undefined ||
-      this.state.validateEmail === undefined ||
-      this.state.validateEmail === null
+      this.state.validateLogin == null ||
+      this.state.validatePassword == null ||
+      this.state.validateEmail == null
     ) {
       this.setState({ alertMessage: "Все поля должны быть заполнены" });
     } else {
       axios
-        .post("http://localhost:3001/user/sign-up", {
+        .post(urlUserApi("/sign-up"), {
           login: this.state.login,
           email: this.state.email,
           password: this.state.password,
@@ -74,8 +67,9 @@ export default class SignUp extends Component {
         })
         .then(res => {
           cookies.set("username", this.state.login);
+          cookies.set("sessionToken", this.state.userToken);
           console.log(res);
-          window.location.href = "http://localhost:3000/topic";
+          reditectUrl("topic");
           this.props.history.push();
         })
         .catch(error => {
@@ -196,14 +190,14 @@ export default class SignUp extends Component {
                   <p className={validateClassForPassword}>{validMessagePass}</p>
                 </div>
                 {/*
-                <div className="form-check mb-2">
+                <div className='form-check mb-2'>
                   <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="autoSizingCheck"
+                    className='form-check-input'
+                    type='checkbox'
+                    id='autoSizingCheck'
                     onChange={this.handleChecked}
                   />
-                  <label className="form-check-label" htmlFor="autoSizingCheck">
+                  <label className='form-check-label' htmlFor='autoSizingCheck'>
                     Зарегистрироваться как администратор
                   </label>
                 </div>
@@ -219,7 +213,7 @@ export default class SignUp extends Component {
                   <input type="reset" className="btn btn-light mb-2 m-1" />
                   <button type="button" className="btn btn-light mb-2 m-1 ">
                     <a
-                      href="http://localhost:3001/sign-in"
+                      href="http://localhost:3001/user/sign-up"
                       className="text-decoration-none text-reset m-1"
                     >
                       Я уже зарегистрирован

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from "axios";
 import { getJwt } from "../helpers/getJwt";
-import NavBar from "../navBar";
+import NavBar from "../navBar/NavBar";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
-const token=getJwt();
+const token = getJwt();
 class ChangeEmail extends Component {
   state = {
     message: "",
@@ -19,18 +19,21 @@ class ChangeEmail extends Component {
 
   onClick = e => {
     e.preventDefault();
-      console.log("меняажали");
-      axios.post(
-          "http://localhost:3001/user/profile/change-email/send", {
-          "email": this.state.email},
-         { headers:{Token:token}}
-         ).then(res => {
-          console.log("send ddata")
-          //this.setState({message:res.request.data});
-          console.log(res.request.data, " hey, i'm here");
+    axios
+      .post(
+        "http://localhost:3001/user/profile/change-email/send",
+        {
+          email: this.state.email
+        },
+        { headers: { Token: token } }
+      )
+      .then(res => {
+        console.log("send ddata");
+        //this.setState({message:res.request.data});
       })
-          .catch(err => console.log(err));
-      console.log("меняажали2")}
+      .catch(err => console.log(err));
+    console.log("меняажали2");
+  };
 
   render() {
     console.log(this.state.email);
@@ -50,7 +53,9 @@ class ChangeEmail extends Component {
                 onChange={this.onChange}
               ></input>
             </li>
-            <button type={"submit"} onClick={this.onClick}>send</button>
+            <button type={"submit"} onClick={this.onClick}>
+              send
+            </button>
           </ul>
         </div>
       </div>

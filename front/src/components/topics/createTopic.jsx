@@ -1,36 +1,48 @@
 import React, { Component } from "react";
-import NavBar from "../navBar";
+import NavBar from "../navBar/NavBar";
 import Cookies from "universal-cookie";
 import axios from "axios";
 
-import {getJwt} from "../helpers/getJwt";
-const cookies= new Cookies();
+import { getJwt } from "../helpers/getJwt";
+import { urlTopics } from "../helpers/baseAPI";
+
+const cookies = new Cookies();
 export default class CreateTopic extends Component {
   state = {
     topicTheme: "",
     content: "",
-    username:"",
+    username: "",
+    error: false
   };
+
   onChangeInput = e => {
     const name = e.target.name;
     const value = e.target.value;
     this.setState({ [name]: value });
   };
-onSendTopic=(e)=>{
-  const token=getJwt();
-  e.preventDefault();
-  axios.post('http://localhost:3001/topics/create-topic/',{
-    "topicName": this.state.topicTheme,
-    "login":this.state.username,
-  }, {headers: {Token: token }}).then(res=>{
-    console.log(getJwt)
-    return(
-        <div>
-          <h2>Тема успешно опубликована!</h2>
-        </div>
-    )
-  }).catch(err=>{console.log(err)})
-}
+  onSendTopic = e => {
+    let message;
+
+    const token = getJwt();
+    e.preventDefault();
+    axios
+      .post(
+        urlTopics("create-topic/"),
+        {
+          topicName: this.state.topicTheme,
+          login: this.state.username
+        },
+        { headers: { Token: token } }
+      )
+      .then(res => {
+        message = (
+          <div>
+            <h2>Тема успешно опубликована!</h2>
+          </div>
+        );
+      })
+      .catch(err => {});
+  };
 
   render() {
     return (
@@ -54,18 +66,20 @@ onSendTopic=(e)=>{
               </div>
               <div className="form-group green-border-focus ">
                 <label htmlFor="exampleFormControlTextarea5">Описание</label>
-                    <textarea
-                        className="form-control"
-                        id="exampleFormControlTextarea5"
-                        rows="10"
-                        cols="150"
-                        name="content"
-                        onChange={this.onChangeInput}
-                    ></textarea>
+                <textarea
+                  className="form-control"
+                  id="exampleFormControlTextarea5"
+                  rows="10"
+                  cols="150"
+                  name="content"
+                  onChange={this.onChangeInput}
+                ></textarea>
               </div>
             </div>
           </form>
-          <button className={"btn btn-primary"} onClick={this.onSendTopic}>Создать</button>
+          <button className={"btn btn-primary"} onClick={this.onSendTopic}>
+            Создать
+          </button>
         </div>
       </div>
     );
