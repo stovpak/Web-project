@@ -11,6 +11,7 @@ export default class NavBar extends Component {
 
   componentDidMount = () => {
     let name = cookies.get("username");
+    console.log(name, "cookie");
     this.setState({ username: name });
   };
   onClick = () => {
@@ -39,8 +40,9 @@ export default class NavBar extends Component {
   };
 
   render() {
-    const { name } = this.state;
+    const { username } = this.state;
     let userName;
+
 
     if (cookies.get("sessionToken")) {
       userName = (
@@ -60,6 +62,9 @@ export default class NavBar extends Component {
           <div className="dropdown-menu">
             <a className="dropdown-item" onClick={this.onUserInfo}>
               Профиль
+            </a>
+            <a className="dropdown-item" onClick={this.userTopic}>
+              Мои темы
             </a>
             <div role="separator" className="dropdown-divider"></div>
             <a className="dropdown-item" onClick={this.onClick}>

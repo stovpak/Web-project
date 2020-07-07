@@ -8,22 +8,21 @@ import {
   validateForm,
   validatePassword
 } from "../validateCheck/validateForm";
-import { postData } from "../helpers/httpClient";
+import userApi from "../helpers/authApi";
 import { redirectToUrl, urlUserApi } from "../helpers/baseAPI";
 import ErrorIndicator from "../errorIndicator/ErrorIndicator";
+import {AuthRequest, setCookiesName, setSession, SignUpRequest} from "../helpers/userService";
 const cookies = new Cookies();
 export default class SignUp extends Component {
   state = {
-    login: "",
-    password: "",
-    email: "",
+    user: { login: "", password: "", email: "" },
     isAdmin: false,
     validateLogin: null,
     validatePassword: null,
     validateEmail: null,
     alertMessage: null
   };
-  onError=()=><ErrorIndicator/>;
+  onError = () => <ErrorIndicator />;
   handleChange = e => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -49,6 +48,11 @@ export default class SignUp extends Component {
 
   onClick = e => {
     e.preventDefault();
+    const { login, password, email } = this.state;
+SignUpRequest.login=login;
+SignUpRequest.password=password;
+SignUpRequest.email=email;
+
     if (
       this.state.validateLogin == null ||
       this.state.validatePassword == null ||
@@ -56,13 +60,10 @@ export default class SignUp extends Component {
     ) {
       this.setState({ alertMessage: "Все поля должны быть заполнены" });
     } else {
-     /* postData(urlUserApi("sign-up"), {
-        login: this.state.login,
-        email: this.state.email,
-        password: this.state.password
-      })
+      userApi.SignUp(SignUpRequest)
         .then(res => {
-          cookies.set("username", this.state.login);
+          setCookiesName(login);
+          setSession(res.token);
           redirectToUrl("topic");
         })
         .catch(error => {
@@ -78,7 +79,7 @@ export default class SignUp extends Component {
             this.onError()
 
           }
-        });*/
+        });
       axios
         .post("http://localhost:3001/user/sign-up", {
           login: this.state.login,

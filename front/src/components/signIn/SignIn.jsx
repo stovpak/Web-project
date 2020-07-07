@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 import axios from "axios";
+
 import "./signin-style.css";
-import { setData } from "../helpers/dataSave";
 import Cookies from "universal-cookie";
 import { validateForm, validatePassword } from "../validateCheck/validateForm";
-import { urlUserApi, redirectToUrl } from "../helpers/baseAPI";
+import { redirectToUrl } from "../helpers/baseAPI";
+import {
+  AuthRequest,
+  setCookiesName,
+  setSession
+} from "../helpers/userService";
+import AuthApi from "../helpers/authApi";
 
 const cookies = new Cookies();
 
@@ -40,35 +46,33 @@ export default class SignIn extends Component {
   };
   onClick = e => {
     e.preventDefault();
+    let { login, password } = this.state;
+    AuthRequest.login = login;
+    AuthRequest.password = password;
     if (
       this.state.validateLogin == null ||
       this.state.validatePassword == null
     ) {
       this.setState({ alertMessage: "Все поля должны быть заполнены" });
     } else {
-      axios
-        .post(urlUserApi("sign-in"), {
-          login: this.state.login,
-          password: this.state.password
-        })
+      AuthApi.signIn(AuthRequest)
         .then(res => {
-          setData(this.state.login, null, this.state.password);
-          cookies.set("username", this.state.login);
-          this.setState({ userToken: res.data.token });
-          cookies.set("sessionToken", this.state.userToken);
+          setCookiesName(login);
+          setSession(res.token);
           redirectToUrl("topic");
         })
         .catch(error => {
-          if (error.response.status === 400) {
+          if (error.request.status === 400) {
             alert("данные неверные");
             this.setState({ alertMessage: "Данные введены не верно" });
-          } else if (error.response.status !== 400) {
+          } else if (error.request.status !== 400) {
             console.log(error);
           }
           console.log(error);
         });
     }
   };
+
   render() {
     const {
       login,
@@ -78,6 +82,7 @@ export default class SignIn extends Component {
       alertMessage,
       validatePassword
     } = this.state;
+
     console.log(validateLogin);
     let validateClassForLogin = "";
     let validateClassForPassword = "";
@@ -113,7 +118,7 @@ export default class SignIn extends Component {
           </div>
         </div>
         <div className="main">
-          <div className="col-md-6 col-sm-12">
+          <div className="col-md-6 col-sm-12 ml-5">
             <div className="login-form">
               <p>{alertMessage}</p>
               <form>
@@ -143,21 +148,34 @@ export default class SignIn extends Component {
                   </label>
                   <p className={validateClassForPassword}>{validMessagePass}</p>
                 </div>
-                <button
-                  type="submit"
-                  className="btn btn-secondary m-1 fix-size"
-                  onClick={this.onClick}
-                >
-                  Войти
-                </button>
-                <button
-                  type="submit"
-                  className="btn btn-black m-1 fix-size"
-                  onClick={this.onClickSignUP}
-                >
-                  Зарегистрироваться
-                </button>
               </form>
+              <button
+                type="submit"
+                className="btn btn-secondary fix-size col-2"
+                onClick={this.onClick}
+              >
+                Войти
+              </button>
+              <button
+                type="reset"
+                className="btn btn-secondary ml-3 fix-size w-18"
+              >
+                Очистить
+              </button>
+
+              <div className={"alternative"}>
+                <div className="containers">
+                  <hr />
+                  <div className="text1">ИЛИ</div>
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="btn btn-black m-1 fix-size w-36"
+                onClick={this.onClickSignUP}
+              >
+                Зарегистрироваться
+              </button>
             </div>
           </div>
         </div>

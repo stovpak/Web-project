@@ -22,6 +22,38 @@ body {
 .main {
     padding: 0px 10px;
 }
+.tx-al {
+    text-align: center;
+}
+.w-18 {
+    width: 18%;
+}
+
+.icon-api {
+    margin-left: 4%;
+
+
+}
+.containers {
+    position: relative;
+    margin: auto;
+    display: inline-block;
+
+}
+.text1 {
+    position: absolute;
+    top: 10px;
+    left: 36%;
+    background: #fff;
+    padding: 0 10px;
+}
+hr{
+    display: inherit;
+    width:195px;
+}
+.w-36{
+    width: 36%;
+}
 
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
