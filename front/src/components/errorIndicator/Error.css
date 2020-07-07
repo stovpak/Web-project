@@ -9,3 +9,6 @@ a:hover img {
 a:hover{
     background: url("hz3.png") no-repeat 50% 50% ;
 }
+.cnt {
+    margin-top: 10%;
+}

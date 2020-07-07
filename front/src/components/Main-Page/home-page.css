@@ -1,5 +1,8 @@
 .count-likes{font-size: 19px;
 padding-top: 0.5%;}
+.login-form{
+    margin-top: 50%
+}
 .btn-likes{
     text-decoration: none;
     border: none;
@@ -22,4 +25,24 @@ padding-top: 0.5%;}
 .onclick-heart:active{
     background: red;
     transition: background 0s;
+}
+
+.creator-name{
+    margin-top: 1%;
+    font-size: initial;
+}
+svg{
+    width: 0.5em;
+    height: 1em;
+    fill:currentColor;
+
+}
+@media (max-width: 975px ) {
+    .adaptive{
+
+    }
+    .content-margin{
+
+    }
+
 }

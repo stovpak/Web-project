@@ -4,8 +4,8 @@ import img2 from "./hz3.png";
 class ErrorIndicator extends Component {
   render() {
     return (
-      <div className="container text-center">
-        <div className="alert alert-danger">
+      <div className="container text-center cnt ">
+        <div className="alert alert-danger ">
           <h1 className="text-center">УПС!</h1>
           <p className="blockquote">Что-то пошло не так</p>
           <p>Скоро мы устраним проблему!</p>
@@ -24,7 +24,6 @@ class ErrorIndicator extends Component {
               />
             </a>
           </div>
-          {/* <img src={img} alt="ohNO" className="imageError"/>*/}
         </div>
       </div>
     );

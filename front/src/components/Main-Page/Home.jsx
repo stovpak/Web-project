@@ -5,9 +5,11 @@ import axios from "axios";
 import "./home-page.css";
 import { withRouter } from "react-router-dom";
 import Paginate from "../helpers/paginate";
-import { getData } from "../helpers/dataSave";
-import { urlTopics } from "../helpers/baseAPI";
 import { getJwt } from "../helpers/getJwt";
+import AuthApi from "../helpers/authApi";
+import Loading from "../loading/Loading";
+import ErrorIndicator from "../errorIndicator/ErrorIndicator";
+import TopicListItem from "./TopicListItem";
 const cookies = new Cookies();
 
 class HomePage extends Component {
@@ -15,99 +17,122 @@ class HomePage extends Component {
     topicList: [],
     page: 1,
     totalResult: 0,
+    totalCount: 1,
     isAuth: false,
-    isActiveButton: false
+    isActiveButton: false,
+    currentUser: "",
+    endPage: null,
+    isLoading: true,
+    isError: false
   };
   onClickLike = e => {
     e.preventDefault();
     this.setState({ isActiveButton: true });
+  };
+  onError = err => {
+    this.setState({ isError: true, isLoading: false });
   };
 
   componentDidMount() {
     getJwt()
       ? this.setState({ isAuth: !this.state.isAuth })
       : this.setState({ isAuth: this.state.isAuth });
-    getData(urlTopics, getJwt)
+    const Token = getJwt;
+    AuthApi.getAllTopics(this.state.page, Token)
       .then(res => {
-        this.setState({ topicList: res.data, totalResult: res.data.length });
-      })
-      .catch(err => console.log(err));
-    /*   axios
-        .get("http://localhost:3001/topics/" + this.state.page, {
-          Token: cookies.get("sessionToken")
-        })
-        .then(res => {
-          this.setState({ topicList: res.data ,totalResult:res.data.length });
-        })
-        .catch(err => console.log(err));*/
-  }
-  nextPage = value => {
-    axios
-      .get("http://localhost:3001/topics/" + value, {
-        Token: cookies.get("sessionToken")
-      })
-      .then(res => {
-        if (this.state.totalResult < 10) {
-          this.setState({ topicList: res.data, page: value });
-          console.log(this.state.page, "page");
+        console.log("response", res);
+        if (res.length < 10) {
+          this.setState({
+            topicList: res,
+            totalResult: res.length,
+            isLoading: false,
+            isError: false
+          });
         } else {
           this.setState({
-            topicList: res.data,
-            page: value,
-            totalResult: res.data.length
+            topicList: res,
+            totalCount: this.state.page + 1,
+            totalResult: 10,
+            isLoading: false,
+            isError: false
           });
+          console.log(this.state.totalCount, "pages");
         }
       })
-      .catch(err => console.log(err));
+      .catch(this.onError);
+  }
+  nextPage = value => {
+    console.log("value1 ", value);
+    AuthApi.getAllTopics(value, getJwt)
+      .then(res => {
+        if (this.state.totalResult < 10) {
+          this.setState({
+            page: value,
+            topicList: res,
+            isLoading: false,
+            isError: false
+          });
+        } else {
+          this.setState({
+            topicList: res,
+            page: value,
+            totalResult: res.length,
+            totalCount: this.state.page+1 ,
+            isLoading: false,
+            isError: false
+          });
+          console.log("totalCount2", this.state.totalCount);
+        }
+        console.log(
+          "totalCount2",
+          this.state.totalCount,
+          "activepage",
+          this.state.page
+        );
+      })
+      .catch(this.onError);
   };
   render() {
-    const { topicList, isAuth, isActiveButton, page, totalResult } = this.state;
+    const { topicList, page, totalCount, isLoading, isError } = this.state;
+
     let renderel = topicList.map(topic => {
       return (
-        <div className="media">
-          <div className="media-body card">
-            <div>
-              <h2 className="mt-0 card-header" key={topic.id}>
-                {topic.topic_name}
-                <p className="float-right count-likes">{topic.likes}</p>
-                <button className="float-right btn-likes">
-                  <svg
-                    className=" bi-heart float-right"
-                    width="0.5em"
-                    height="1em"
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
-                    />
-                  </svg>
-                </button>
-              </h2>
-            </div>
-            <div className="card-body">
-              <p>content</p>
-            </div>
-          </div>
+        <div className={"testing"}>
+          <TopicListItem
+            topic_name={topic.topic_name}
+            id={topic.id}
+            likes={topic.likes}
+            auth={topic.creator_name}
+            className={"container "}
+          />
         </div>
       );
     });
+    const hasData = !(isLoading || isError);
+    const errorMessage = isError ? <ErrorIndicator /> : null;
+    const spinner = isLoading ? <Loading /> : null;
+    const content = hasData ? (
+      <div className="container">
+        <div className="row">
+          <div className="col-md-8 order-md-1 cc_cursor ">{renderel}</div>
+        </div>
+        <Paginate
+          nextPage={this.nextPage}
+          pages={totalCount}
+          currentPage={page}
+          endPage={this.state.endPage}
+        />
+      </div>
+    ) : null;
 
     return (
       <div className="">
         <NavBar />
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 order-md-1 cc_cursor">{renderel}</div>
-          </div>
+        <div className="exception">
+          {errorMessage}
+          {spinner}
+          {content}
         </div>
-        <Paginate
-          nextPage={this.nextPage}
-          pages={page + 1}
-          currentPage={page}
-        />
       </div>
     );
   }

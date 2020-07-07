@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import NavBar from "../navBar/NavBar";
-import { getData, setData } from "../helpers/dataSave";
 import {redirectToUrl} from "../helpers/baseAPI";
 export default class Profile extends Component {
+
   state = {
     userInfo: []
   };
@@ -13,7 +13,7 @@ export default class Profile extends Component {
 
   render() {
     let { userInfo } = this.state;
-    //let value=getData();
+
 
       return (
           <div>
