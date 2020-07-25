@@ -40,6 +40,7 @@ class HomePage extends Component {
     const Token = getJwt;
     AuthApi.getAllTopics(this.state.page, Token)
         .then(res => {
+          console.log("response", res);
           if (res.length < 10) {
             this.setState({
               topicList: res,
@@ -55,11 +56,13 @@ class HomePage extends Component {
               isLoading: false,
               isError: false
             });
+            console.log(this.state.totalCount, "pages");
           }
         })
         .catch(this.onError);
   }
   nextPage = value => {
+    console.log("value1 ", value);
     AuthApi.getAllTopics(value, getJwt)
         .then(res => {
           if (this.state.totalResult < 10) {
@@ -78,8 +81,14 @@ class HomePage extends Component {
               isLoading: false,
               isError: false
             });
+            console.log("totalCount2", this.state.totalCount);
           }
-
+          console.log(
+              "totalCount2",
+              this.state.totalCount,
+              "activepage",
+              this.state.page
+          );
         })
         .catch(this.onError);
   };
