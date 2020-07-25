@@ -1,64 +1,69 @@
 import React, { Component } from "react";
 import NavBar from "../navBar/NavBar";
-import {redirectToUrl} from "../helpers/baseAPI";
+import "./profile.css";
+import Link from "react-router-dom/Link";
+
 export default class Profile extends Component {
-
   state = {
-    userInfo: []
+    userInfo: ["Имя", "Фамилия", "Дата рождения"]
   };
-  onChange = () => {};
-  onChangeEmail = () => {
-    redirectToUrl("profile/change-email");
-  };
-
   render() {
     let { userInfo } = this.state;
-
-
+    const changeDataElement = userInfo.map((listData, i) => {
       return (
-          <div>
-              <div className="container">
-                  <NavBar/>
-                  <div>
-                      <h1>Профиль</h1>
-
-                      <ul className="list-group container col-8">
-                          <li className="list-group-item active"> Основные данные</li>
-                          <li className="list-group-item" name="name">
-                              <span className="size-label">Имя</span>
-
-                              <button
-                                  className={" float-right btn btn-link"}
-                                  onClick={this.onChangeEmail}
-                                  data-toggle="modal"
-                                  data-target="#exampleModalCenter"
-                              >
-                                  Изменить
-                              </button>
-                          </li>
-                          <li className="list-group-item" name="surname">
-                              Фамилия
-                          </li>
-                          <li className="list-group-item" name="birth">
-                              Дата рождения
-                          </li>
-                          <li className="list-group-item" name="password">
-                              Пароль
-                          </li>
-                          <li className="list-group-item" name="mail">
-                              Почта
-                          </li>
-                      </ul>
-                  </div>
-                  <div>
-                      <ul className="list-group container col-8">
-                          <li className="list-group-item active">Контактная информаци</li>
-                          <li className="list-group-item">Электронная почта</li>
-                      </ul>
-                  </div>
-                  <button onClick={this.state.onClick}>Нажми что бы изменить!</button>
-              </div>
-          </div>
+        <li className="list-group-item" name="name">
+          <span className="size-label" key={i}>
+            {listData}
+          </span>
+        </li>
       );
+    });
+    return (
+      <div>
+        <NavBar />
+        <div className="container">
+          <div>
+            <h1 className=" container col-8">Профиль</h1>
+            <ul className="list-group container col-8">
+              <li className="list-group-item active"> Основные данные</li>
+              {changeDataElement}
+              <li className="list-group-item ">
+                <Link className=" " to={"profile/change-data"}>
+                  Изменить
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <ul className="list-group container col-8">
+              <li className="list-group-item active">Пароль</li>
+              <li className="list-group-item">
+                Пароль
+                <Link
+                  className="btn btn-link btn-right "
+                  to={"profile/change-pass"}
+                >
+                  Изменить
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <ul className="list-group container col-8">
+              <li className="list-group-item active">Контактная информаци</li>
+              <li className="list-group-item">
+                Электронная почта
+                <Link
+                  className="btn btn-link btn-right "
+                  to={"profile/change-email"}
+                >
+                  Изменить
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
   }
 }

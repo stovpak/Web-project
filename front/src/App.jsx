@@ -1,4 +1,4 @@
-import React,{Component}from "react";
+import React, { Component } from "react";
 import {
     BrowserRouter as Router,
     Switch,
@@ -6,30 +6,57 @@ import {
     Redirect,
     Link
 } from "react-router-dom";
+import {createBrowserHistory} from 'history';
 import SignIn from "./components/signIn/SignIn";
 import SignUp from "./components/signUp/SignUp";
 import MainPage from "./components/Main-Page/Home";
-import Cookies from "universal-cookie";
 import CreateTopic from "./components/topics/createTopic";
 import Profile from "./components/userProfile/Profile";
-import ChangeEmail from "./components/changeData/ChangeEmail";
-const cookies = new Cookies();
+import ChangeEmail from "./components/changeData/СhangeEmail";
+import ChangeUserPassword from "./components/changeData/ChangePassword";
+import {getJwt} from "./components/helpers/userService";
+import ChangeData from "./components/changeData/ChangeData";
 
-export default class App extends Component{
+let history = new createBrowserHistory({
+    baseName:'/'
+});
+
+export default class App extends Component {
     render() {
-        const isAuth=cookies.get('sessionToken');
-        return(
-            <Router >
+        const isAuth = getJwt();
+        return (
+            <Router history={history}>
                 <Switch>
-                    {/*<Route exact path="/" component={() => isAuth?<Redirect to={"/homePage"}/>:<Redirect to={"/sign-in"}/>}/>*/}
-                <Route path={"/sign-up"} component={SignUp}/>
-                <Route path={"/sign-in"} component={SignIn}/>
-                    <Route path={"/topic"} component={MainPage}/>
-                    <Route path={'/create-topic'} component={CreateTopic}/>
-                    <Route exact  path={"/profile"} component={Profile} />
-                    <Route path={"/profile/change-email"} component={ChangeEmail}/>
+                    <Route
+                        exact
+                        path="/"
+                        component={() =>
+                            isAuth ? (
+                                <Redirect to={"/topics"} />
+                            ) : (
+                                <Redirect to={"user/sign-in"} />
+                            )
+                        }
+                    />
+                    <Route path={"/user/sign-up"} component={SignUp} />
+                    <Route path={"/user/sign-in"} component={SignIn} />
+                    <Route exact path={"/topics"}  component={MainPage} />
+                    <Route path={"/topics/create-topic"} component={CreateTopic} />
+                    <Route exact path={"/user/profile"} component={Profile} />
+                    <Route
+                        path={"/user/profile/change-email"}
+                        component={ChangeEmail}
+                    />
+                    <Route
+                        path={"/user/profile/change-pass"}
+                        component={ChangeUserPassword}
+                    />
+                    <Route
+                        path={"/user/profile/change-data"}
+                        component={ChangeData}
+                    />
                 </Switch>
             </Router>
-        )
+        );
     }
 }
