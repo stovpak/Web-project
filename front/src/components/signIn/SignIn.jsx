@@ -3,7 +3,7 @@ import axios from "axios";
 
 import "./signin-style.css";
 import Cookies from "universal-cookie";
-import { validateForm, validatePassword } from "../validateCheck/validateForm";
+import { validateForm, validatePassword } from "../ValidateCheck/validateForm";
 import { redirectToUrl } from "../helpers/baseAPI";
 import {
   AuthRequest,
@@ -11,6 +11,7 @@ import {
   setSession
 } from "../helpers/userService";
 import AuthApi from "../helpers/authApi";
+import ErrorIndicator from "../errorIndicator/ErrorIndicator";
 
 const cookies = new Cookies();
 
@@ -42,7 +43,7 @@ export default class SignIn extends Component {
   };
   onClickSignUP = e => {
     e.preventDefault();
-    redirectToUrl("sign-up");
+    redirectToUrl("user/sign-up");
   };
   onClick = e => {
     e.preventDefault();
@@ -50,44 +51,41 @@ export default class SignIn extends Component {
     AuthRequest.login = login;
     AuthRequest.password = password;
     if (
-      this.state.validateLogin == null ||
-      this.state.validatePassword == null
+        this.state.validateLogin == null ||
+        this.state.validatePassword == null
     ) {
       this.setState({ alertMessage: "Все поля должны быть заполнены" });
     } else {
       AuthApi.signIn(AuthRequest)
-        .then(res => {
-          setCookiesName(login);
-          setSession(res.token);
-          redirectToUrl("topic");
-        })
-        .catch(error => {
-          if (error.request.status === 400) {
-            alert("данные неверные");
-            this.setState({ alertMessage: "Данные введены не верно" });
-          } else if (error.request.status !== 400) {
-            console.log(error);
-          }
-          console.log(error);
-        });
+          .then(res => {
+            console.log("token", res.token);
+            setCookiesName(login);
+            setSession(res.token);
+            redirectToUrl("topics");
+            window.history.listen(location => {
+              window.history.push("/topics");
+            });
+          })
+          .catch(error => {
+            if (error.request.status === 400) {
+              this.setState({ alertMessage: "Данные введены не верно" });
+            } else if (error.request.status !== 400) {
+              console.log(404);
+            }
+          });
     }
   };
 
   render() {
     const {
-      login,
-      password,
       validateLogin,
       validateEmail,
       alertMessage,
       validatePassword
     } = this.state;
-
-    console.log(validateLogin);
     let validateClassForLogin = "";
     let validateClassForPassword = "";
-    let validMessage;
-    let validMessagePass;
+    let validMessage, validMessagePass;
     let className = "form-control ";
     let classNamePass = "form-control ";
     if (validateLogin === true || validateEmail === true) {
@@ -110,76 +108,83 @@ export default class SignIn extends Component {
     }
 
     return (
-      <div>
-        <div className="sidenav">
-          <div className="login-main-text">
-            <h2>Вход</h2>
-            <p>Войдите что бы продолжить</p>
+        <div>
+          <div className="sidenav">
+            <div className="login-main-text">
+              <h2>Вход</h2>
+              <p>Войдите что бы продолжить</p>
+            </div>
           </div>
-        </div>
-        <div className="main">
-          <div className="col-md-6 col-sm-12 ml-5">
-            <div className="login-form">
-              <p>{alertMessage}</p>
-              <form>
-                <div className="form-group">
-                  <label className="label-width">
-                    Логин
-                    <input
-                      type="text"
-                      className={className}
-                      placeholder="Логин"
-                      name="login"
-                      onChange={this.handleUserInput}
-                    />
-                  </label>
-                  <p className={validateClassForLogin}>{validMessage}</p>
-                </div>
-                <div className="form-group">
-                  <label className="label-width">
-                    Пароль
-                    <input
-                      type="password"
-                      className={classNamePass}
-                      placeholder="Пароль"
-                      name="password"
-                      onChange={this.handleUserInput}
-                    />
-                  </label>
-                  <p className={validateClassForPassword}>{validMessagePass}</p>
-                </div>
-              </form>
-              <button
-                type="submit"
-                className="btn btn-secondary fix-size col-2"
-                onClick={this.onClick}
-              >
-                Войти
-              </button>
-              <button
-                type="reset"
-                className="btn btn-secondary ml-3 fix-size w-18"
-              >
-                Очистить
-              </button>
+          <div className="main">
+            <div className="col-md-6 col-sm-12 ml-5">
+              <div className="login-form">
+                <p>{alertMessage}</p>
+                <form>
+                  <div className="form-group">
+                    <label className="label-width">
+                      Логин
+                      <input
+                          type="text"
+                          className={className}
+                          placeholder="Логин"
+                          name="login"
+                          onChange={this.handleUserInput}
+                      />
+                    </label>
+                    <p className={validateClassForLogin}>{validMessage}</p>
+                  </div>
+                  <div className="form-group">
+                    <label className="label-width">
+                      Пароль
+                      <input
+                          type="password"
+                          className={classNamePass}
+                          placeholder="Пароль"
+                          name="password"
+                          onChange={this.handleUserInput}
+                      />
+                    </label>
+                    <p className={validateClassForPassword}>{validMessagePass}</p>
+                  </div>
+                </form>
+                <button
+                    type="submit"
+                    className="btn btn-secondary fix-size w-23"
+                    onClick={this.onClick}
+                >
+                  Войти
+                </button>
+                <button
+                    type="reset"
+                    className="btn btn-secondary ml-3 fix-size w-23"
+                >
+                  Очистить
+                </button>
 
-              <div className={"alternative"}>
-                <div className="containers">
-                  <hr />
-                  <div className="text1">ИЛИ</div>
+                <div className={"alternative"}>
+                  <div className="containers">
+                    <hr />
+                    <div className="text1">ИЛИ</div>
+                  </div>
                 </div>
+                <button
+                    type="submit"
+                    className="btn btn-black fix-size w-50"
+                    onClick={this.onClickSignUP}
+                >
+                  Зарегистрироваться
+                </button>
+                <button
+                    type="submit"
+                    className="btn btn-black fix-size w-50"
+                    onClick={this.onClickSignUP}
+                >
+                  Забыли пароль?
+                </button>
               </div>
-              <button
-                type="submit"
-                className="btn btn-black m-1 fix-size w-36"
-                onClick={this.onClickSignUP}
-              >
-                Зарегистрироваться
-              </button>
             </div>
           </div>
         </div>
-      </div>
     );
   }
 }

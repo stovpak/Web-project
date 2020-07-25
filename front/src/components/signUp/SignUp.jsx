@@ -7,11 +7,16 @@ import {
   validateEmail,
   validateForm,
   validatePassword
-} from "../validateCheck/validateForm";
+} from "../ValidateCheck/validateForm";
 import userApi from "../helpers/authApi";
 import { redirectToUrl, urlUserApi } from "../helpers/baseAPI";
 import ErrorIndicator from "../errorIndicator/ErrorIndicator";
-import {AuthRequest, setCookiesName, setSession, SignUpRequest} from "../helpers/userService";
+import {
+  AuthRequest,
+  setCookiesName,
+  setSession,
+  SignUpRequest
+} from "../helpers/userService";
 const cookies = new Cookies();
 export default class SignUp extends Component {
   state = {
@@ -49,9 +54,9 @@ export default class SignUp extends Component {
   onClick = e => {
     e.preventDefault();
     const { login, password, email } = this.state;
-SignUpRequest.login=login;
-SignUpRequest.password=password;
-SignUpRequest.email=email;
+    SignUpRequest.login = login;
+    SignUpRequest.password = password;
+    SignUpRequest.email = email;
 
     if (
       this.state.validateLogin == null ||
@@ -60,11 +65,12 @@ SignUpRequest.email=email;
     ) {
       this.setState({ alertMessage: "Все поля должны быть заполнены" });
     } else {
-      userApi.SignUp(SignUpRequest)
+      userApi
+        .SignUp(SignUpRequest)
         .then(res => {
           setCookiesName(login);
           setSession(res.token);
-          redirectToUrl("topic");
+          redirectToUrl("topics");
         })
         .catch(error => {
           if (error.response.status === 409) {
@@ -76,28 +82,8 @@ SignUpRequest.email=email;
               alertMessage: "Проверьте правильность введенных данных"
             });
           } else {
-            this.onError()
-
+            this.onError();
           }
-        });
-      axios
-        .post("http://localhost:3001/user/sign-up", {
-          login: this.state.login,
-          email: this.state.email,
-          password: this.state.password
-        })
-        .then(res => {
-          cookies.set("username", this.state.login);
-          console.log(res);
-          window.location.href = "http://localhost:3000/topic";
-          this.props.history.push();
-        })
-        .catch(error => {
-          if (error.response.status === 409) {
-            alert("Такой пользователь уже зарегистрирован");
-          } else if (error.response.status === 400) {
-            alert("Проверьте правильность введенных данных");
-          } else console.log(error);
         });
     }
   };
@@ -209,19 +195,6 @@ SignUpRequest.email=email;
                   </label>
                   <p className={validateClassForPassword}>{validMessagePass}</p>
                 </div>
-                {/*
-                <div className="form-check mb-2">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="autoSizingCheck"
-                    onChange={this.handleChecked}
-                  />
-                  <label className="form-check-label" htmlFor="autoSizingCheck">
-                    Зарегистрироваться как администратор
-                  </label>
-                </div>
-                */}
                 <div className="form-group ">
                   <input
                     type="submit"
