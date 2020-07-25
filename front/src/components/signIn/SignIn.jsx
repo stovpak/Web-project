@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import * as Yup from "yup";
+
 import "./signin-style.css";
 import Cookies from "universal-cookie";
-import {validateEmail, validateForm, validatePassword} from "../validateCheck/validateForm";
+import { validateForm, validatePassword } from "../ValidateCheck/validateForm";
 import { redirectToUrl } from "../helpers/baseAPI";
 import {
   AuthRequest,
@@ -11,125 +11,180 @@ import {
   setSession
 } from "../helpers/userService";
 import AuthApi from "../helpers/authApi";
-import { useFormik } from "formik";
-const cookies = new Cookies();
-const SignIn=()=> {
-  const formik = useFormik({
-    initialValues: {
-      login: "",
-      password: "",
-      email: "",
-      errorInfo: ""
+import ErrorIndicator from "../errorIndicator/ErrorIndicator";
 
-    },
-    validate: values => {
-      const errors = {};
-      if (!validatePassword(values.password)) {
-        errors.password = "Пароль должен состоять из A-Z a-z 0-9";
-      }
-      if (!validateForm(values.login)) {
-        errors.login = "Логин введен неправильно"
-      }
-      return errors;
-    },
-    onSubmit: values => {
-      AuthRequest.login = values.login;
-      AuthRequest.password = values.password;
+const cookies = new Cookies();
+
+export default class SignIn extends Component {
+  state = {
+    login: "",
+    email: "",
+    password: "",
+    isAdmin: false,
+    userToken: null,
+    validateLogin: null,
+    validatePassword: null,
+    validateEmail: null,
+    alertMessage: null
+  };
+  handleUserInput = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({ [name]: value });
+    if (name === "login") {
+      validateForm(value);
+      this.setState({ validateLogin: validateForm(value) });
+    }
+    if (name === "password") {
+      validatePassword(value);
+      this.setState({ validatePassword: validatePassword(value) });
+      console.log("password ", value);
+    }
+  };
+  onClickSignUP = e => {
+    e.preventDefault();
+    redirectToUrl("user/sign-up");
+  };
+  onClick = e => {
+    e.preventDefault();
+    let { login, password } = this.state;
+    AuthRequest.login = login;
+    AuthRequest.password = password;
+    if (
+        this.state.validateLogin == null ||
+        this.state.validatePassword == null
+    ) {
+      this.setState({ alertMessage: "Все поля должны быть заполнены" });
+    } else {
       AuthApi.signIn(AuthRequest)
           .then(res => {
-            setCookiesName(values.login);
+            console.log("token", res.token);
+            setCookiesName(login);
             setSession(res.token);
             redirectToUrl("topics");
+            window.history.listen(location => {
+              window.history.push("/topics");
+            });
           })
           .catch(error => {
-            if (error.status === 409) {
-              values.errorInfo = "такой пользователь уже зарегестрирован"
+            if (error.request.status === 400) {
+              this.setState({ alertMessage: "Данные введены не верно" });
+            } else if (error.request.status !== 400) {
+              console.log(404);
             }
           });
     }
-  });
-  return (
-      <div>
-        <div className="sidenav">
-          <div className="login-main-text">
-            <h2>Вход</h2>
-            <p>Войдите что бы продолжить</p>
+  };
+
+  render() {
+    const {
+      validateLogin,
+      validateEmail,
+      alertMessage,
+      validatePassword
+    } = this.state;
+    let validateClassForLogin = "";
+    let validateClassForPassword = "";
+    let validMessage, validMessagePass;
+    let className = "form-control ";
+    let classNamePass = "form-control ";
+    if (validateLogin === true || validateEmail === true) {
+      className += " border-success text-success ";
+      validMessage = "✔";
+      validateClassForLogin += "d-inline ml-2 text-success mark";
+    } else if (validateLogin === false || validateEmail === false) {
+      className += "border-danger text-danger";
+      validateClassForLogin += "d-inline ml-2 text-danger mark";
+      validMessage = "✖  Проверьте правильность введенных данных";
+    }
+    if (validatePassword === true) {
+      classNamePass += " border-success text-success ";
+      validMessagePass = "✔";
+      validateClassForPassword += " d-inline ml-2 text-success mark";
+    } else if (validatePassword === false) {
+      classNamePass += " border-danger text-danger";
+      validateClassForPassword += " d-inline ml-2 text-danger mark";
+      validMessagePass = `✖ \n Проверьте правильность введенных данных`;
+    }
+
+    return (
+        <div>
+          <div className="sidenav">
+            <div className="login-main-text">
+              <h2>Вход</h2>
+              <p>Войдите что бы продолжить</p>
+            </div>
           </div>
-        </div>
-        <div className="main">
-          <div className="col-md-6 col-sm-12 ml-5">
-            <div className="login-form">
-              <p>{formik.values.errorInfo}</p>
-              <form onSubmit={formik.handleSubmit}>
-                <div className="form-group">
-                  <label className="label-width w-60">
-                    Логин
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Логин"
-                        name="login"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.login}
-                    />
-                  </label>
-                  <p className="text-danger font-italic position-fixed small-text">
-                    {formik.touched.login && formik.errors.login ? (
-                        <div>{formik.errors.login}</div>
-                    ) : null}
-                  </p>
-                </div>
-                <div className="form-group">
-                  <label className="label-width w-60">
-                    Пароль
-                    <input
-                        type="password"
-                        className="form-control mb-2"
-                        placeholder="Пароль"
-                        name="password"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.password}
-                    />
-                  </label>
-                  <p className="text-danger font-italic position-fixed small-text">
-                    {formik.touched.password && formik.errors.password ? (
-                        <div>{formik.errors.password}</div>
-                    ) : null}
-                  </p>
-                </div>
+          <div className="main">
+            <div className="col-md-6 col-sm-12 ml-5">
+              <div className="login-form">
+                <p>{alertMessage}</p>
+                <form>
+                  <div className="form-group">
+                    <label className="label-width">
+                      Логин
+                      <input
+                          type="text"
+                          className={className}
+                          placeholder="Логин"
+                          name="login"
+                          onChange={this.handleUserInput}
+                      />
+                    </label>
+                    <p className={validateClassForLogin}>{validMessage}</p>
+                  </div>
+                  <div className="form-group">
+                    <label className="label-width">
+                      Пароль
+                      <input
+                          type="password"
+                          className={classNamePass}
+                          placeholder="Пароль"
+                          name="password"
+                          onChange={this.handleUserInput}
+                      />
+                    </label>
+                    <p className={validateClassForPassword}>{validMessagePass}</p>
+                  </div>
+                </form>
                 <button
                     type="submit"
-                    className="btn btn-black fix-size w-25"
+                    className="btn btn-secondary fix-size w-23"
+                    onClick={this.onClick}
                 >
                   Войти
                 </button>
+                <button
+                    type="reset"
+                    className="btn btn-secondary ml-3 fix-size w-23"
+                >
+                  Очистить
+                </button>
 
-              <button
-                  className="btn btn-black ml-3 fix-size"
-                  onClick={(e)=>{e.preventDefault();redirectToUrl("user/sign-in/forget-password")}}
-              >
-                Забыли пароль?
-              </button>
-              </form>
-              <div className={"alternative"}>
-                <div className="containers">
-                  <hr />
-                  <div className="text1">ИЛИ</div>
+                <div className={"alternative"}>
+                  <div className="containers">
+                    <hr />
+                    <div className="text1">ИЛИ</div>
+                  </div>
                 </div>
+                <button
+                    type="submit"
+                    className="btn btn-black fix-size w-50"
+                    onClick={this.onClickSignUP}
+                >
+                  Зарегистрироваться
+                </button>
+                <button
+                    type="submit"
+                    className="btn btn-black fix-size w-50"
+                    onClick={this.onClickSignUP}
+                >
+                  Забыли пароль?
+                </button>
               </div>
-              <button
-                  onClick={(e)=>{e.preventDefault();redirectToUrl("user/sign-up")}}
-                  className="btn btn-black fix-size w-60 "
-              >
-                Зарегистрироваться
-              </button>
             </div>
           </div>
         </div>
-      </div>
-  )
-
+    );
+  }
 }
-export default SignIn;
