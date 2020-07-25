@@ -4,7 +4,7 @@ import authApi from "../helpers/authApi";
 import { getJwt } from "../helpers/userService";
 import { validateDate, validateName } from "../ValidateCheck/validateForm";
 import NavBar from "../navBar/NavBar";
-import { redirectToUrl } from "../helpers/baseAPI";
+
 const ChangeData = () => {
   const Token = getJwt();
   const formik = useFormik({

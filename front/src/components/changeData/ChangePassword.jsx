@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { getJwt } from "../helpers/getJwt";
 import NavBar from "../navBar/NavBar";
-import Cookies from "universal-cookie";
+
 import AuthApi from "../helpers/authApi";
 import { PasswordChanges } from "../helpers/userService";
 import { validatePassword } from "../ValidateCheck/validateForm";
