@@ -35,105 +35,105 @@ class HomePage extends Component {
 
   componentDidMount() {
     getJwt()
-      ? this.setState({ isAuth: !this.state.isAuth })
-      : this.setState({ isAuth: this.state.isAuth });
+        ? this.setState({ isAuth: !this.state.isAuth })
+        : this.setState({ isAuth: this.state.isAuth });
     const Token = getJwt;
     AuthApi.getAllTopics(this.state.page, Token)
-      .then(res => {
-        console.log("response", res);
-        if (res.length < 10) {
-          this.setState({
-            topicList: res,
-            totalResult: res.length,
-            isLoading: false,
-            isError: false
-          });
-        } else {
-          this.setState({
-            topicList: res,
-            totalCount: this.state.page + 1,
-            totalResult: 10,
-            isLoading: false,
-            isError: false
-          });
-          console.log(this.state.totalCount, "pages");
-        }
-      })
-      .catch(this.onError);
+        .then(res => {
+          console.log("response", res);
+          if (res.length < 10) {
+            this.setState({
+              topicList: res,
+              totalResult: res.length,
+              isLoading: false,
+              isError: false
+            });
+          } else {
+            this.setState({
+              topicList: res,
+              totalCount: this.state.page + 1,
+              totalResult: 10,
+              isLoading: false,
+              isError: false
+            });
+            console.log(this.state.totalCount, "pages");
+          }
+        })
+        .catch(this.onError);
   }
   nextPage = value => {
     console.log("value1 ", value);
     AuthApi.getAllTopics(value, getJwt)
-      .then(res => {
-        if (this.state.totalResult < 10) {
-          this.setState({
-            page: value,
-            topicList: res,
-            isLoading: false,
-            isError: false
-          });
-        } else {
-          this.setState({
-            topicList: res,
-            page: value,
-            totalResult: res.length,
-            totalCount: this.state.page+1 ,
-            isLoading: false,
-            isError: false
-          });
-          console.log("totalCount2", this.state.totalCount);
-        }
-        console.log(
-          "totalCount2",
-          this.state.totalCount,
-          "activepage",
-          this.state.page
-        );
-      })
-      .catch(this.onError);
+        .then(res => {
+          if (this.state.totalResult < 10) {
+            this.setState({
+              page: value,
+              topicList: res,
+              isLoading: false,
+              isError: false
+            });
+          } else {
+            this.setState({
+              topicList: res,
+              page: value,
+              totalResult: res.length,
+              totalCount: this.state.page+1 ,
+              isLoading: false,
+              isError: false
+            });
+            console.log("totalCount2", this.state.totalCount);
+          }
+          console.log(
+              "totalCount2",
+              this.state.totalCount,
+              "activepage",
+              this.state.page
+          );
+        })
+        .catch(this.onError);
   };
   render() {
     const { topicList, page, totalCount, isLoading, isError } = this.state;
 
-    let renderel = topicList.map(topic => {
+    let renderTopicElement = topicList.map(topic => {
       return (
-        <div className={"testing"}>
-          <TopicListItem
-            topic_name={topic.topic_name}
-            id={topic.id}
-            likes={topic.likes}
-            auth={topic.creator_name}
-            className={"container "}
-          />
-        </div>
+          <div className={"testing"}>
+            <TopicListItem
+                topic_name={topic.topic_name}
+                id={topic.id}
+                likes={topic.likes}
+                auth={topic.creator_name}
+                className={"container "}
+            />
+          </div>
       );
     });
     const hasData = !(isLoading || isError);
     const errorMessage = isError ? <ErrorIndicator /> : null;
     const spinner = isLoading ? <Loading /> : null;
     const content = hasData ? (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-8 order-md-1 cc_cursor ">{renderel}</div>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-8 order-md-1 cc_cursor ">{renderTopicElement}</div>
+          </div>
+          <Paginate
+              nextPage={this.nextPage}
+              pages={totalCount}
+              currentPage={page}
+              endPage={this.state.endPage}
+          />
         </div>
-        <Paginate
-          nextPage={this.nextPage}
-          pages={totalCount}
-          currentPage={page}
-          endPage={this.state.endPage}
-        />
-      </div>
     ) : null;
 
     return (
-      <div className="">
-        <NavBar />
-        <div className="exception">
-          {errorMessage}
-          {spinner}
-          {content}
+        <div className="">
+          <NavBar />
+          <div className="exception">
+            {errorMessage}
+            {spinner}
+            {content}
+          </div>
         </div>
-      </div>
     );
   }
 }

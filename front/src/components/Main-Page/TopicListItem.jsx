@@ -1,34 +1,37 @@
-import React, {Component} from 'react';
-import "./home-page.css"
+import React, { Component } from "react";
+import "./home-page.css";
 import authApi from "../helpers/authApi";
-import {getJwt} from "../helpers/getJwt";
+import { getJwt } from "../helpers/getJwt";
 class TopicListItem extends Component {
-    state={
-        isLike:false
-    }
-    addLike=(e,id)=>{
+    state = {
+        isLike: false
+    };
+    addLike = (e, id) => {
+        const token = getJwt();
         e.preventDefault();
-        this.setState({isLike:!this.state.isLike});
-        authApi.addLikeTopic(id,getJwt).then(res=>
-            console.log(res)
-        )
-
-
-    }
+        this.setState({ isLike: !this.state.isLike });
+        authApi.addLikeTopic(id, token).then();
+    };
     render() {
-        const {isLike}=this.state;
-        let {likes, auth, id}=this.props;
-        let heartIsLike=isLike?"text-danger": " ";
-        let countLikes=isLike?1:0;
-        return (<div className="media adaptive">
+        const { isLike } = this.state;
+        let { likes, auth, id } = this.props;
+        let heartIsLike = isLike ? "text-danger" : " ";
+        let countLikes = isLike ? 1 : 0;
+        return (
+            <div className="media adaptive">
                 <div className="media-body card container mt-4">
                     <div className="row">
                         <h2 className="mt-0 card-header tx-al col" key={id}>
                             {this.props.topic_name}
-                            < p className="creator-name float-left ">{auth}</p>
+                            <p className="creator-name float-left ">{auth}</p>
 
-                            <p className={`float-right count-likes ${heartIsLike}`}>{likes+countLikes}</p>
-                            <button className={`float-right btn-likes ${heartIsLike}`} onClick={this.addLike(id)}>
+                            <p className={`float-right count-likes ${heartIsLike}`}>
+                                {likes + countLikes}
+                            </p>
+                            <button
+                                className={`float-right btn-likes ${heartIsLike}`}
+                                onClick={e => this.addLike(e, id)}
+                            >
                                 <svg
                                     className=" bi-heart float-right"
                                     viewBox="0 0 16 16"
@@ -40,10 +43,8 @@ class TopicListItem extends Component {
                                     />
                                 </svg>
                             </button>
-
                         </h2>
                     </div>
-
                 </div>
             </div>
         );
