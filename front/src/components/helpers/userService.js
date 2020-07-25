@@ -17,5 +17,7 @@ export const setSession=(token)=>{
 export let AuthRequest = { login: "", password: "" };
 export let SignUpRequest = { login: "", password: "", email: "" };
 export let TopicRequest={login:"", topicName:""};
-export let EmailChanges={password:""};
+export let EmailChanges = { email: "" };
+export let PasswordChanges={password:""};
+export let Data={firstName:"", lastName:"", birthday:""};
 
