@@ -26,7 +26,7 @@ function createAccount(registrationRequest, response) {
     email: registrationRequest.email,
     password,
   });
-  response.status(200).send('Вы успешно зарегестрировались');
+  response.status(200).send();
 }
 function exists(login, email) {
   return userModel.user.findOne({
@@ -44,7 +44,7 @@ function updatePersonalData(request, response) {
       login: request.body.login,
     },
   });
-  response.status(200).send('Данные обновлены');
+  response.status(200).send();
 }
 function changePassword(request, response) {
   const autHeader = request.get('Token');
@@ -66,17 +66,16 @@ function changeEmail(request, response) {
   const autHeader = request.get('Token');
   const login = jwtService.getLogin(autHeader);
   const {email} = request.body;
-  if (emailValidation(email)) {
+  if (emailValidation.validateEmail(email)) {
     userModel.user.update({email}, {
       where: {
         login,
       },
     });
-    response.status(200).send('Данные обновлены');
+    response.status(200).send();
     return;
   }
-
-  response.status(400).send('Неправильные данные');
+  response.status(400).send();
 }
 function findUser(userLogin) {
   return userModel.user.findOne({
@@ -95,9 +94,9 @@ function restorePassword(request, response) {
       },
     });
     deleteRestoreKey(request.body.email);
-    response.status(200).send('Пароль обновлен');
+    response.status(200).send();
   } else {
-    response.status(400).send('Неправильно введнный пароль');
+    response.status(400).send();
   }
 }
 function sendEmail(addressee, subject, text) {

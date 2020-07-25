@@ -16,6 +16,7 @@ import ChangeEmail from "./components/changeData/СhangeEmail";
 import ChangeUserPassword from "./components/changeData/ChangePassword";
 import {getJwt} from "./components/helpers/userService";
 import ChangeData from "./components/changeData/ChangeData";
+import ChangeUserEmail from "./components/changeData/ChangeEmail";
 
 let history = new createBrowserHistory({
     baseName:'/'
@@ -45,7 +46,7 @@ export default class App extends Component {
                     <Route exact path={"/user/profile"} component={Profile} />
                     <Route
                         path={"/user/profile/change-email"}
-                        component={ChangeEmail}
+                        component={ChangeUserEmail}
                     />
                     <Route
                         path={"/user/profile/change-pass"}

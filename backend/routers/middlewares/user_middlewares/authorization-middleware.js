@@ -6,8 +6,12 @@ const router = express.Router();
 
 router.use('/', (req, res, next) => {
   const autHeader = req.get('Token');
-  if (authorizationService(autHeader)) {
+  if (req.method==='OPTIONS'){
+    res.status(200).send();
+  } else if (authorizationService(autHeader))
+  {
     return next();
   }
+
 });
 module.exports = router;
