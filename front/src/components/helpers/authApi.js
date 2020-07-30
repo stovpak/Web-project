@@ -9,12 +9,12 @@ class authApi {
         .then(res => res.data);
   }
 
-  async SignUp(AuthRequest) {
+  async signUp(AuthRequest) {
     return await httpClient
         .post("user/sign-up", AuthRequest)
         .then(res => res.data);
   }
-  async ChangeData(firstName,lastName,birth,token){
+  async updateData(firstName,lastName,birth,token){
     return httpClient({
       method: "POST",
       url:"user/profile/change-data/send",
@@ -30,7 +30,7 @@ class authApi {
     }).then(res=>res.data);
   }
 
-  async ChangeEmail(email, token) {
+  async updateEmail(email, token) {
     return httpClient({
       method: "POST",
       url: "user/profile/change-email/send",
@@ -42,7 +42,7 @@ class authApi {
     });
   }
 
-  async ChangePassword(password, token) {
+  async updatePassword(password, token) {
     return httpClient
     ({
       method: "POST",
@@ -53,6 +53,11 @@ class authApi {
         Token: token
       }
     });
+  }
+  async restorePassword(email, password) {
+    return await httpClient.post("/sign-in/forget-password", {
+    email:email, password:password
+    })
   }
   async getAllTopics(page, tokenResponse) {
     return await httpClient

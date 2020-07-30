@@ -66,7 +66,7 @@ export default class SignUp extends Component {
       this.setState({ alertMessage: "Все поля должны быть заполнены" });
     } else {
       userApi
-        .SignUp(SignUpRequest)
+        .signUp(SignUpRequest)
         .then(res => {
           setCookiesName(login);
           setSession(res.token);
