@@ -24,11 +24,11 @@ const ChangeData = () => {
       if (!validateDate(values.birth)) {
         errors.birth = "Введите дату в формате гггг-мм-дд";
       }
+      return errors;
     },
     onSubmit: values => {
-      console.log("step1");
       authApi
-        .ChangeData(values.firstName, values.lastName, values.birth, Token)
+        .updateData(values.firstName, values.lastName, values.birth, Token)
         .then(res => {
           console.log(res);
         });
