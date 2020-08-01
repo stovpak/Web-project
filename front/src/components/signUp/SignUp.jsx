@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import ".//signup-style.css";
+import "./signup-style.css";
 import Cookies from "universal-cookie";
 import {
   validateEmail,
@@ -50,7 +50,10 @@ export default class SignUp extends Component {
       }
     }
   };
-
+  onClickRedirect=e=>{
+    e.preventDefault();
+    redirectToUrl("user/sign-in")
+  }
   onClick = e => {
     e.preventDefault();
     const { login, password, email } = this.state;
@@ -66,7 +69,7 @@ export default class SignUp extends Component {
       this.setState({ alertMessage: "Все поля должны быть заполнены" });
     } else {
       userApi
-        .SignUp(SignUpRequest)
+        .signUp(SignUpRequest)
         .then(res => {
           setCookiesName(login);
           setSession(res.token);
@@ -134,84 +137,71 @@ export default class SignUp extends Component {
     return (
       <div>
         <div className="sidenav">
-          <div className="login-main-text">
+          <div className="sidebar-main-text">
             <h2>Регистрация</h2>
             <p>Введите ваши данные для того чтобы зарегистрироватсья</p>
           </div>
         </div>
-        <div className="main form-align ">
-          <div className="col-md-6 col-sm-12 m-1">
-            <div className="register-form ">
+        <div className="main  ">
+          <div className="col-md-6 col-sm-12 m-5">
+            <div className="login-form">
               <p>{alertMessage}</p>
               <form
                 id="todoInputForm"
                 name="registerForm"
-                method="POST"
-                className=" form-group "
+                className="form-group"
                 onSubmit={this.handleSubmit}
               >
-                <div className="form-group  ">
-                  <label className="w-75" id="pops">
-                    Логин :
+                <div className="form-group">
+                  <label className="label-width w-60">
+                    Логин
                     <input
                       type="text"
                       className={className}
-                      name={"login"}
-                      id="login"
+                      name="login"
                       onChange={this.handleChange}
                       placeholder="Логин"
-                      required
                     />
                   </label>
                   <p className={validateClassForLogin}>{validMessage}</p>
-                </div>
-                <div className="form-group ">
-                  <label className="w-75">
-                    Почта :
+                  <label className="label-width w-60">
+                    Почта
                     <input
                       type="email"
                       className={classNameEmail}
-                      name={"email"}
+                      name="email"
                       onChange={this.handleChange}
-                      id="secondName"
                       placeholder="Почта"
-                      required
                     />
                   </label>
                   <p className={validateClassForEmail}>{validMessageEmail}</p>
-                </div>
-                <div className="form-group ">
-                  <label className="w-75">
-                    Пароль:
+                  <label className="label-width w-60">
+                    Пароль
                     <input
                       type="password"
                       className={classNamePass}
                       name="password"
                       onChange={this.handleChange}
-                      id="password"
                       placeholder="Пароль"
-                      required
                     />
                   </label>
                   <p className={validateClassForPassword}>{validMessagePass}</p>
-                </div>
-                <div className="form-group ">
-                  <input
-                    type="submit"
-                    className="btn btn-light mb-2"
-                    value="Отправить"
-                    id="submitForm"
-                    onClick={this.onClick}
-                  />
-                  <input type="reset" className="btn btn-light mb-2 m-1" />
-                  <button type="button" className="btn btn-light mb-2 m-1 ">
-                    <a
-                      href="http://localhost:3001/sign-in"
-                      className="text-decoration-none text-reset m-1"
-                    >
-                      Я уже зарегистрирован
-                    </a>
-                  </button>
+
+                  <div className="form-group ">
+                    <input
+                      type="submit"
+                      className="btn btn-black btn-style"
+                      value="Отправить"
+                      id="submitForm"
+                      onClick={this.onClick}
+                    />
+
+                    <button
+                        className="btn btn-black btn-style"
+                        onClick={this.onClickRedirect}
+                    > Я уже зарегестрирован
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>
