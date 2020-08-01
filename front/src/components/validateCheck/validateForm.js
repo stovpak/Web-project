@@ -14,3 +14,14 @@ export function validateEmail(email){
     return checkEmail;
 
 };
+export function validateDate(birthday){
+    const validate = /([0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01]))|(0000-00-00)/;
+    let checkDate = validate.test(birthday);
+    return checkDate;
+};
+export function validateName(name){
+    const validate = /^([A-Z][a-z]+-[A-Z][a-z]+)$|^([A-Z][a-z]+)$/;
+    let checkName = validate.test(name);
+    return checkName;
+};
+
