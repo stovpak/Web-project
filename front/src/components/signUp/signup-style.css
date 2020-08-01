@@ -20,6 +20,12 @@ body {
 .form-align{
     margin-top: 10%;
 }
+.btn-style{
+    display: block;
+    margin: 15px 0;
+    width: 60%;
+}
+
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
 }
@@ -65,9 +71,4 @@ body {
 
 .login-main-text h2{
     font-weight: 300;
-}
-
-.btn-black{
-    background-color: #000 !important;
-    color: #fff;
 }

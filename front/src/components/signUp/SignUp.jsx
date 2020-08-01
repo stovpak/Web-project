@@ -50,7 +50,10 @@ export default class SignUp extends Component {
       }
     }
   };
-
+  onClickRedirect=e=>{
+    e.preventDefault();
+    redirectToUrl("user/sign-in")
+  }
   onClick = e => {
     e.preventDefault();
     const { login, password, email } = this.state;
@@ -194,15 +197,9 @@ export default class SignUp extends Component {
                     />
 
                     <button
-                      type="submit"
-                      className="btn btn-black fix-size btn-style"
-                    >
-                      <a
-                        href="http://localhost:3001/sign-in"
-                        className="text-decoration-none text-reset"
-                      >
-                        Я уже зарегистрирован
-                      </a>
+                        className="btn btn-black btn-style"
+                        onClick={this.onClickRedirect}
+                    > Я уже зарегестрирован
                     </button>
                   </div>
                 </div>
