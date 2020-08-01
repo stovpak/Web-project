@@ -10,15 +10,13 @@ import { createBrowserHistory } from "history";
 import SignIn from "./components/signIn/SignIn";
 import SignUp from "./components/signUp/SignUp";
 import MainPage from "./components/Main-Page/Home";
-import Cookies from "universal-cookie";
 import CreateTopic from "./components/topics/createTopic";
 import Profile from "./components/userProfile/Profile";
-import ChangeEmail from "./components/changeData/СhangeEmail";
 import ChangeUserPassword from "./components/changeData/ChangePassword";
 import { getJwt } from "./components/helpers/userService";
-import Paginate from "./components/helpers/paginate";
 import ChangeData from "./components/changeData/ChangeData";
 import RestorePassword from "./components/restorePassword/RestorePassword";
+import ChangeUserEmail from "./components/changeData/ChangeEmail";
 
 let history = new createBrowserHistory({
   baseName: "/"
@@ -46,7 +44,7 @@ export default class App extends Component {
           <Route exact path={"/topics"} component={MainPage} />
           <Route path={"/topics/create-topic"} component={CreateTopic} />
           <Route exact path={"/user/profile"} component={Profile} />
-          <Route path={"/user/profile/change-email"} component={ChangeEmail} />
+          <Route path={"/user/profile/change-email"} component={ChangeUserEmail} />
           <Route
             path={"/user/profile/change-pass"}
             component={ChangeUserPassword}

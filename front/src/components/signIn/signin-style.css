@@ -17,7 +17,9 @@ body {
     overflow-x: hidden;
     padding-top: 20px;
 }
-
+    .w-23{
+    width: 23%;
+}
 
 .main {
     padding: 0px 10px;
@@ -25,9 +27,7 @@ body {
 .tx-al {
     text-align: center;
 }
-.w-18 {
-    width: 18%;
-}
+
 
 .icon-api {
     margin-left: 4%;
@@ -43,18 +43,20 @@ body {
 .text1 {
     position: absolute;
     top: 10px;
-    left: 36%;
+    left: 40%;
     background: #fff;
     padding: 0 10px;
 }
 hr{
     display: inherit;
-    width:195px;
+    width: 247px;
 }
 .w-36{
     width: 36%;
 }
-
+.w-60{
+    width:60%;
+}
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
 }
@@ -95,8 +97,8 @@ hr{
 }
 
 
-.login-main-text{
-    margin-top: 50%;
+.sidebar-main-text{
+    margin-top: 30%;
     padding: 60px;
     color: #fff;
   font-size: large;
