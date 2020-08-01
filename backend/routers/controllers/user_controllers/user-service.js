@@ -86,17 +86,18 @@ function findUser(userLogin) {
   });
 }
 function restorePassword(request, response) {
-  if (passwordValidator(request.body.password)) {
-    userModel.user.update({password: request.body.password}, {
+  if (passwordValidator.validatePassword(request.body.password)) {
+    const passwordToWrite = bcrypt.hashSync(request.body.password, salt);
+    userModel.user.update({password: passwordToWrite}, {
       raw: true,
       where: {
         email: request.body.email,
       },
     });
     deleteRestoreKey(request.body.email);
-    response.status(200).send();
+    response.status(200).send('Пароль обновлен');
   } else {
-    response.status(400).send();
+    response.status(400).send('Неправильно введнный пароль');
   }
 }
 function sendEmail(addressee, subject, text) {
