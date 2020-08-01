@@ -95,9 +95,9 @@ function restorePassword(request, response) {
       },
     });
     deleteRestoreKey(request.body.email);
-    response.status(200).send();
+    response.status(200).send('Пароль обновлен');
   } else {
-    response.status(400).send();
+    response.status(400).send('Неправильно введнный пароль');
   }
 }
 function sendEmail(addressee, subject, text) {
