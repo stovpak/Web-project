@@ -53,7 +53,7 @@ const ChangeUserPassword = () => {
                   name="password"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.firstName}
+                  value={formik.values.password}
                 />
                 <p className="text-danger font-italic position-fixed small-text">
                   {formik.touched.password && formik.errors.password ? (
@@ -69,7 +69,7 @@ const ChangeUserPassword = () => {
                   name="confirmPassword"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.firstName}
+                  value={formik.values.confirmPassword}
                 />
                 <p className="text-danger font-italic position-fixed small-text">
                   {formik.touched.confirmPassword &&
