@@ -17,6 +17,7 @@ import { getJwt } from "./components/helpers/userService";
 import ChangeData from "./components/changeData/ChangeData";
 import RestorePassword from "./components/restorePassword/RestorePassword";
 import ChangeUserEmail from "./components/changeData/ChangeEmail";
+import PasswordKey from "./components/restorePassword/passwordKey";
 
 let history = new createBrowserHistory({
   baseName: "/"
@@ -54,6 +55,10 @@ export default class App extends Component {
           <Route
             path={"/user/sign-in/forget-password"}
             component={RestorePassword}
+          />
+          <Route
+              path={"/sign-in/restore-password/send-key"}
+              component={PasswordKey}
           />
         </Switch>
       </Router>

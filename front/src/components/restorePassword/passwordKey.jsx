@@ -4,7 +4,7 @@ import "./restorePasswordStyle.css";
 import * as Yup from "yup";
 import AuthApi from "../helpers/authApi";
 import { redirectToUrl } from "../helpers/baseAPI";
-import { validateForm, validatePassword } from "../validateCheck/validateForm";
+import { validateForm, validatePassword } from "../ValidateCheck/validateForm";
 import {
   EmailContext,
   emailEmail,
@@ -35,43 +35,44 @@ export default class PasswordKey extends Component {
   };
   keyComponent = () => {
     return (
-        <div>
-          <form className="form-group text-center center-component mt-lg-5 phone-size">
-            <div>
-              <h1 className="text-center">
-                Введите ключ, который пришел к вам на почту
-              </h1>
-              <input
-                  type="text"
-                  name="key"
-                  placeholder="Ключ"
-                  className="form-control "
-                  onChange={this.handleUserInput}
-              />
-              <p className="text-danger font-italic position-fixed small-text">
-                {this.state.keyMessage}
-              </p>
-              <button className="btn btn-warning mt-4 w-50" onClick={this.onKey}>
-                Далее
-              </button>
-            </div>
-          </form>
-        </div>
+      <div>
+        <form className="form-group text-center center-component mt-lg-5 phone-size">
+          <div>
+            <h1 className="text-center">
+              Введите ключ, который пришел к вам на почту
+            </h1>
+            <input
+              type="text"
+              name="key"
+              placeholder="Ключ"
+              className="form-control "
+              onChange={this.handleUserInput}
+            />
+            <p className="text-danger font-italic position-fixed small-text">
+              {this.state.keyMessage}
+            </p>
+            <button className="btn btn-warning mt-4 w-50" onClick={this.onKey}>
+              Далее
+            </button>
+          </div>
+        </form>
+      </div>
     );
   };
 
   render() {
     const { keyMessage, keyMatch, key } = this.state;
+    console.log(key, keyMessage, "пассворд инфооо");
     let showKeyComponent = this.keyComponent();
     let showNextStep = keyMatch ? showKeyComponent : <PasswordPage />;
     return (
-        <div>
-          <div className=" p-3 mb-5 bg-light rounded container w-35 display-center">
-            <div>
+      <div>
+        <div className=" p-3 mb-5 bg-light rounded container w-35 display-center">
+          <div>
               {showNextStep}
-            </div>
           </div>
         </div>
+      </div>
     );
   }
 };

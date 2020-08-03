@@ -1,6 +1,7 @@
 import { AuthRequest } from "./userService";
 import { TokenResponse } from "./getJwt";
 import { httpClient } from "./httpClient";
+import {redirectToUrl} from "./baseAPI";
 
 class authApi {
   async signIn(AuthRequest) {
@@ -9,12 +10,12 @@ class authApi {
         .then(res => res.data);
   }
 
-  async SignUp(AuthRequest) {
+  async signUp(AuthRequest) {
     return await httpClient
         .post("user/sign-up", AuthRequest)
         .then(res => res.data);
   }
-  async ChangeData(firstName,lastName,birth,token){
+  async updateData(firstName,lastName,birth,token){
     return httpClient({
       method: "POST",
       url:"user/profile/change-data/send",
@@ -30,7 +31,7 @@ class authApi {
     }).then(res=>res.data);
   }
 
-  async ChangeEmail(email, token) {
+  async updateEmail(email, token) {
     return httpClient({
       method: "POST",
       url: "user/profile/change-email/send",
@@ -42,7 +43,7 @@ class authApi {
     });
   }
 
-  async ChangePassword(password, token) {
+  async updatePassword(password, token) {
     return httpClient
     ({
       method: "POST",
@@ -53,6 +54,20 @@ class authApi {
         Token: token
       }
     });
+  }
+  async restorePassword(email) {
+    return await httpClient.post("user/sign-in/forget-password", {
+      email:email
+    }).then(res=>res.data)
+  }
+  async passwordKey(key,password){
+  return await httpClient.post("/sign-in/restore-password/send-key").then(
+      res=>{
+        if(res.status==200){
+          redirectToUrl("sign-in/restore-password/send-key")
+        }
+      }
+  )
   }
   async getAllTopics(page, tokenResponse) {
     return await httpClient
