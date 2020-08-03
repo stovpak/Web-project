@@ -1,6 +1,7 @@
 import { AuthRequest } from "./userService";
 import { TokenResponse } from "./getJwt";
 import { httpClient } from "./httpClient";
+import {redirectToUrl} from "./baseAPI";
 
 class authApi {
   async signIn(AuthRequest) {
@@ -54,10 +55,19 @@ class authApi {
       }
     });
   }
-  async restorePassword(email, password) {
-    return await httpClient.post("/sign-in/forget-password", {
-    email:email, password:password
-    })
+  async restorePassword(email) {
+    return await httpClient.post("user/sign-in/forget-password", {
+      email:email
+    }).then(res=>res.data)
+  }
+  async passwordKey(key,password){
+  return await httpClient.post("/sign-in/restore-password/send-key").then(
+      res=>{
+        if(res.status==200){
+          redirectToUrl("sign-in/restore-password/send-key")
+        }
+      }
+  )
   }
   async getAllTopics(page, tokenResponse) {
     return await httpClient
