@@ -1,82 +1,80 @@
 import React, { Component } from "react";
-import { useFormik } from "formik";
+import { useFormik, Formik, Field, Form, ErrorMessage } from "formik";
 import "./restorePasswordStyle.css";
 import img from "./passwordPNG.png";
 import * as Yup from "yup";
 import AuthApi from "../helpers/authApi";
 import { emailSave, restorePasswordInfo } from "../helpers/userService";
+import {redirectToUrl} from "../helpers/baseAPI";
 
-const RestorePassword = () => {
-  const formik = useFormik({
-    initialValues: {
-      email: ""
-    },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Почта введена неправильно")
-        .required("Поле не должно быть пустым")
-    }),
-    onSubmit: values => {
-      console.log(values.email, "values");
-      restorePasswordInfo.email = values.email;
-      AuthApi.restorePassword(values.email)
-        .then(res => {
+export default class RestorePassword extends Component {
+  render() {
+    return (
+      <div className="main-bg">
+        <div className=" p-3 mb-5 bg-light rounded container w-35 display-center ">
+          <div>
+            <img
+              src={img}
+              alt="passwordRestore"
+              className={"img-size text-center"}
+            />
+          </div>
+          <div>
+            <h1 className="text-center">Забыли пароль?</h1>
+            <h5 className="text-black-50 text-center mt-lg-5">
+              Введите почту, чтобы востановить пароль
+            </h5>
+            <Formik
+              initialValues={{ email: "" }}
+              validationSchema={Yup.object({
+                email: Yup.string()
+                  .email("Почта введена неправильно")
+                  .required("Поле не должно быть пустым")
+              })}
+              onSubmit={({ email }, { setStatus, setSubmitting }) => {
+                setStatus();
+                console.log(email, "values");
+                restorePasswordInfo.email = email;
+                AuthApi.restorePassword(email)
+                  .then(res => {console.log("SOMEBADY ONCE TOLD ME");
+                  redirectToUrl("/sign-in/restore-password/send-key")})
+                  .catch(err => {
+                    setSubmitting(false);
+                    setStatus(err);
+                  });
 
-        })
-        .catch(err => {
-          if( err.status===404){
-            alert("Такая пчота не найдена")
-          } else if(err.status>=500){
-            alert("Произошла ошибка сервера")
-          }
+              }}
+              render={({ errors, status, touched, isSubmitting }) => (
+                <Form className="form-group text-center center-component mt-lg-5 phone-size">
+                  <div className="mb-5 ">
+                    <Field
+                      type="email"
+                      name="email"
+                      placeholder="Почта"
+                      className={
+                        "form-control "
+                      }
+                    />
+                    <ErrorMessage
+                      name={"email"}
+                      component={"div"}
+                      className="text-danger font-italic position-fixed small-text"
+                    />
+                  </div>
 
-      });
-    }
-  });
-
-  return (
-    <div>
-      <div className=" p-3 mb-5 bg-light rounded container w-35 display-center ">
-        <div>
-          <img
-            src={img}
-            alt="passwordRestore"
-            className={"img-size text-center"}
-          />
-        </div>
-        <div>
-          <h1 className="text-center">Забыли пароль?</h1>
-          <h5 className="text-black-50 text-center mt-lg-5">
-            Введите почту, чтобы востановить пароль
-          </h5>
-          <form
-            onSubmit={formik.handleSubmit}
-            className="form-group text-center center-component mt-lg-5 phone-size"
-          >
-            <div className="mb-5 ">
-              <input
-                type="email"
-                name="email"
-                placeholder="Почта"
-                className="form-control "
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
-              />
-              <p className="text-danger font-italic position-fixed small-text">
-                {formik.touched.email && formik.errors.email ? (
-                  <div>{formik.errors.email}</div>
-                ) : null}
-              </p>
-            </div>
-            <button type="submit" className="btn btn-warning  w-75 phone-size">
-              Выслать код
-            </button>
-          </form>
+                  <button
+                    type="submit"
+                    className="btn btn-warning  w-75 phone-size"
+                  >
+                    Выслать код
+                  </button>
+                </Form>
+              )}
+            />
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
-export default RestorePassword;
