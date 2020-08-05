@@ -11,21 +11,20 @@ export default class NavBar extends Component {
 
   componentDidMount = () => {
     let name = cookies.get("username");
-    console.log(name, "cookie");
     this.setState({ username: name });
   };
   onClick = () => {
     cookies.remove("username");
     cookies.remove("sessionToken");
-    redirectToUrl("/sign-in");
+    redirectToUrl("user/sign-in");
   };
   onUserInfo = e => {
     e.preventDefault();
-    redirectToUrl("profile");
+    redirectToUrl("user/profile");
   };
   onClickPage = e => {
     e.preventDefault();
-    redirectToUrl("sign-in");
+    redirectToUrl("user/sign-in");
   };
   addTopic = e => {
     e.preventDefault();
@@ -33,9 +32,9 @@ export default class NavBar extends Component {
       cookies.get("username") === null ||
       cookies.get("username") === undefined
     ) {
-      redirectToUrl("sign-in");
+      redirectToUrl("user/sign-in");
     } else {
-      redirectToUrl("create-topic");
+      redirectToUrl("topics/create-topic");
     }
   };
 
