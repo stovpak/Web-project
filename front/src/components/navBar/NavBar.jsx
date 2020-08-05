@@ -32,7 +32,7 @@ export default class NavBar extends Component {
       cookies.get("username") === null ||
       cookies.get("username") === undefined
     ) {
-      redirectToUrl("sign-in");
+      redirectToUrl("user/sign-in");
     } else {
       redirectToUrl("topics/create-topic");
     }
