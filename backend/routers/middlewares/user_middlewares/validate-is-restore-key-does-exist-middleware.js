@@ -5,7 +5,9 @@ const restoreKeyValidation = require('../../../core/validations/user_validation/
 
 router.post('/', (request, response, next) => {
   restoreKeyValidation(request.body.email).then((Key) =>{
+    console.log("key")
     if (!Key) {
+      console.log("key",Key)
       response.status(400).send('Ошибка ключа');
       return;
     } else {
