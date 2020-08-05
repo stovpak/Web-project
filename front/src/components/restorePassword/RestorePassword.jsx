@@ -5,7 +5,7 @@ import img from "./passwordPNG.png";
 import * as Yup from "yup";
 import AuthApi from "../helpers/authApi";
 import { emailSave, restorePasswordInfo } from "../helpers/userService";
-import {redirectToUrl} from "../helpers/baseAPI";
+import { redirectToUrl } from "../helpers/baseAPI";
 
 export default class RestorePassword extends Component {
   render() {
@@ -25,24 +25,30 @@ export default class RestorePassword extends Component {
               Введите почту, чтобы востановить пароль
             </h5>
             <Formik
-              initialValues={{ email: "" }}
+              initialValues={{ email: "", errorMessage:"" }}
               validationSchema={Yup.object({
                 email: Yup.string()
                   .email("Почта введена неправильно")
                   .required("Поле не должно быть пустым")
               })}
-              onSubmit={({ email }, { setStatus, setSubmitting }) => {
+              onSubmit={({ email , errorMessage}, { setStatus, setSubmitting }) => {
                 setStatus();
                 console.log(email, "values");
-                restorePasswordInfo.email = email;
+
                 AuthApi.restorePassword(email)
-                  .then(res => {console.log("SOMEBADY ONCE TOLD ME");
-                  redirectToUrl("/sign-in/restore-password/send-key")})
+                  .then(res => {
+                    if (res) {
+                        restorePasswordInfo.email = email;
+                        redirectToUrl("sign-in/restore-password/send-key");
+                    }
+                  })
                   .catch(err => {
+                      if (err.response.status>=400){
+                          alert("Такой почты не cуществует");
+                      }
                     setSubmitting(false);
                     setStatus(err);
                   });
-
               }}
               render={({ errors, status, touched, isSubmitting }) => (
                 <Form className="form-group text-center center-component mt-lg-5 phone-size">
@@ -51,16 +57,15 @@ export default class RestorePassword extends Component {
                       type="email"
                       name="email"
                       placeholder="Почта"
-                      className={
-                        "form-control "
-                      }
+                      className={"form-control "}
                     />
                     <ErrorMessage
                       name={"email"}
                       component={"div"}
                       className="text-danger font-italic position-fixed small-text"
                     />
-                  </div>
+
+                </div>
 
                   <button
                     type="submit"

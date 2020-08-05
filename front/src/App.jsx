@@ -51,13 +51,12 @@ export default class App extends Component {
             component={ChangeUserPassword}
           />
           <Route path={"/user/profile/change-data"} component={ChangeData} />
-          <Route path={"/user/profile/change-data"} component={ChangeData} />
           <Route
             path={"/user/sign-in/forget-password"}
             component={RestorePassword}
           />
           <Route
-              path={"/sign-in/restore-password/send-key"}
+              path={"/user/sign-in/restore-password/send-key"}
               component={PasswordKey}
           />
         </Switch>
