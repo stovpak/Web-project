@@ -21,8 +21,10 @@ export default class SignIn extends Component {
     validateLogin: null,
     validatePassword: null,
     validateEmail: null,
-    alertMessage: null
+    alertMessage: null,
+
   };
+
   handleUserInput = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -69,6 +71,7 @@ export default class SignIn extends Component {
         .catch(error => {
           if (error.request.status === 400) {
             this.setState({ alertMessage: "Данные введены не верно" });
+
           } else if (error.request.status !== 400) {
             console.log(404);
           }
