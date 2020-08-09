@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import SignIn from "./components/signIn/SignIn";
-import SignUp from "./components/signUp/SignUp";
 import MainPage from "./components/Main-Page/Home";
 import CreateTopic from "./components/topics/createTopic";
 import Profile from "./components/userProfile/Profile";
@@ -18,6 +17,7 @@ import ChangeData from "./components/changeData/ChangeData";
 import RestorePassword from "./components/restorePassword/RestorePassword";
 import ChangeUserEmail from "./components/changeData/ChangeEmail";
 import PasswordKey from "./components/restorePassword/passwordKey";
+import SignUp from "./components/signUp/SignUp";
 
 let history = new createBrowserHistory({
   baseName: "/"
@@ -45,7 +45,10 @@ export default class App extends Component {
           <Route exact path={"/topics"} component={MainPage} />
           <Route path={"/topics/create-topic"} component={CreateTopic} />
           <Route exact path={"/user/profile"} component={Profile} />
-          <Route path={"/user/profile/change-email"} component={ChangeUserEmail} />
+          <Route
+            path={"/user/profile/change-email"}
+            component={ChangeUserEmail}
+          />
           <Route
             path={"/user/profile/change-pass"}
             component={ChangeUserPassword}
@@ -56,8 +59,8 @@ export default class App extends Component {
             component={RestorePassword}
           />
           <Route
-              path={"/user/sign-in/restore-password/send-key"}
-              component={PasswordKey}
+            path={"/user/sign-in/restore-password/send-key"}
+            component={PasswordKey}
           />
         </Switch>
       </Router>

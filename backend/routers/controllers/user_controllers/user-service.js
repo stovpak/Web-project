@@ -116,9 +116,9 @@ function sendEmail(addressee, subject, text) {
   });
 }
 function findMail (email){
-    return userModel.user.findOne({where: {
-            email
-        }});
+  return userModel.user.findOne({where: {
+      email
+    }});
 }
 
 function createRestoreKey(email) {
