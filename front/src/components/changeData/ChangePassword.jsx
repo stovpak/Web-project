@@ -28,69 +28,69 @@ const ChangeUserPassword = () => {
     onSubmit: values => {
       PasswordChanges.password = values.password;
       AuthApi.updatePassword(PasswordChanges, token)
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => console.log(err));
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => console.log(err));
     }
   });
   return (
-    <div>
-      <NavBar />
-      <form onSubmit={formik.handleSubmit}>
-        <div>
-          <ul className="list-group container col-4 ">
-            <h1 className=" text-center">Профиль</h1>
-            <li className="list-group-item bg-dark text-center text-white">
-              Изменение пароля
-            </li>
-            <li className="list-group-item" name="password">
-              Ведите новый пароль
-              <div>
-                <input
-                  className="form-control mb-3"
-                  type="password"
-                  name="password"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.password}
-                />
-                <p className="text-danger font-italic position-fixed small-text">
-                  {formik.touched.password && formik.errors.password ? (
-                    <div>{formik.errors.password}</div>
-                  ) : null}
-                </p>
-              </div>
-              <div>
-                Повторите пароль
-                <input
-                  className="form-control mb-3"
-                  type="password"
-                  name="confirmPassword"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.confirmPassword}
-                />
-                <p className="text-danger font-italic position-fixed small-text">
-                  {formik.touched.confirmPassword &&
-                  formik.errors.confirmPassword ? (
-                    <div>{formik.errors.confirmPassword}</div>
-                  ) : null}
-                </p>
-                <p className="text-danger font-italic position-fixed small-text">
-                  {formik.errors.passwordMatch ? (
-                    <div>{formik.errors.passwordMatch}</div>
-                  ) : null}
-                </p>
-              </div>
-              <button className="btn btn-dark mt-2 float-right" type="submit">
-                Изменить
-              </button>
-            </li>
-          </ul>
-        </div>
-      </form>
-    </div>
+      <div>
+        <NavBar />
+        <form onSubmit={formik.handleSubmit}>
+          <div>
+            <ul className="list-group container col-4 ">
+              <h1 className=" text-center">Профиль</h1>
+              <li className="list-group-item bg-dark text-center text-white">
+                Изменение пароля
+              </li>
+              <li className="list-group-item" name="password">
+                Ведите новый пароль
+                <div>
+                  <input
+                      className="form-control mb-3"
+                      type="password"
+                      name="password"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.password}
+                  />
+                  <p className="text-danger font-italic position-fixed small-text">
+                    {formik.touched.password && formik.errors.password ? (
+                        <div>{formik.errors.password}</div>
+                    ) : null}
+                  </p>
+                </div>
+                <div>
+                  Повторите пароль
+                  <input
+                      className="form-control mb-3"
+                      type="password"
+                      name="confirmPassword"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.confirmPassword}
+                  />
+                  <p className="text-danger font-italic position-fixed small-text">
+                    {formik.touched.confirmPassword &&
+                    formik.errors.confirmPassword ? (
+                        <div>{formik.errors.confirmPassword}</div>
+                    ) : null}
+                  </p>
+                  <p className="text-danger font-italic position-fixed small-text">
+                    {formik.errors.passwordMatch ? (
+                        <div>{formik.errors.passwordMatch}</div>
+                    ) : null}
+                  </p>
+                </div>
+                <button className="btn btn-dark mt-2 float-right" type="submit">
+                  Изменить
+                </button>
+              </li>
+            </ul>
+          </div>
+        </form>
+      </div>
   );
 };
 export default ChangeUserPassword;
