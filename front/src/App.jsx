@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import {
   BrowserRouter as Router,
@@ -18,7 +19,9 @@ import RestorePassword from "./components/restorePassword/RestorePassword";
 import ChangeUserEmail from "./components/changeData/ChangeEmail";
 import PasswordKey from "./components/restorePassword/passwordKey";
 import SignUp from "./components/signUp/SignUp";
-
+import openSocket from 'socket.io-client';
+import Socket from "./components/socket-test/socket";
+export const socket = openSocket('http://localhost:8081');
 let history = new createBrowserHistory({
   baseName: "/"
 });
@@ -62,8 +65,10 @@ export default class App extends Component {
             path={"/user/sign-in/restore-password/send-key"}
             component={PasswordKey}
           />
+          <Route path={"/test"} component={Socket}/>
         </Switch>
       </Router>
     );
   }
 }
+

@@ -1,45 +1,45 @@
-const dataConnection = require('../../user_db/data-connection.js');
+const dataConnection = require("../../user_db/data-connection.js");
 
-const {sequelizeConnection} = dataConnection;
+const { sequelizeConnection } = dataConnection;
 const sequrlizeType = sequelizeConnection.Sequelize;
-const user = sequelizeConnection.define('users', {
+const user = sequelizeConnection.define("users", {
   id: {
     type: sequrlizeType.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-    allowNull: false,
+    allowNull: false
   },
   first_name: {
-    type: sequrlizeType.STRING,
+    type: sequrlizeType.STRING
   },
   second_name: {
-    type: sequrlizeType.STRING,
+    type: sequrlizeType.STRING
   },
   role_id: {
     type: sequrlizeType.INTEGER,
     defaultValue: 1,
     references: {
-      model: 'roles',
-      key: 'id',
-    },
+      model: "roles",
+      key: "id"
+    }
   },
   login: {
     type: sequrlizeType.STRING,
     allowNull: false,
-    unique: true,
+    unique: true
   },
   password: {
     type: sequrlizeType.STRING,
     allowNull: false,
-    unique: false,
+    unique: false
   },
   birthday: {
-    type: sequrlizeType.DATE,
+    type: sequrlizeType.DATE
   },
   email: {
     type: sequrlizeType.STRING,
     allowNull: false,
-    unique: true,
-  },
+    unique: true
+  }
 });
 module.exports.user = user;
