@@ -11,20 +11,21 @@ export default class NavBar extends Component {
 
   componentDidMount = () => {
     let name = cookies.get("username");
+    console.log(name, "cookie");
     this.setState({ username: name });
   };
   onClick = () => {
     cookies.remove("username");
     cookies.remove("sessionToken");
-    redirectToUrl("user/sign-in");
+    redirectToUrl("/sign-in");
   };
   onUserInfo = e => {
     e.preventDefault();
-    redirectToUrl("user/profile");
+    redirectToUrl("profile");
   };
   onClickPage = e => {
     e.preventDefault();
-    redirectToUrl("user/sign-in");
+    redirectToUrl("sign-in");
   };
   addTopic = e => {
     e.preventDefault();
@@ -32,9 +33,9 @@ export default class NavBar extends Component {
       cookies.get("username") === null ||
       cookies.get("username") === undefined
     ) {
-      redirectToUrl("user/sign-in");
+      redirectToUrl("sign-in");
     } else {
-      redirectToUrl("topics/create-topic");
+      redirectToUrl("create-topic");
     }
   };
 
@@ -42,10 +43,9 @@ export default class NavBar extends Component {
     const { username } = this.state;
     let userName;
 
-
     if (cookies.get("sessionToken")) {
       userName = (
-        <div className="input-group mb-3">
+        <div className="input-group mb-3 ">
           <button
             className="btn btn-outline-secondary dropdown-toggle"
             type="button"
@@ -81,16 +81,23 @@ export default class NavBar extends Component {
     }
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark rounded-0 p-0">
-          <a className="navbar-brand" href={"#"}>
+        <nav className="navbar navbar-expand-md bg-dark navbar-dark  d-flex justify-content-end">
+          <a className="navbar-brand " href="#">
             AvtoForum
           </a>
-          <div
-            className="collapse navbar-collapse content-center "
-            id="navbarSupportedContent"
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapsibleNavbar"
           >
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item active">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div
+              class="collapse navbar-collapse" id="collapsibleNavbar"
+          >
+            <ul className="navbar-nav ">
+              <li className="nav-item ">
                 <a className="nav-link" href="/topic">
                   Главная <span className="sr-only">(current)</span>
                 </a>
@@ -100,35 +107,23 @@ export default class NavBar extends Component {
                   Обсуждения
                 </a>
               </li>
-            </ul>
-            <form className="form-inline form-group my-2 my-lg-0 float-right">
-              <div className="">
-                <input
-                  className="form-control mr-sm-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
+              <li className="nav-item">
+                <a className="nav-link" href="#">{userName}</a></li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">
+              <form className="form-inline form-group my-2 my-lg-0 float-right">
                 <button
-                  className="btn btn-outline-success my-2 my-sm-0 btn-right form-control "
-                  type="submit"
+                  name="addTopic"
+                  className="ml-auto btn btn-warning m-50"
+                  onClick={this.addTopic}
                 >
-                  Поиск
+                  Добавить тему
                 </button>
-              </div>
-              <button
-                name="addTopic"
-                className="ml-auto btn btn-warning m-50"
-                onClick={this.addTopic}
-              >
-                Добавить тему
-              </button>
-              {userName}
+              </form>
+                </a>
+              </li>
 
-              {/*<button name="logOut" className="ml-auto btn btn-warning " onClick={this.onClick}>
-                Выход
-              </button>*/}
-            </form>
+            </ul>
           </div>
         </nav>
       </div>
