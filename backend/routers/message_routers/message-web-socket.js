@@ -1,7 +1,7 @@
 const WebSocket = require('ws');
 const authorizationService = require('../controllers/user_controllers/authorization-service.js');
 
-const port = 8081;
+const port = 8080;
 const server = new WebSocket.Server({port});
 const messageService = require('../controllers/message_controllers/message-service.js');
 const topicLikeService = require('../controllers/message_controllers/topic-like-service.js');
@@ -14,14 +14,17 @@ function responseToClient(responseMessage, server) {
   server.clients.forEach((client) => {
     if (client.readyState === WebSocket.OPEN) {
       client.send(responseMessage);
+      console.log(responseMessage,"res");
     }
   });
 }
 
 server.on('connection', (ws) => {
   ws.on('message', (message) => {
+      console.log("message",message)
     const messageType = JSON.parse(message).type;
     const autHeader = JSON.parse(message).token;
+      console.log(messageType, "mess onj")
     if (messageType === 'Connect') {
       messageService.showOldMessages(JSON.parse(message).topicId).then((responseMessage) => {
         responseToClient(JSON.stringify(responseMessage), server);
@@ -32,6 +35,7 @@ server.on('connection', (ws) => {
       switch (messageType) {
         case 'Message':
           const messageObject = new Message(JSON.parse(message).topicId, login, JSON.parse(message).date, JSON.parse(message).text);
+          console.log(messageObject, "mess onj")
           messageService.createMessage(messageObject);
           responseToClient(message, server);
           break;
