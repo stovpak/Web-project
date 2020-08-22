@@ -1,24 +1,19 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
+import {getCookiesName, getJwt} from "../helpers/userService";
+import NavBar from "../navBar/NavBar";
+import "./chatStyle.css";
 
 class ChildComponent extends Component {
+render(){
+    let {user, message}= this.props;
 
-    sendMessage=()=>{
-        const {websocket, message} = this.props; // websocket instance passed as props to the child component.
-
-        try {
-            websocket.send(JSON.stringify({type:'message',message:'hello'})) //send data to the server
-
-        } catch (error) {
-            console.log(error) // catch error
-        }
-    }
-    render() {
-        return (
-            <div>
-               <button onClick={this.sendMessage}>send</button>
-            </div>
-        );
-    }
+    return (
+      <div className={"bg-primary"}>
+          <h1 >{user}</h1>
+          <p>message:{message}</p>
+      </div>
+    );
+  }
 }
 
 export default ChildComponent;

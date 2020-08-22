@@ -19,14 +19,14 @@ import RestorePassword from "./components/restorePassword/RestorePassword";
 import ChangeUserEmail from "./components/changeData/ChangeEmail";
 import PasswordKey from "./components/restorePassword/passwordKey";
 import SignUp from "./components/signUp/SignUp";
-import openSocket from 'socket.io-client';
+
 import Socket from "./components/socket-test/socket";
-export const socket = openSocket('http://localhost:8081');
 let history = new createBrowserHistory({
   baseName: "/"
 });
-
 export default class App extends Component {
+
+
   render() {
     const isAuth = getJwt();
     return (
