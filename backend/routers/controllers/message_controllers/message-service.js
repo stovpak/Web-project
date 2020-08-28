@@ -2,7 +2,7 @@ const messageModel = require('../../../db/models/message_models/message-model.js
 
 function createMessage(message) {
   messageModel.create({
-    author_name: message.author_name,
+    author_name: message.authorName,
     topic_id: message.topicId,
     date: message.creationDate,
     text: message.text,

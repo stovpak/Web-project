@@ -15,38 +15,33 @@ function responseToClient(responseMessage, server) {
 
     if (client.readyState === WebSocket.OPEN) {
       client.send(responseMessage);
-      console.log(responseMessage,"сообщение отправляемое пользователю");
     }
   });
 }
 
 server.on('connection', (ws) => {
   ws.on('message', (message) => {
-      console.log("message",message)
     const messageType = JSON.parse(message).type;
     const autHeader = JSON.parse(message).token;
-      console.log(messageType, "mess type", autHeader, "authHeaderr");
-
     if (messageType === 'Connect') {
-      console.log("connect")
+      console.log('connect i strue', message)
       messageService.showOldMessages(JSON.parse(message).topicId).then((responseMessage) => {
         responseToClient(JSON.stringify(responseMessage), server);
       });
     } else if (authorizationService(autHeader)) {
+      console.log("else is run");
       const login = jwtService.getLogin(autHeader);
-      console.log(login, "login");
       const role = jwtService.getRole(autHeader);
-      console.log(role, "role")
       switch (messageType) {
         case 'Message':
-          const messageObject = new Message(JSON.parse(message).topicId, login, JSON.parse(message).date, JSON.parse(message).text);
-          console.log(messageObject, "messageObj")
+          console.log("message is run")
+          let messageObject = new Message(JSON.parse(message).topicId, login ,JSON.parse(message).text);
           messageService.createMessage(messageObject);
           responseToClient(message, server);
           break;
         case 'Update':
           messageService.findMessage(JSON.parse(message).messageId).then((mgs) => {
-            if (authorValidator(login, mgs.author) && adminValidator(role)) {
+            if (authorValidator(login, mgs.author_name) && adminValidator(role)) {
               messageService.updateMessage(JSON.parse(message).messageId, JSON.parse(message).text).then((responseMessage) => {
                 responseToClient(responseMessage, server);
               });
