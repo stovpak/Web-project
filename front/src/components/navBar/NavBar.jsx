@@ -11,7 +11,6 @@ export default class NavBar extends Component {
 
   componentDidMount = () => {
     let name = cookies.get("username");
-    console.log(name, "cookie");
     this.setState({ username: name });
   };
   onClick = () => {

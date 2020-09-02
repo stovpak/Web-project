@@ -68,7 +68,7 @@ export default class App extends Component {
                 component={PasswordKey}
             />
             <Route path={"/test"} component={Socket}/>
-            <Route path={"/topicId/:id"} children={<TopicInfo/>}/>
+            <Route path={"/topicId/show-comment"} component={TopicInfo}/>
 
           </Switch>
         </Router>
