@@ -4,6 +4,8 @@ import authApi from "../helpers/authApi";
 import MessageList from "../socket-test/showMessage";
 import { getJwt } from "../helpers/getJwt";
 import Socket from "../socket-test/socket";
+import {redirectToUrl} from "../helpers/baseAPI";
+import {Link }from "react-router-dom";
 export default class TopicListItem extends Component {
     state = {
         isLike: false,
@@ -19,6 +21,7 @@ export default class TopicListItem extends Component {
     commentItem = (e, id, author, text) => {
         e.preventDefault();
         this.setState({isShow:!this.state.isShow})
+        redirectToUrl('/topicId/show-comment');
 
     };
 
@@ -64,12 +67,7 @@ export default class TopicListItem extends Component {
                     >
                         Понравилось : {likes + countLikes}
                     </button>
-                    <button
-                        className={" btn-likes float-right "}
-                        onClick={e => this.commentItem(e, id, auth, topic_name)}
-                    >
-                        Обсудить
-                    </button>
+                    <Link to={{pathname:'/topicId/show-comment',state:this.props}}>Обсудить</Link>
                 </div>
             </div>
         );

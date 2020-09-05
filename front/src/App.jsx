@@ -67,7 +67,7 @@ export default class App extends Component {
                 path={"/user/sign-in/restore-password/send-key"}
                 component={PasswordKey}
             />
-            <Route path={"/test"} component={Socket}/>
+            {/*<Route path={"/test"} component={Socket}/>*/}
             <Route path={"/topicId/show-comment"} component={TopicInfo}/>
 
           </Switch>

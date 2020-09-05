@@ -4,18 +4,24 @@ import React, { Component } from "react";
 export default class MessageList extends Component {
   render() {
     let messages = this.props.content;
-    const messageItem = messages.map((messages, i) => {
+    const messageItem = messages.map(({author_name, date, text, id}) => {
         return (
-          <div  className={"w-100"}>
-            <div className={"shadow-sm p-3 mb-5 bg-light rounded w-100"} key={i}>
-              <h5 >{messages.author_name}</h5>
-              <p>message:{messages.text}</p>
+            <div className="media text-muted pt-3  " key={id}>
+                <svg className="bd-placeholder-img mr-2 rounded" width="32" height="32"
+                     xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
+                     role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#B8860B"></rect>
+                </svg>
+                <p className="pb-3 mb-0  border-bottom border-gray pb-2 mb-0 w-100 cc_cursor">
+                    <strong className="d-block text-body cc_cursor blog-post-title text-monospace">@{author_name}</strong>
+                   {text}
+                    <small className="text-muted float-right">{date}</small>
+                </p>
+
             </div>
-          </div>
         );
       })
-    return <div>{messageItem}</div>;
+    return <div>{messageItem}</div>
 
   }
 }
-

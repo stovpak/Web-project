@@ -1,15 +1,15 @@
 import React from "react";
 import TopicListItem from "../Main-Page/TopicListItem";
 /*let styleList = "table-hover table-dark ";*/
-const TopicList = props => {
+const TopicList = ({topic}) => {
 
-  const topicElement = props.topic.map(topic => {
+  const topicElement = topic.map(topics => {
     return (
         <TopicListItem
-          topic_name={topic.topic_name}
-          id={topic.id}
-          likes={topic.likes}
-          auth={topic.creator_name}
+          topic_name={topics.topic_name}
+          id={topics.id}
+          likes={topics.likes}
+          auth={topics.creator_name}
           className="container "
         />
     );
