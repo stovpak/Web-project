@@ -1,8 +1,8 @@
 class Message {
-  constructor(topicId, author, creationDate, text) {
+  constructor(topicId, authorName, text) {
     this.topicId = topicId;
-    this.author = author;
-    this.creationDate = creationDate;
+    this.authorName = authorName;
+    this.creationDate = new Date();
     this.text = text;
   }
 }

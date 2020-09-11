@@ -6,13 +6,13 @@ export function getCookiesName(name) {
   return cookies.get("username");
 }
 export function setCookiesName(name) {
-  return cookies.set("username", name, {path:"/"});
+  return cookies.set("username", name);
 }
 export const getJwt = () => {
   return cookies.get("sessionToken");
 };
 export const setSession = token => {
-  return cookies.set("sessionToken", token,{path:"/"});
+  return cookies.set("sessionToken", token);
 };
 
 export let AuthRequest = { login: "", password: "" };

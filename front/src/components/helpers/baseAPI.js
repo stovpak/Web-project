@@ -10,7 +10,4 @@ export function urlUserApi(path) {
   return userApi + path;
 }
 
-export function urlTopics(path) {
-  return topicsApi + path;
-}
 

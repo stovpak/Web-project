@@ -32,7 +32,7 @@ export default class NavBar extends Component {
       cookies.get("username") === null ||
       cookies.get("username") === undefined
     ) {
-      redirectToUrl("user/sign-in");
+      redirectToUrl("sign-in");
     } else {
       redirectToUrl("topics/create-topic");
     }
@@ -42,55 +42,60 @@ export default class NavBar extends Component {
     const { username } = this.state;
     let userName;
 
-
     if (cookies.get("sessionToken")) {
       userName = (
-        <div className="input-group mb-3">
-          <button
-            className="btn btn-outline-secondary dropdown-toggle"
-            type="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <UserNameLabel
-              name={this.state.username}
-              className="form-control"
-            />
-          </button>
-          <div className="dropdown-menu">
-            <a className="dropdown-item" onClick={this.onUserInfo}>
-              Профиль
-            </a>
-            <a className="dropdown-item" onClick={this.userTopic}>
-              Мои темы
-            </a>
-            <div role="separator" className="dropdown-divider"></div>
-            <a className="dropdown-item" onClick={this.onClick}>
-              Выход
-            </a>
+        <div className="input-group mb-3 ">
+          <div className="dropdown open w-50">{/*margin: 0px 65px 0px 0px;*/}
+            <button type="button" className="btn btn-secondary dropdown-toggle "
+                    type="button" id="dropdownMenu3" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+               { this.state.username}
+            </button>
+            <div className="dropdown-menu" x-placement="right-start"
+                >
+              <a className="dropdown-item" onClick={this.onUserInfo}>
+                Профиль
+              </a>
+              <a className="dropdown-item" onClick={this.userTopic}>
+                Мои темы
+              </a>
+              <a className="dropdown-item" onClick={()=>redirectToUrl('test')}>
+                Мои сообщения
+              </a>
+              <div role="separator" className="dropdown-divider"></div>
+              <a className="dropdown-item" onClick={this.onClick}>
+                Выход
+              </a>
+            </div>
           </div>
         </div>
       );
     } else {
       userName = (
-        <button className="btn btn-warning m-1" onClick={this.onClickPage}>
+        <button className="btn btn-warning form-control" onClick={this.onClickPage}>
           Войти
         </button>
       );
     }
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark rounded-0 p-0">
-          <a className="navbar-brand" href={"#"}>
+        <nav className="navbar navbar-expand-md bg-dark navbar-dark ">
+          <a className="navbar-brand " href="#">
             AvtoForum
           </a>
-          <div
-            className="collapse navbar-collapse content-center "
-            id="navbarSupportedContent"
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapsibleNavbar"
           >
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item active">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div
+              class=" navbar-collapse" id="collapsibleNavbar"
+          >
+            <ul className="navbar-nav mr-auto">{/*align-items: inherit;float: right */}
+              <li className="nav-item ">
                 <a className="nav-link" href="/topic">
                   Главная <span className="sr-only">(current)</span>
                 </a>
@@ -100,35 +105,24 @@ export default class NavBar extends Component {
                   Обсуждения
                 </a>
               </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">
+                  <form className="form-inline form-group my-2 my-lg-0 float-right">
+                    <button
+                        name="addTopic"
+                        className="ml-auto btn btn-warning m-50"
+                        onClick={this.addTopic}
+                    >
+                      Добавить тему
+                    </button>
+                  </form>
+                </a>
+              </li>
             </ul>
-            <form className="form-inline form-group my-2 my-lg-0 float-right">
-              <div className="">
-                <input
-                  className="form-control mr-sm-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button
-                  className="btn btn-outline-success my-2 my-sm-0 btn-right form-control "
-                  type="submit"
-                >
-                  Поиск
-                </button>
-              </div>
-              <button
-                name="addTopic"
-                className="ml-auto btn btn-warning m-50"
-                onClick={this.addTopic}
-              >
-                Добавить тему
-              </button>
-              {userName}
-
-              {/*<button name="logOut" className="ml-auto btn btn-warning " onClick={this.onClick}>
-                Выход
-              </button>*/}
-            </form>
+            <ul className="navbar-nav navbar-align w-25">
+              <li className="nav-item">
+               <a className="nav-link" href="#">{userName}</a></li>
+            </ul>
           </div>
         </nav>
       </div>

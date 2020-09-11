@@ -31,12 +31,16 @@ padding-top: 0.5%;}
     margin-top: 1%;
     font-size: initial;
 }
-svg{
-    width: 0.5em;
-    height: 1em;
+.svg{
+    width: 15px;
+    height: 15px;
     fill:currentColor;
 
 }
+.svg-heart{
+    padding-top: 5px
+}
+
 @media (max-width: 975px ) {
     .adaptive{
 
