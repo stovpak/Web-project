@@ -33,8 +33,6 @@ export default class RestorePassword extends Component {
                             })}
                             onSubmit={({ email , errorMessage}, { setStatus, setSubmitting }) => {
                                 setStatus();
-                                console.log(email, "values");
-
                                 AuthApi.restorePassword(email)
                                     .then(res => {
                                         if (res) {

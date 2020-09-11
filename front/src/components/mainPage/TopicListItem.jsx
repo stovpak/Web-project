@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import "./home-page.css";
 import authApi from "../helpers/authApi";
-import MessageList from "../socket-test/showMessage";
+import MessageList from "../socketComment/showMessage";
 import { getJwt } from "../helpers/getJwt";
-import Socket from "../socket-test/socket";
 import {redirectToUrl} from "../helpers/baseAPI";
 import {Link }from "react-router-dom";
 export default class TopicListItem extends Component {
@@ -28,12 +27,10 @@ export default class TopicListItem extends Component {
     render() {
         let chatBox = [];
         chatBox.push(<MessageList content={this.state.getMessage} />);
-        console.log(this.state.getMessage, 'lol')
         const { isLike, isShow } = this.state;
         let { likes, auth, id, topic_name, getInfo } = this.props;
         let heartIsLike = isLike ? "text-danger" : " ";
         let countLikes = isLike ? 1 : 0;
-        let show=isShow ? <Socket /> : <div></div>
         return (
             <div className="media text-muted pt-3">
                 <svg

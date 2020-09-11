@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import SignIn from "./components/signIn/SignIn";
-import MainPage from "./components/Main-Page/Home";
+import MainPage from "./components/mainPage/Home";
 import CreateTopic from "./components/topics/createTopic";
 import Profile from "./components/userProfile/Profile";
 import ChangeUserPassword from "./components/changeData/ChangePassword";
@@ -20,9 +20,7 @@ import RestorePassword from "./components/restorePassword/RestorePassword";
 import ChangeUserEmail from "./components/changeData/ChangeEmail";
 import PasswordKey from "./components/restorePassword/passwordKey";
 import SignUp from "./components/signUp/SignUp";
-
-import Socket from "./components/socket-test/socket";
-import TopicInfo from "./components/socket-test/topicInfo";
+import TopicInfo from "./components/socketComment/topicInfo";
 let history = new createBrowserHistory({
   baseName: "/"
 });
@@ -67,7 +65,6 @@ export default class App extends Component {
                 path={"/user/sign-in/restore-password/send-key"}
                 component={PasswordKey}
             />
-            {/*<Route path={"/test"} component={Socket}/>*/}
             <Route path={"/topicId/show-comment"} component={TopicInfo}/>
 
           </Switch>
@@ -75,13 +72,3 @@ export default class App extends Component {
     );
   }
 }
-/*function TopicInfos(){
-  let {id}= useParams();
-  return(
-      <div>
-        <h3><TopicInfo id={id}/></h3>
-      </div>
-
-  )
-}*/
-

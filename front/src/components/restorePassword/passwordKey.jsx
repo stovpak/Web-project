@@ -4,7 +4,7 @@ import "./restorePasswordStyle.css";
 import * as Yup from "yup";
 import AuthApi from "../helpers/authApi";
 import { redirectToUrl } from "../helpers/baseAPI";
-import { validateForm, validatePassword } from "../ValidateCheck/validateForm";
+import { validateForm, validatePassword } from "../validateCheck/validateForm";
 import {
   EmailContext,
   emailEmail,
@@ -62,7 +62,6 @@ export default class PasswordKey extends Component {
 
   render() {
     const { keyMessage, keyMatch, key } = this.state;
-    console.log(key, keyMessage, "пассворд инфооо");
     let showKeyComponent = this.keyComponent();
     let showNextStep = keyMatch ? showKeyComponent : <PasswordPage />;
     return (

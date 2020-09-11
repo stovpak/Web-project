@@ -5,7 +5,6 @@ class UserLabel extends Component {
     render() {
         let cookies = new Cookies();
         let getUser = this.props.name;
-        console.log(getUser);
         let user;
         if(getUser!==null || getUser!==undefined){
             user=

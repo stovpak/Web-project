@@ -1,140 +1,66 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "./signup-style.css";
+import ".//signup-style.css";
 import Cookies from "universal-cookie";
 import {
   validateEmail,
   validateForm,
   validatePassword
-} from "../ValidateCheck/validateForm";
-import userApi from "../helpers/authApi";
+} from "../validateCheck/validateForm";
+import AuthApi from "../helpers/authApi";
 import { redirectToUrl, urlUserApi } from "../helpers/baseAPI";
-import ErrorIndicator from "../errorIndicator/ErrorIndicator";
-import {
-  AuthRequest,
-  setCookiesName,
-  setSession,
-  SignUpRequest
-} from "../helpers/userService";
-const cookies = new Cookies();
-export default class SignUp extends Component {
-  state = {
-    user: { login: "", password: "", email: "" },
-    isAdmin: false,
-    validateLogin: null,
-    validatePassword: null,
-    validateEmail: null,
-    alertMessage: null
-  };
-  onError = () => <ErrorIndicator />;
-  handleChange = e => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    this.setState({ [name]: value, group: e.target.value });
-    switch (name) {
-      case "login": {
-        validateForm(value);
-        this.setState({ validateLogin: validateForm(value) });
-        break;
+import {AuthRequest, setCookiesName, setSession, SignUpRequest} from "../helpers/userService";
+import {useFormik} from "formik";
+const SignUp =()=>{
+  const formik = useFormik({
+    initialValues:{
+      login:"",
+      email:"",
+      password:"",
+      errorInfo:"",
+    },
+    validate: values => {
+      const errors = {};
+      if (!validatePassword(values.password)) {
+        errors.password = "Пароль должен состоять из A-Z a-z 0-9";
       }
-      case "password": {
-        validatePassword(value);
-        this.setState({ validatePassword: validatePassword(value) });
-        break;
+      if (!validateEmail(values.email)) {
+        errors.email = "Почта введене непраивльно"
       }
-      case "email": {
-        validateEmail(value);
-        this.setState({ validateEmail: validateEmail(value) });
-        break;
+      if (!validateForm(values.login)) {
+        errors.login = "Логин введен неправильно"
       }
-    }
-  };
-  onClickRedirect=e=>{
-    e.preventDefault();
-    redirectToUrl("user/sign-in")
-  }
-  onClick = e => {
-    e.preventDefault();
-    const { login, password, email } = this.state;
-    SignUpRequest.login = login;
-    SignUpRequest.password = password;
-    SignUpRequest.email = email;
+      return errors;
+    },
+    onSubmit:values => {
 
-    if (
-      this.state.validateLogin == null ||
-      this.state.validatePassword == null ||
-      this.state.validateEmail == null
-    ) {
-      this.setState({ alertMessage: "Все поля должны быть заполнены" });
-    } else {
-      userApi
-        .signUp(SignUpRequest)
-        .then(res => {
-          setCookiesName(login);
-          setSession(res.token);
-          redirectToUrl("topics");
-        })
-        .catch(error => {
-          if (error.response.status === 409) {
-            this.setState({
-              alertMessage: "Такой пользователь уже зарегистрирован"
-            });
-          } else if (error.response.status === 400) {
-            this.setState({
-              alertMessage: "Проверьте правильность введенных данных"
-            });
-          } else {
-            this.onError();
-          }
-        });
-    }
-  };
+      SignUpRequest.email=values.email;
+      SignUpRequest.password= values.password;
+      SignUpRequest.login=values.login;
 
-  render() {
-    const {
-      validateEmail,
-      validateLogin,
-      validatePassword,
-      alertMessage
-    } = this.state;
-    let validateClassForLogin = "";
-    let validateClassForPassword = "";
-    let validateClassForEmail = "";
-    let validMessage;
-    let validMessagePass;
-    let validMessageEmail;
-    let className = "form-control ";
-    let classNamePass = "form-control ";
-    let classNameEmail = "form-control ";
-    if (validateLogin === true) {
-      className += " border-success text-success ";
-      validMessage = "✔";
-      validateClassForLogin += "d-inline ml-2 text-success mark";
-    } else if (validateLogin === false || validateEmail === false) {
-      className += "border-danger text-danger";
-      validateClassForLogin += "d-inline ml-2 text-danger mark";
-      validMessage = `✖  \n  Проверьте правильность введенных данных`;
+     AuthApi.signUp(SignUpRequest).then(res=>{
+
+          setCookiesName(values.login);
+      setSession(res.token);
+      redirectToUrl("topics");}
+      ).catch(error => {
+        if (error.response.status === 409) {
+          this.setState({
+            alertMessage: "Такой пользователь уже зарегистрирован"
+          });
+        } else if (error.response.status === 400) {
+          this.setState({
+            alertMessage: "Проверьте правильность введенных данных"
+          });
+        } else {
+          this.onError();
+        }
+      });
     }
-    if (validatePassword === true) {
-      classNamePass += " border-success text-success ";
-      validMessagePass = "✔";
-      validateClassForPassword += " d-inline ml-2 text-success mark";
-    } else if (validatePassword === false) {
-      classNamePass += " border-danger text-danger";
-      validateClassForPassword += " d-inline ml-2 text-danger mark";
-      validMessagePass = `✖ \n  Проверьте правильность введенных данных`;
-    }
-    if (validateEmail === true) {
-      classNameEmail += " border-success text-success ";
-      validMessageEmail = "✔";
-      validateClassForEmail += " d-inline ml-2 text-success mark";
-    } else if (validateEmail === false) {
-      classNameEmail += " border-danger text-danger";
-      validateClassForEmail += " d-inline ml-2 text-danger mark";
-      validMessageEmail = `✖ \n Проверьте правильность введенных данных`;
-    }
-    return (
+
+  });
+  return(
       <div>
         <div className="sidenav">
           <div className="sidebar-main-text">
@@ -145,60 +71,70 @@ export default class SignUp extends Component {
         <div className="main  ">
           <div className="col-md-6 col-sm-12 m-5">
             <div className="login-form">
-              <p>{alertMessage}</p>
+              <p>{formik.values.errorInfo}</p>
               <form
-                id="todoInputForm"
-                name="registerForm"
-                className="form-group"
-                onSubmit={this.handleSubmit}
+                  className="form-group"
+                  onSubmit={formik.handleSubmit}
               >
                 <div className="form-group">
                   <label className="label-width w-60">
                     Логин
                     <input
-                      type="text"
-                      className={className}
-                      name="login"
-                      onChange={this.handleChange}
-                      placeholder="Логин"
+                        type="text"
+                        className="form-control"
+                        name="login"
+                        placeholder="Логин"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.login}
+
                     />
                   </label>
-                  <p className={validateClassForLogin}>{validMessage}</p>
+                  <p className="text-danger font-italic position-fixed small-text">{formik.touched.login && formik.errors.login ? (
+                      <div>{formik.errors.login}</div>
+                  ) : null}</p>
                   <label className="label-width w-60">
                     Почта
                     <input
-                      type="email"
-                      className={classNameEmail}
-                      name="email"
-                      onChange={this.handleChange}
-                      placeholder="Почта"
+                        type="email"
+                        className="form-control"
+                        name="email"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.email}
+                        placeholder="Почта"
                     />
                   </label>
-                  <p className={validateClassForEmail}>{validMessageEmail}</p>
+                  <p className="text-danger font-italic position-fixed small-text">{formik.touched.email && formik.errors.email ? (
+                      <div>{formik.errors.email}</div>
+                  ) : null}</p>
                   <label className="label-width w-60">
                     Пароль
                     <input
-                      type="password"
-                      className={classNamePass}
-                      name="password"
-                      onChange={this.handleChange}
-                      placeholder="Пароль"
+                        type="password"
+                        className="form-control"
+                        name="password"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.password}
+                        placeholder="Пароль"
                     />
                   </label>
-                  <p className={validateClassForPassword}>{validMessagePass}</p>
-
+                  <p className="text-danger font-italic position-fixed small-text">
+                    {formik.touched.password && formik.errors.password ? (
+                        <div>{formik.errors.password}</div>
+                    ) : null}
+                  </p>
                   <div className="form-group ">
                     <input
-                      type="submit"
-                      className="btn btn-black btn-style"
-                      value="Отправить"
-                      id="submitForm"
-                      onClick={this.onClick}
+                        type="submit"
+                        className="btn btn-black btn-style"
+                        value="Отправить"
+                        id="submitForm"
                     />
-
                     <button
                         className="btn btn-black btn-style"
-                        onClick={this.onClickRedirect}
+                        onClick={()=>{redirectToUrl("user/sign-in")}}
                     > Я уже зарегестрирован
                     </button>
                   </div>
@@ -208,6 +144,7 @@ export default class SignUp extends Component {
           </div>
         </div>
       </div>
-    );
-  }
+  )
 }
+export default SignUp;
+
