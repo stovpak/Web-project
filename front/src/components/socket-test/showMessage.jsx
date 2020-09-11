@@ -2,14 +2,20 @@
 import React, { Component } from "react";
 
 export default class MessageList extends Component {
-
   render() {
     let messages = this.props.content;
-
-    console.log("fill", this.props.fill)
-    console.log( "message show");
+    let showDate, showTime;
     const messageItem = messages.map(({ author_name, date, text, id }) => {
-
+      if (date !== null) {
+        let data = new Date(date);
+        showDate =
+          data.getDate() +
+          " " +
+          data.toLocaleString("ru", { month: "long" }) +
+          " " +
+          data.getFullYear();
+        showTime = data.getHours() + ":" + data.getMinutes();
+      }
       return (
         <div className="media text-muted pt-3  " key={id}>
           <svg
@@ -30,7 +36,9 @@ export default class MessageList extends Component {
               @{author_name}
             </strong>
             {text}
-            <small className="text-muted float-right">{date}</small>
+            <small className="text-muted float-right">
+              {showTime} {showDate}{" "}
+            </small>
           </p>
         </div>
       );
