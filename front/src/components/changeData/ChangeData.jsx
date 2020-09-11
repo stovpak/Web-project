@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { useFormik } from "formik";
 import authApi from "../helpers/authApi";
 import { getJwt } from "../helpers/userService";
-import { validateDate, validateName } from "../ValidateCheck/validateForm";
+import { validateDate, validateName } from "../validateCheck/validateForm";
 import NavBar from "../navBar/NavBar";
 
 const ChangeData = () => {

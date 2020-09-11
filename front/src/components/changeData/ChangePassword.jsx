@@ -4,7 +4,7 @@ import { getJwt } from "../helpers/getJwt";
 import NavBar from "../navBar/NavBar";
 import AuthApi from "../helpers/authApi";
 import { PasswordChanges } from "../helpers/userService";
-import { validatePassword } from "../ValidateCheck/validateForm";
+import { validatePassword } from "../validateCheck/validateForm";
 import { useFormik } from "formik";
 const ChangeUserPassword = () => {
   const token = getJwt();

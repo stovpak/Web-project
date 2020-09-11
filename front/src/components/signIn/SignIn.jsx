@@ -3,7 +3,7 @@ import axios from "axios";
 import * as Yup from "yup";
 import "./signin-style.css";
 import Cookies from "universal-cookie";
-import {validateEmail, validateForm, validatePassword} from "../ValidateCheck/validateForm";
+import {validateEmail, validateForm, validatePassword} from "../validateCheck/validateForm";
 import { redirectToUrl } from "../helpers/baseAPI";
 import {
   AuthRequest,
@@ -40,12 +40,11 @@ const SignIn=()=> {
             setCookiesName(values.login);
             setSession(res.token);
             redirectToUrl("topics");
-            console.log("true")
           })
           .catch(error => {
             if (error.status === 409) {
               values.errorInfo = "такой пользователь уже зарегестрирован"
-            }console.log("true", error)
+            }
           });
     }
   });
