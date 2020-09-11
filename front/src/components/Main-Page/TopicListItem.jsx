@@ -67,7 +67,7 @@ export default class TopicListItem extends Component {
                     >
                         Понравилось : {likes + countLikes}
                     </button>
-                    <Link to={{pathname:'/topicId/show-comment',state:this.props}}>Обсудить</Link>
+                    <Link to={{pathname:'/topicId/show-comment',state:this.props}} className="float-right mr-2">Обсудить</Link>
                 </div>
             </div>
         );

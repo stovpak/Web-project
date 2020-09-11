@@ -2,7 +2,7 @@ import React from "react";
 import TopicListItem from "../Main-Page/TopicListItem";
 /*let styleList = "table-hover table-dark ";*/
 const TopicList = ({topic}) => {
-
+console.log("topicic", topic)
   const topicElement = topic.map(topics => {
     return (
         <TopicListItem

@@ -22,7 +22,7 @@ import PasswordKey from "./components/restorePassword/passwordKey";
 import SignUp from "./components/signUp/SignUp";
 
 import Socket from "./components/socket-test/socket";
-import TopicInfo from "./components/tipicList/topicInfo";
+import TopicInfo from "./components/socket-test/topicInfo";
 let history = new createBrowserHistory({
   baseName: "/"
 });
