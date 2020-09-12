@@ -107,7 +107,7 @@ function sendEmail(addressee, subject, text) {
     subject: subject,
     text: text,
   };
-  transport.sendMail(message, function(err, info) {
+  transport.sendMail(message, function(err, info,res,req) {
     if (err) {
       console.log(err);
     } else {
@@ -115,6 +115,12 @@ function sendEmail(addressee, subject, text) {
     }
   });
 }
+function findMail (email){
+  return userModel.user.findOne({where: {
+      email
+    }});
+}
+
 function createRestoreKey(email) {
   const key = bcrypt.hashSync(email, salt);
   restorePasswordKeyModel.create({
@@ -123,7 +129,7 @@ function createRestoreKey(email) {
   });
   return key;
 }
-function deleteRestoreKey(email) {
+function deleteRestoreKey(email,res) {
   restorePasswordKeyModel.destroy({
     where: {
       email: email,
@@ -140,3 +146,4 @@ module.exports.updatePersonalData = updatePersonalData;
 module.exports.changePassword = changePassword;
 module.exports.changeEmail = changeEmail;
 module.exports.findUser = findUser;
+module.exports.findMail = findMail;

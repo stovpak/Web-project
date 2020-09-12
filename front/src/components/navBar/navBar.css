@@ -1,3 +1,7 @@
 .content-center{
     margin-top: 15px;
 }
+.navbar-align{
+    align-items: inherit;
+    float: right
+}

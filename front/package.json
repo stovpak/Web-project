@@ -6,7 +6,7 @@
     "file-loader": "^6.0.0",
     "node-sass": "^4.14.1",
     "prettier": "^1.19.1",
-    "react-scripts": "^3.4.1"
+    "react-scripts": "^3.4.3"
   },
   "dependencies": {
     "antd": "^2.11.2",
