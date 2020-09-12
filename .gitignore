@@ -12,3 +12,4 @@ backend/.env
 backend/.eslintrc.json
 /front/src/components/.idea/
 front/debug.log
+front/src/.idea/*
