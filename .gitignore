@@ -10,3 +10,5 @@ backend/node_modules/*
 backend/.idea/*
 backend/.env
 backend/.eslintrc.json
+/front/src/components/.idea/
+front/debug.log

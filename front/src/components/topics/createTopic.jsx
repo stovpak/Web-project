@@ -4,15 +4,16 @@ import Cookies from "universal-cookie";
 import axios from "axios";
 
 import { getJwt } from "../helpers/getJwt";
-import { urlTopics } from "../helpers/baseAPI";
-
+import AuthApi from "../helpers/authApi";
+import { TopicRequest } from "../helpers/userService";
+import Modal from "../Modal/Component";
 const cookies = new Cookies();
 export default class CreateTopic extends Component {
   state = {
     topicTheme: "",
     content: "",
     username: "",
-    error: false
+
   };
 
   onChangeInput = e => {
@@ -20,28 +21,21 @@ export default class CreateTopic extends Component {
     const value = e.target.value;
     this.setState({ [name]: value });
   };
-  onSendTopic = e => {
-    let message;
 
-    const token = getJwt();
+  onSendTopic = e => {
     e.preventDefault();
-    axios
-      .post(
-        urlTopics("create-topic/"),
-        {
-          topicName: this.state.topicTheme,
-          login: this.state.username
-        },
-        { headers: { Token: token } }
-      )
+    const token = getJwt();
+    TopicRequest.login = this.state.username;
+    TopicRequest.topicName = this.state.topicTheme;
+    AuthApi.createTopic(TopicRequest, token)
       .then(res => {
-        message = (
-          <div>
-            <h2>Тема успешно опубликована!</h2>
-          </div>
-        );
+        if(res.status===200){
+
+        };
       })
-      .catch(err => {});
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {
@@ -62,6 +56,9 @@ export default class CreateTopic extends Component {
                     onChange={this.onChangeInput}
                     size={70}
                   />
+                  <p className="text-black-50 font-italic ">
+                    количество символов {70 - this.state.topicTheme.length}
+                  </p>
                 </label>
               </div>
               <div className="form-group green-border-focus ">

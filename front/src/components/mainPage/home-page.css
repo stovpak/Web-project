@@ -1,5 +1,8 @@
 .count-likes{font-size: 19px;
 padding-top: 0.5%;}
+.login-form{
+    margin-top: 50%
+}
 .btn-likes{
     text-decoration: none;
     border: none;
@@ -23,8 +26,27 @@ padding-top: 0.5%;}
     background: red;
     transition: background 0s;
 }
-.bi-heart{
-    width:0.5em;
-    height:1em;
+
+.creator-name{
+    margin-top: 1%;
+    font-size: initial;
+}
+.svg{
+    width: 15px;
+    height: 15px;
     fill:currentColor;
+
+}
+.svg-heart{
+    padding-top: 5px
+}
+
+@media (max-width: 975px ) {
+    .adaptive{
+
+    }
+    .content-margin{
+
+    }
+
 }
