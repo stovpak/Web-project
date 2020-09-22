@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Cookies from "universal-cookie";
 class UserLabel extends Component {
   render() {
     let isAuth;
@@ -19,7 +18,7 @@ class UserLabel extends Component {
             <a className="dropdown-item" href="http://localhost:3000/profile">
               Профиль
             </a>
-            <div role="separator" className="dropdown-divider"></div>
+            <div role="separator" className="dropdown-divider"/>
             <a className="dropdown-item" onClick={this.onClick}>
               Выход
             </a>
