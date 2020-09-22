@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { useFormik } from "formik";
 
-import { validatePassword } from "../ValidateCheck/validateForm";
+import {validatePassword} from "../validateCheck/validateForm";
 import AuthApi from "../helpers/authApi";
 import { restorePasswordInfo } from "../helpers/userService";
 export const PasswordPage = () => {

@@ -1,9 +1,8 @@
-
 import React, { Component } from "react";
-
 export default class MessageList extends Component {
   render() {
     let messages = this.props.content;
+    console.log("messages content", messages);
     let showDate, showTime;
     const messageItem = messages.map(({ author_name, date, text, id }) => {
       if (date !== null) {

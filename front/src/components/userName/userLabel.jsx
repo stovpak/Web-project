@@ -2,12 +2,9 @@ import React, { Component } from "react";
 import Cookies from "universal-cookie";
 class UserLabel extends Component {
   render() {
-    let cookies = new Cookies();
-    let getName = this.props.name;
-    console.log(getName);
-    let user;
-    if (getName != null) {
-      user = (
+    let isAuth;
+    if (this.props.name != null) {
+      isAuth = (
         <div className="input-group mb-3">
           <button
             className="btn btn-outline-secondary dropdown-toggle"
@@ -30,9 +27,9 @@ class UserLabel extends Component {
         </div>
       );
     } else {
-      user = <button className="btn btn-warning">Войти </button>;
+      isAuth = <button className="btn btn-warning">Войти </button>;
     }
-    return <div>{user}</div>;
+    return <div>{isAuth}</div>;
   }
 }
 

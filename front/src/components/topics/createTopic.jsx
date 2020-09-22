@@ -6,7 +6,7 @@ import axios from "axios";
 import { getJwt } from "../helpers/getJwt";
 import AuthApi from "../helpers/authApi";
 import { TopicRequest } from "../helpers/userService";
-import Modal from "../Modal/Component";
+
 const cookies = new Cookies();
 export default class CreateTopic extends Component {
   state = {

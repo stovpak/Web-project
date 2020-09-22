@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import UserNameLabel from "../userName/UserNameLabel";
 import "./navBar.css";
 import Cookies from "universal-cookie";
 import { redirectToUrl } from "../helpers/baseAPI";
@@ -29,8 +28,7 @@ export default class NavBar extends Component {
   addTopic = e => {
     e.preventDefault();
     if (
-      cookies.get("username") === null ||
-      cookies.get("username") === undefined
+      cookies.get("username") == null
     ) {
       redirectToUrl("sign-in");
     } else {

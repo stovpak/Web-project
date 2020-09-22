@@ -25,8 +25,6 @@ let history = new createBrowserHistory({
   baseName: "/"
 });
 export default class App extends Component {
-
-
   render() {
     const isAuth = getJwt();
     return (
