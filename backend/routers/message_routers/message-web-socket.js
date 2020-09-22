@@ -12,9 +12,9 @@ const jwtService = require('../controllers/user_controllers/jwt-service.js');
 
 function responseToClient(responseMessage, server) {
   server.clients.forEach((client) => {
-
     if (client.readyState === WebSocket.OPEN) {
       client.send(responseMessage);
+      console.log("responce message", responseMessage)
     }
   });
 }
@@ -24,20 +24,18 @@ server.on('connection', (ws) => {
     const messageType = JSON.parse(message).type;
     const autHeader = JSON.parse(message).token;
     if (messageType === 'Connect') {
-      console.log('connect i strue', message)
       messageService.showOldMessages(JSON.parse(message).topicId).then((responseMessage) => {
         responseToClient(JSON.stringify(responseMessage), server);
       });
     } else if (authorizationService(autHeader)) {
-      console.log("else is run");
       const login = jwtService.getLogin(autHeader);
       const role = jwtService.getRole(autHeader);
       switch (messageType) {
         case 'Message':
-          console.log("message is run")
           let messageObject = new Message(JSON.parse(message).topicId, login ,JSON.parse(message).text);
           messageService.createMessage(messageObject);
           responseToClient(message, server);
+          console.log(message,"responce to client")
           break;
         case 'Update':
           messageService.findMessage(JSON.parse(message).messageId).then((mgs) => {
@@ -68,7 +66,6 @@ server.on('connection', (ws) => {
           });
           break;
         default:
-          console.log( "err")
           responseToClient('Ошибка', server);
           break;
       }
