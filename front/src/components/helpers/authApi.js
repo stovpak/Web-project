@@ -2,18 +2,19 @@ import { AuthRequest } from "./userService";
 import { TokenResponse } from "./getJwt";
 import { httpClient } from "./httpClient";
 import { redirectToUrl } from "./baseAPI";
+import React from "react";
 
 class authApi {
   async signIn(AuthRequest) {
     return await httpClient
       .post("user/sign-in", AuthRequest)
-      .then(res => res.data);
+      .then((res) => res.data);
   }
 
   async signUp(AuthRequest) {
     return await httpClient
       .post("user/sign-up", AuthRequest)
-      .then(res => res.data);
+      .then((res) => res.data);
   }
   async updateData(firstName, lastName, birth, token) {
     return httpClient
@@ -23,11 +24,11 @@ class authApi {
         {
           headers: {
             "Content-Type": "application/json",
-            Token: token
-          }
+            Token: token,
+          },
         }
       )
-      .then(res => res.data);
+      .then((res) => res.data);
   }
 
   async updateEmail(email, token) {
@@ -37,8 +38,8 @@ class authApi {
       {
         headers: {
           "Content-Type": "application/json",
-          Token: token
-        }
+          Token: token,
+        },
       }
     );
   }
@@ -51,56 +52,58 @@ class authApi {
         {
           headers: {
             "Content-Type": "application/json",
-            Token: token
-          }
+            Token: token,
+          },
         }
-      ).then(res => res.data);
+      )
+      .then((res) => res.data);
   }
   async restorePassword(email) {
     return await httpClient
       .post("user/sign-in/forget-password", {
-        email: email
+        email: email,
       })
-      .then(res => res.data);
+      .then((res) => res.data);
   }
-  async passwordKey(key, password) {
+  async passwordKey(key, email, password) {
     return await httpClient
-      .post("/sign-in/restore-password/send-key", {key:key, password:password})
-      .then(res => res.data);
+      .post("user/sign-in/restore-password/send-key", { key, password, email })
+      .then((res) => res.data);
   }
+
   async getAllTopics(page, tokenResponse) {
     return await httpClient
       .get(`topics/${page}`, {
         "Content-Type": "application/json",
-        Token: tokenResponse
+        Token: tokenResponse,
       })
-      .then(res => res.data);
+      .then((res) => res.data);
   }
   async createTopic(data, token) {
     return await httpClient
       .post("topics/create-topic/", data, {
         headers: {
           "Content-Type": "application/json",
-          Token: token
-        }
+          Token: token,
+        },
       })
-      .then(res => res.data);
+      .then((res) => res.data);
   }
   async addLikeTopic(idTopic, Token) {
     return await httpClient
       .post(
         "topics/like",
         {
-          topicId: idTopic
+          topicId: idTopic,
         },
         {
           headers: {
             "Content-Type": "application/json",
-            Token: Token
-          }
+            Token: Token,
+          },
         }
       )
-      .then(res => res.data);
+      .then((res) => res.data);
   }
 }
 const AuthApi = new authApi();

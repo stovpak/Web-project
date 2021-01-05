@@ -5,8 +5,6 @@ import {
   Switch,
   Route,
   Redirect,
-    useParams,
-  Link
 } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import SignIn from "./components/signIn/SignIn";

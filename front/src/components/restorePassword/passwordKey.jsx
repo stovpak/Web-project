@@ -61,9 +61,10 @@ export default class PasswordKey extends Component {
   };
 
   render() {
-    const { keyMessage, keyMatch, key } = this.state;
+    const {  keyMatch,key} = this.state;
     let showKeyComponent = this.keyComponent();
-    let showNextStep = keyMatch ? showKeyComponent : <PasswordPage />;
+console.log(key )
+    let showNextStep = keyMatch ? showKeyComponent : <PasswordPage key={key} email={this.props.location.state.email}/>;
     return (
         <div>
           <div className=" p-3 mb-5 bg-light rounded container w-35 display-center">

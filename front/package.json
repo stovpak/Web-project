@@ -4,6 +4,7 @@
   "private": true,
   "devDependencies": {
     "file-loader": "^6.0.0",
+    "history": "^5.0.0",
     "node-sass": "^4.14.1",
     "prettier": "^1.19.1",
     "react-scripts": "^3.4.3"
@@ -13,6 +14,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "formik": "^2.1.5",
+    "password-validator": "^5.1.1",
     "react": "^16.13.1",
     "react-apollo": "^1.4.3",
     "react-awesome-modal": "^2.0.5",

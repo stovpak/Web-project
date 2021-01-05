@@ -3,6 +3,7 @@ let userApi = "http://localhost:3001/user/";
 let topicsApi = "http://localhost:3001/topics/";
 
 export function redirectToUrl(path) {
+  console.log("aa",baseUrl+path )
   return (window.location.href = baseUrl + path);
 }
 
