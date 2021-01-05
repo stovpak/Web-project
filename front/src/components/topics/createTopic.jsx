@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import NavBar from "../navBar/NavBar";
-import Cookies from "universal-cookie";
-import axios from "axios";
-
 import { getJwt } from "../helpers/getJwt";
 import AuthApi from "../helpers/authApi";
 import { TopicRequest } from "../helpers/userService";
 
-const cookies = new Cookies();
 export default class CreateTopic extends Component {
   state = {
     topicTheme: "",

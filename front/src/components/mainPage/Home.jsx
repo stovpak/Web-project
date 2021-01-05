@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Cookies from "universal-cookie";
 import NavBar from "../navBar/NavBar";
 import "./home-page.css";
 import { withRouter } from "react-router-dom";

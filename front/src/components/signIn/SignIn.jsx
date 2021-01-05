@@ -1,10 +1,7 @@
-import React, { Component } from "react";
-import axios from "axios";
-import * as Yup from "yup";
+import React from "react";
 import "./signin-style.css";
 import Cookies from "universal-cookie";
 import {
-  validateEmail,
   validateForm,
   validatePassword,
 } from "../validateCheck/validateForm";

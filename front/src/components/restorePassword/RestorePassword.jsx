@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import { useFormik, Formik, Field, Form, ErrorMessage } from "formik";
 import "./restorePasswordStyle.css";
 import img from "./passwordPNG.png";
-import * as Yup from "yup";
 import AuthApi from "../helpers/authApi";
-import { emailSave, restorePasswordInfo } from "../helpers/userService";
-import { redirectToUrl } from "../helpers/baseAPI";
-import { createBrowserHistory } from "history";
 import { Redirect } from "react-router-dom";
-const history = createBrowserHistory();
 
 export default class RestorePassword extends Component {
   state = {

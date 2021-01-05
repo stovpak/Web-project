@@ -5,6 +5,7 @@ import MessageList from "../socketComment/showMessage";
 import { getJwt } from "../helpers/getJwt";
 import {redirectToUrl} from "../helpers/baseAPI";
 import {Link }from "react-router-dom";
+
 export default class TopicListItem extends Component {
     state = {
         isLike: false,
@@ -27,8 +28,8 @@ export default class TopicListItem extends Component {
     render() {
         let chatBox = [];
         chatBox.push(<MessageList content={this.state.getMessage} />);
-        const { isLike, isShow } = this.state;
-        let { likes, auth, id, topic_name, getInfo } = this.props;
+        const { isLike} = this.state;
+        let { likes, auth, id, topic_name } = this.props;
         let heartIsLike = isLike ? "text-danger" : " ";
         let countLikes = isLike ? 1 : 0;
         return (

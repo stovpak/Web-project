@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import authApi from "../helpers/authApi";
 import { getJwt } from "../helpers/userService";

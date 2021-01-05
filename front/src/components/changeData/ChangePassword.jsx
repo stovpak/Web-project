@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "./updateInfoUser.css";
 import { getJwt } from "../helpers/getJwt";
 import NavBar from "../navBar/NavBar";
@@ -6,6 +6,7 @@ import AuthApi from "../helpers/authApi";
 import { PasswordChanges } from "../helpers/userService";
 import { validatePassword } from "../validateCheck/validateForm";
 import { useFormik } from "formik";
+
 const ChangeUserPassword = () => {
   const token = getJwt();
   const formik = useFormik({
@@ -14,6 +15,7 @@ const ChangeUserPassword = () => {
       confirmPassword: "",
       passwordMatch: ""
     },
+
     validate: values => {
       const errors = {};
       if (!validatePassword(values.password)) {
@@ -25,6 +27,7 @@ const ChangeUserPassword = () => {
       }
       return errors;
     },
+
     onSubmit: values => {
       PasswordChanges.password = values.password;
       AuthApi.updatePassword(PasswordChanges, token)
@@ -34,6 +37,7 @@ const ChangeUserPassword = () => {
         .catch(err => console.log(err));
     }
   });
+
   return (
     <div>
       <NavBar />

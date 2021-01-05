@@ -10,7 +10,7 @@ class ErrorIndicator extends Component {
           <p className="blockquote">Что-то пошло не так</p>
           <p>Скоро мы устраним проблему!</p>
           <div className="error">
-            <a href="#">
+            <a href="/#">
               <img
                 src={img}
                 alt="ohNO"

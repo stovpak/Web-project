@@ -1,20 +1,17 @@
-import React, { Component, useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../navBar/NavBar";
 import { useLocation } from "react-router-dom";
 import Socket from "./socket";
 import { getCookiesName, getJwt } from "../helpers/userService";
 import MessageList from "./showMessage";
 import Form from "../commentsForm/form";
-import { message } from "antd";
 import TopicItem from "../topicItemComponent/topicItem";
 
 export default function TopicInfo() {
   const ws = new WebSocket("ws://localhost:8081");
-
   const location = useLocation().state;
-
   const [comments, setComments] = useState([]);
-  const [text, setText] = useState();
+
   useEffect(() => {
     connect(ws);
   }, []);
@@ -30,6 +27,7 @@ export default function TopicInfo() {
       );
       ws.onmessage = recieveMsg;
     };
+
     ws.onclose = evt => {
       console.log(
         "Socket is closed.Reconnect will be attempted in 10 second.",
@@ -51,6 +49,7 @@ export default function TopicInfo() {
       ? setComments(msg => msg.concat(configMessage))
       : setComments(msg => msg.concat(comments));
   };
+
   const sendMessage = text => {
     const date = new Date();
     ws.send(

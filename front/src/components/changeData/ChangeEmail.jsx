@@ -7,18 +7,22 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./updateInfoUser.css";
 import ErrorIndicator from "../errorIndicator/ErrorIndicator";
+
 const ChangeUserEmail = () => {
   const token = getJwt();
+
   const formik = useFormik({
     initialValues: {
       email: "",
       errorMessage: ""
     },
+
     validationSchema: Yup.object({
       email: Yup.string()
         .email("Почта введена неправильно")
         .required("Поле не должно быть пустым")
     }),
+
     onSubmit: values => {
       EmailChanges.email = values.email;
       AuthApi.updateEmail(EmailChanges, token)
@@ -34,6 +38,7 @@ const ChangeUserEmail = () => {
         });
     }
   });
+
   return (
     <div>
       <NavBar />

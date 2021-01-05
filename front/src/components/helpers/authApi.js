@@ -1,8 +1,4 @@
-import { AuthRequest } from "./userService";
-import { TokenResponse } from "./getJwt";
 import { httpClient } from "./httpClient";
-import { redirectToUrl } from "./baseAPI";
-import React from "react";
 
 class authApi {
   async signIn(AuthRequest) {

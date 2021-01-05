@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
 import { validatePassword } from "../validateCheck/validateForm";
@@ -7,6 +7,7 @@ import { restorePasswordInfo } from "../helpers/userService";
 
 export const PasswordPage = ({ email }) => {
   const history = useHistory();
+
   const formik = useFormik({
     initialValues: {
       password: "",
