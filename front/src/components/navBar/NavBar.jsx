@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import "./navBar.css";
 import Cookies from "universal-cookie";
 import { redirectToUrl } from "../helpers/baseAPI";
+import { clearLikes } from "../../redux/reducers/userLikes";
+import { connect } from "react-redux";
 const cookies = new Cookies();
-export default class NavBar extends Component {
+class NavBar extends Component {
   state = {
     username: "",
   };
@@ -15,6 +17,7 @@ export default class NavBar extends Component {
   onClick = () => {
     cookies.remove("username");
     cookies.remove("sessionToken");
+    this.props.clearLikes()
     redirectToUrl("user/sign-in");
   };
   onUserInfo = (e) => {
@@ -23,6 +26,7 @@ export default class NavBar extends Component {
   };
   onClickPage = (e) => {
     e.preventDefault();
+
     redirectToUrl("user/sign-in");
   };
   addTopic = (e) => {
@@ -51,17 +55,17 @@ export default class NavBar extends Component {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              {this.state.username}
+              {username}
             </button>
             <div className="dropdown-menu" x-placement="right-start">
-              <a className="dropdown-item" onClick={this.onUserInfo}>
+              <a className="dropdown-item" href="/#" onClick={this.onUserInfo}>
                 Профиль
               </a>
-              <a className="dropdown-item" onClick={this.userTopic}>
+              <a className="dropdown-item" href="/#" onClick={this.userTopic}>
                 Мои темы
               </a>
               <div role="separator" className="dropdown-divider"></div>
-              <a className="dropdown-item" onClick={this.onClick}>
+              <a className="dropdown-item" href="/#" onClick={this.onClick}>
                 Выход
               </a>
             </div>
@@ -81,7 +85,7 @@ export default class NavBar extends Component {
     return (
       <div>
         <nav className="navbar navbar-expand-md bg-dark navbar-dark ">
-          <a className="navbar-brand " href="#">
+          <a className="navbar-brand " href="/#">
             AvtoForum
           </a>
           <button
@@ -92,7 +96,7 @@ export default class NavBar extends Component {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div class=" navbar-collapse" id="collapsibleNavbar">
+          <div className=" navbar-collapse" id="collapsibleNavbar">
             <ul className="navbar-nav mr-auto">
               {/*align-items: inherit;float: right */}
               <li className="nav-item ">
@@ -101,7 +105,7 @@ export default class NavBar extends Component {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <a className="nav-link" href="/#">
                   <form className="form-inline form-group my-2 my-lg-0 float-right">
                     <button
                       name="addTopic"
@@ -116,7 +120,7 @@ export default class NavBar extends Component {
             </ul>
             <ul className="navbar-nav navbar-align w-25">
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <a className="nav-link" href="/#">
                   {userName}
                 </a>
               </li>
@@ -127,3 +131,4 @@ export default class NavBar extends Component {
     );
   }
 }
+export default connect(null, { clearLikes })(NavBar);

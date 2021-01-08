@@ -36,7 +36,9 @@ export const PasswordPage = ({ email }) => {
           errors.key = true;
           history.push("/user/sign-in");
         })
-        .catch((err) => (console.log(err),errors.key = false));
+        .catch((err) => {
+          console.log(err)((errors.key = false));
+        });
     },
   });
 
@@ -86,5 +88,3 @@ export const PasswordPage = ({ email }) => {
     </div>
   );
 };
-    
-

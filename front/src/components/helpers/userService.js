@@ -22,4 +22,4 @@ export let EmailChanges = { email: "" };
 export let PasswordChanges = { password: "" };
 export let Data = { firstName: "", lastName: "", birthday: "" };
 export let restorePasswordInfo = { email: "", password: "", key: "" };
-export let emailSave = "";
+export let arrayLikes=[];

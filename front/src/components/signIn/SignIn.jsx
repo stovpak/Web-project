@@ -1,10 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./signin-style.css";
-import Cookies from "universal-cookie";
-import {
-  validateForm,
-  validatePassword,
-} from "../validateCheck/validateForm";
+import { validateForm, validatePassword } from "../validateCheck/validateForm";
 import { redirectToUrl } from "../helpers/baseAPI";
 import {
   AuthRequest,
@@ -13,8 +9,20 @@ import {
 } from "../helpers/userService";
 import AuthApi from "../helpers/authApi";
 import { useFormik } from "formik";
-const cookies = new Cookies();
+import { Redirect } from "react-router-dom";
+import { connect, useDispatch } from "react-redux";
+import { loadLikesList } from "../../redux/reducers/userLikes";
+import { getJwt } from "../helpers/getJwt";
+
 const SignIn = () => {
+  const [isSubmit, setIsSubmit] = useState(true);
+  const [currentUserLikes, setCurrentUserLikes] = useState(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (currentUserLikes) dispatch(loadLikesList(currentUserLikes));
+  });
+
   const formik = useFormik({
     initialValues: {
       login: "",
@@ -32,22 +40,29 @@ const SignIn = () => {
       }
       return errors;
     },
-    onSubmit: (values) => {
+    onSubmit: (values, setErrors) => {
       AuthRequest.login = values.login;
       AuthRequest.password = values.password;
       AuthApi.signIn(AuthRequest)
         .then((res) => {
           setCookiesName(values.login);
           setSession(res.token);
-          redirectToUrl("topics");
+          setCurrentUserLikes(res.likes);
+          setIsSubmit(true);
         })
         .catch((error) => {
-          if (error.status === 409) {
-            values.errorInfo = "такой пользователь уже зарегестрирован";
+          if (error.response.status === 400) {
+            setIsSubmit(false);
           }
         });
     },
   });
+  if (getJwt())
+    return (
+      <Redirect
+        to={{ pathname: "/topics", state: { likes: currentUserLikes } }}
+      />
+    );
   return (
     <div>
       <div className="sidenav">
@@ -59,7 +74,9 @@ const SignIn = () => {
       <div className="main">
         <div className="col-md-6 col-sm-12 ml-5">
           <div className="login-form">
-            <p>{formik.values.errorInfo}</p>
+            <div className="text-danger font-italic position-fixed small-text mb-3">
+              {!isSubmit && <p>Проверьте правильность введенных данных </p>}
+            </div>
             <form onSubmit={formik.handleSubmit}>
               <div className="form-group">
                 <label className="label-width w-100">
@@ -74,11 +91,11 @@ const SignIn = () => {
                     value={formik.values.login}
                   />
                 </label>
-                <p className="text-danger font-italic position-fixed small-text">
+                <div className="text-danger font-italic position-fixed small-text">
                   {formik.touched.login && formik.errors.login ? (
-                    <div>{formik.errors.login}</div>
+                    <p>{formik.errors.login}</p>
                   ) : null}
-                </p>
+                </div>
               </div>
               <div className="form-group">
                 <label className="label-width w-100">
@@ -93,11 +110,11 @@ const SignIn = () => {
                     value={formik.values.password}
                   />
                 </label>
-                <p className="text-danger font-italic position-fixed small-text">
+                <div className="text-danger font-italic position-fixed small-text">
                   {formik.touched.password && formik.errors.password ? (
-                    <div>{formik.errors.password}</div>
+                    <p>{formik.errors.password}</p>
                   ) : null}
-                </p>
+                </div>
               </div>
               <button type="submit" className="btn btn-black fix-size w-25">
                 Войти
@@ -134,4 +151,4 @@ const SignIn = () => {
     </div>
   );
 };
-export default SignIn;
+export default connect((state) => ({ likes: state.userLikes.likes }))(SignIn);
