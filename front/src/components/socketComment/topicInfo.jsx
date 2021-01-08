@@ -16,19 +16,19 @@ export default function TopicInfo() {
     connect(ws);
   }, []);
 
-  const connect = ws => {
+  const connect = (ws) => {
     ws.onopen = () => {
       console.log("socket is open ");
       ws.send(
         JSON.stringify({
           type: "Connect",
-          topicId: location.id
+          topicId: location.id,
         })
       );
       ws.onmessage = recieveMsg;
     };
 
-    ws.onclose = evt => {
+    ws.onclose = (evt) => {
       console.log(
         "Socket is closed.Reconnect will be attempted in 10 second.",
         evt.reason
@@ -37,20 +37,20 @@ export default function TopicInfo() {
     };
   };
 
-  const recieveMsg = message => {
+  const recieveMsg = (message) => {
     const comments = JSON.parse(message.data);
     const configMessage = {
       author_name: comments.login,
       date: comments.date,
       text: comments.text,
-      topic_id: comments.topicId
+      topic_id: comments.topicId,
     };
     comments.type
-      ? setComments(msg => msg.concat(configMessage))
-      : setComments(msg => msg.concat(comments));
+      ? setComments((msg) => msg.concat(configMessage))
+      : setComments((msg) => msg.concat(comments));
   };
 
-  const sendMessage = text => {
+  const sendMessage = (text) => {
     const date = new Date();
     ws.send(
       JSON.stringify({
@@ -59,7 +59,7 @@ export default function TopicInfo() {
         text: text,
         login: getCookiesName(),
         date: date,
-        token: getJwt()
+        token: getJwt(),
       })
     );
   };
@@ -80,7 +80,6 @@ export default function TopicInfo() {
             <small className="d-block  mt-3 cc_cursor mb-3">
               <MessageList content={comments} ws={ws} />
             </small>
-            <a href="#">Загрузить все комментарии</a>
           </div>
         </div>
         <div>
