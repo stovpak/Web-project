@@ -35,7 +35,7 @@ export default class MessageList extends Component {
             </strong>
             {text}
             <small className="text-muted float-right">
-              {showTime} {showDate}{" "}
+              {showTime} {showDate}
             </small>
           </p>
         </div>

@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import "./home-page.css";
-import authApi from "../helpers/authApi";
 import MessageList from "../socketComment/showMessage";
 import { getJwt } from "../helpers/getJwt";
 import { redirectToUrl } from "../helpers/baseAPI";
 import { Link } from "react-router-dom";
-import { getCookiesName } from "../helpers/userService";
-import { createBrowserHistory } from "history";
-const history = createBrowserHistory();
 
 const ws = new WebSocket("ws://localhost:8081");
 
@@ -22,7 +18,6 @@ export default class TopicListItem extends Component {
   }
 
   connect = (ws, id) => {
-    console.log("socket is open ");
     ws.send(
       JSON.stringify({
         type: "Like",
@@ -34,9 +29,8 @@ export default class TopicListItem extends Component {
 
   addLike = (e, id) => {
     e.preventDefault();
-    this.setState({ targetId: id });
-    const token = getJwt();
     this.connect(ws, id);
+    this.setState({ targetId: id });
     this.setState({ isLike: !this.state.isLike });
   };
 
@@ -49,7 +43,7 @@ export default class TopicListItem extends Component {
   render() {
     let { likes, auth, id, topic_name, isLikes } = this.props;
     const { isLike } = this.state;
-
+console.log(isLikes)
     const chatBox = [];
     chatBox.push(<MessageList content={this.state.getMessage} />);
 

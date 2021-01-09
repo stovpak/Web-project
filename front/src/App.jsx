@@ -23,7 +23,6 @@ let history = new createBrowserHistory({
 });
 export default class App extends Component {
   render() {
-    const isAuth = getJwt();
     return (
       <Router history={history}>
         <Switch>

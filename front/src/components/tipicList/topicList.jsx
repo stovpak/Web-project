@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TopicListItem from "../mainPage/TopicListItem";
 import { connect } from "react-redux";
-const TopicList = ({ topic, likeCount }) => {
+import { getJwt } from "../helpers/getJwt";
+import { clearLikes } from "../../redux/reducers/userLikes";
+const TopicList = ({ topic, likeCount, clearLikes }) => {
+  useEffect(() => {
+    if (!getJwt()) {
+      clearLikes();
+    }
+  }, []);
+
   const topicElement = topic.map(
     ({ topic_name, id, likes, creator_name }, key) => {
       return (
@@ -29,7 +37,6 @@ const TopicList = ({ topic, likeCount }) => {
   );
 };
 
-export default connect(
-  (state) => ({ likeCount: state.userLikes.likes }),
-  null
-)(TopicList);
+export default connect((state) => ({ likeCount: state.userLikes.likes }), {
+  clearLikes,
+})(TopicList);
