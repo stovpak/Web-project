@@ -38,8 +38,8 @@ class HomePage extends Component {
     getJwt()
       ? this.setState({ isAuth: !this.state.isAuth })
       : this.setState({ isAuth: this.state.isAuth });
-    const Token = getJwt();
-    AuthApi.getAllTopics(this.state.page, Token)
+
+    AuthApi.getAllTopics(this.state.page, getJwt())
       .then((res) => {
         if (res.length < 10) {
           this.setState({

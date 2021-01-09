@@ -6,6 +6,7 @@ import { getCookiesName, getJwt } from "../helpers/userService";
 import MessageList from "./showMessage";
 import Form from "../commentsForm/form";
 import TopicItem from "../topicItemComponent/topicItem";
+import Button from "../Button/Button";
 
 export default function TopicInfo() {
   const ws = new WebSocket("ws://localhost:8081");
@@ -18,7 +19,6 @@ export default function TopicInfo() {
 
   const connect = (ws) => {
     ws.onopen = () => {
-      console.log("socket is open ");
       ws.send(
         JSON.stringify({
           type: "Connect",
@@ -68,6 +68,7 @@ export default function TopicInfo() {
     <div>
       <NavBar />
       <div className=" container ">
+        <Button />
         <TopicItem
           auth={location.auth}
           topic_name={location.topic_name}
@@ -89,4 +90,3 @@ export default function TopicInfo() {
     </div>
   );
 }
-
