@@ -125,7 +125,6 @@ const SignIn = () => {
                 Забыли пароль?
               </button>
             </form>
-
             <div className="sign-up-tab mt-3 ml-5 w-100">
               <p className="mt-3 ml-5"> У вас ещё нет аккаунта? </p>
               <button
@@ -151,7 +150,6 @@ const SignIn = () => {
       </div>
       {/*  */}
     </div>
-
   );
 };
 export default connect((state) => ({ likes: state.userLikes.likes }))(SignIn);

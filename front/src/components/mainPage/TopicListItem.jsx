@@ -43,7 +43,7 @@ export default class TopicListItem extends Component {
   render() {
     let { likes, auth, id, topic_name, isLikes } = this.props;
     const { isLike } = this.state;
-console.log(isLikes)
+
     const chatBox = [];
     chatBox.push(<MessageList content={this.state.getMessage} />);
 
@@ -53,8 +53,6 @@ console.log(isLikes)
       <div className="media text-muted pt-3">
         <svg
           className="bd-placeholder-img mr-2 rounded"
-          width="32"
-          height="32"
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="xMidYMid slice"
           focusable="false"
@@ -62,14 +60,8 @@ console.log(isLikes)
           aria-label="Placeholder: 32x32"
         >
           <title></title>
-          <rect width="100%" height="100%" fill="#ffc800"></rect>
-          <text
-            x="35%"
-            y="55%"
-            fill="#fff"
-            dy=".3em"
-            className="text-white bold"
-          >
+          <rect />
+          <text x="35%" y="55%" dy=".3em" className="text-white bold">
             {auth[0]}
           </text>
         </svg>

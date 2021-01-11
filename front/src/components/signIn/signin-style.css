@@ -37,18 +37,18 @@ body {
 
 }
 
-svg {
+.sign-in-side-right svg {
     display: inline-block;
     width: 80vh;
 }
 
-.sign-in-side-right {
+.linear-background .sign-in-side-right {
     display: inline-block;
     position: relative;
     transform: translate(25%, 0%) rotate(90deg);
 }
 
-.sign-in-side-left {
+.linear-background .sign-in-side-left {
     position: absolute;
     background: white;
     height: 100%;
@@ -58,42 +58,43 @@ svg {
     right: 0;
 }
 
-.sign-in-form {
+.linear-background .sign-in-form {
     margin: auto;
     width: 75%;
     height: 100%;
     transform: translate(0%, 25%);
 }
 
-.btn-custom {
+.linear-background .btn-custom {
     color: white;
     background: #F3BF7F;
 }
 
-.btn-custom-link {
+.linear-background .btn-custom-link {
     width: 45%;
     color: #e9c61b;
     text-decoration: underline #e9c61b;
 }
 
-.btn-custom-link:hover {
+.linear-background .btn-custom-link:hover {
+    color: black;
     text-decoration: underline black;
 }
 
-.path {
+.linear-background .path {
     stroke: none;
     fill: white;
 }
 
-.sign-up-tab {
+.linear-background .sign-up-tab {
     display: inline-flex;
 }
 
-.fix-size {
+.linear-background .fix-size {
     text-align-last: justify;
 }
 
-.w-60 {
+.linear-background .w-60 {
     width: 60%;
 }
 

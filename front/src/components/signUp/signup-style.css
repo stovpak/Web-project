@@ -69,6 +69,10 @@ svg {
     background: #722c23;
 }
 
+.btn-sign-up:hover,.btn-sign-up:active {
+    color: white;
+}
+
 .link-sign-up {
     width: 45%;
     color: #722c23;
@@ -76,7 +80,8 @@ svg {
 }
 
 .link-sign-up:hover {
-    text-decoration:  black;
+    color: black;
+    text-decoration: underline black;
 }
 
 .path {
@@ -152,7 +157,67 @@ svg {
     font-size: xx-large;
 }
 
-.btn-black {
-    background-color: #000 !important;
-    color: #fff;
+
+body {
+    font-family: "Lato", sans-serif;
+
+}
+.main-head{
+    height: 150px;
+    background: #FFF;
+
+}
+.sidenav {
+    height: 100%;
+    background-color: #000;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+.main {
+    padding: 0px 10px;
+
+}
+.form-align{
+    margin-top: 10%;
+}
+.btn-style{
+    display: block;
+    margin: 15px 0;
+    width: 60%;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+}
+
+@media screen and (max-width: 450px) {
+    .login-form{
+        margin-top: 10%;
+    }
+
+    .register-form{
+        margin-top: 10%;
+    }
+}
+
+@media screen and (min-width: 768px){
+    .main{
+        margin-left: 40%;
+    }
+
+    .sidenav{
+        width: 40%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+    }
+
+    .login-form{
+        margin-top: 80%;
+    }
+
+    .register-form{
+        margin-top: 20%;
+    }
 }
