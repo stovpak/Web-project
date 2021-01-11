@@ -64,21 +64,17 @@ const SignIn = () => {
       />
     );
   return (
-    <div>
-      <div className="sidenav">
-        <div className="login-main-text">
-          <h2>Вход</h2>
-          <p>Войдите что бы продолжить</p>
-        </div>
-      </div>
-      <div className="main">
-        <div className="col-md-6 col-sm-12 ml-5">
-          <div className="login-form">
-            <div className="text-danger font-italic position-fixed small-text mb-3">
+    <div className="linear-background">
+      <div className="sign-in-background">
+        <div className="sign-in-form-image" />
+        <div className="sign-in-side-left auth-form">
+          <div className="sign-in-form">
+            <h1 className="text-center mb-5">Вход</h1>
+            <div className="text-danger font-italic position-fixed small-text mb-5">
               {!isSubmit && <p>Проверьте правильность введенных данных </p>}
             </div>
-            <form onSubmit={formik.handleSubmit}>
-              <div className="form-group">
+            <form onSubmit={formik.handleSubmit} className="mt-5">
+              <div className="form-group mb-5">
                 <label className="label-width w-100">
                   Логин
                   <input
@@ -97,7 +93,7 @@ const SignIn = () => {
                   ) : null}
                 </div>
               </div>
-              <div className="form-group">
+              <div className="form-group mb-5">
                 <label className="label-width w-100">
                   Пароль
                   <input
@@ -116,12 +112,11 @@ const SignIn = () => {
                   ) : null}
                 </div>
               </div>
-              <button type="submit" className="btn btn-black fix-size w-25">
+              <button type="submit" className="btn w-50 btn-custom">
                 Войти
               </button>
-
               <button
-                className="btn btn-black ml-3 fix-size"
+                className="btn ml-3 btn-custom-link"
                 onClick={(e) => {
                   e.preventDefault();
                   redirectToUrl("user/sign-in/forget-password");
@@ -130,25 +125,33 @@ const SignIn = () => {
                 Забыли пароль?
               </button>
             </form>
-            <div className={"alternative"}>
-              <div className="containers">
-                <hr />
-                <div className="text1">ИЛИ</div>
-              </div>
+
+            <div className="sign-up-tab mt-3 ml-5 w-100">
+              <p className="mt-3 ml-5"> У вас ещё нет аккаунта? </p>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  redirectToUrl("user/sign-up");
+                }}
+                className="btn btn-custom-link fix-size "
+              >
+                Зарегистрироваться
+              </button>
             </div>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                redirectToUrl("user/sign-up");
-              }}
-              className="btn btn-black fix-size w-100 "
-            >
-              Зарегистрироваться
-            </button>
           </div>
         </div>
+        <div className="sign-in-side-right">
+          <svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
+            <path
+              d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z"
+              className="path"
+            ></path>
+          </svg>
+        </div>
       </div>
+      {/*  */}
     </div>
+
   );
 };
 export default connect((state) => ({ likes: state.userLikes.likes }))(SignIn);

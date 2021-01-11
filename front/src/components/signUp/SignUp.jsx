@@ -1,5 +1,5 @@
 import React from "react";
-import ".//signup-style.css";
+import "./signup-style.css";
 import {
   validateEmail,
   validateForm,
@@ -65,20 +65,18 @@ const SignUp = () => {
   });
 
   return (
-    <div>
-      <div className="sidenav">
-        <div className="sidebar-main-text">
-          <h2>Регистрация</h2>
-          <p>Введите ваши данные для того чтобы зарегистрироватсья</p>
-        </div>
-      </div>
-      <div className="main  ">
-        <div className="col-md-6 col-sm-12 m-5">
-          <div className="login-form">
-            <p>{formik.values.errorInfo}</p>
-            <form className="form-group" onSubmit={formik.handleSubmit}>
-              <div className="form-group">
-                <label className="label-width w-60">
+    <div className="sign-up-linear-background">
+      <div className="sign-up-background">
+        <div className="sign-up-form-image" />
+        <div className="sign-up-side-left auth-form">
+          <div className="sign-up-form">
+            <h1 className="text-center mb-5">Регистрация</h1>
+            <p className="text-danger font-italic position-fixed small-text mb-5">
+              {formik.values.errorInfo && <p>Проверьте правильность введенных данных </p>}
+            </p>
+            <form className="mt-5" onSubmit={formik.handleSubmit}>
+              <div className="form-group mb-5">
+                <label className="label-width w-100">
                   Логин
                   <input
                     type="text"
@@ -90,12 +88,14 @@ const SignUp = () => {
                     value={formik.values.login}
                   />
                 </label>
-                <p className="text-danger font-italic position-fixed small-text">
+                <div className="text-danger font-italic position-fixed small-text">
                   {formik.touched.login && formik.errors.login ? (
-                    <div>{formik.errors.login}</div>
+                    <p>{formik.errors.login}</p>
                   ) : null}
-                </p>
-                <label className="label-width w-60">
+                </div>
+              </div>
+              <div className="form-group mb-5">
+                <label className="label-width w-100">
                   Почта
                   <input
                     type="email"
@@ -107,12 +107,14 @@ const SignUp = () => {
                     placeholder="Почта"
                   />
                 </label>
-                <p className="text-danger font-italic position-fixed small-text">
+                <div className="text-danger font-italic position-fixed small-text">
                   {formik.touched.email && formik.errors.email ? (
-                    <div>{formik.errors.email}</div>
+                    <p>{formik.errors.email}</p>
                   ) : null}
-                </p>
-                <label className="label-width w-60">
+                </div>
+              </div>
+              <div className="form-group mb-5">
+                <label className="label-width w-100">
                   Пароль
                   <input
                     type="password"
@@ -124,35 +126,42 @@ const SignUp = () => {
                     placeholder="Пароль"
                   />
                 </label>
-                <p className="text-danger font-italic position-fixed small-text">
+
+                <div className="text-danger font-italic position-fixed small-text">
                   {formik.touched.password && formik.errors.password ? (
-                    <div>{formik.errors.password}</div>
+                    <p>{formik.errors.password}</p>
                   ) : null}
-                </p>
-                <div className="form-group ">
-                  <input
-                    type="submit"
-                    className="btn btn-black btn-style"
-                    value="Отправить"
-                    id="submitForm"
-                  />
-                  <button
-                    className="btn btn-black btn-style"
-                    onClick={() => {
-                      redirectToUrl("user/sign-in");
-                    }}
-                  >
-                    {" "}
-                    Я уже зарегестрирован
-                  </button>
                 </div>
               </div>
+              <input
+                type="submit"
+                className="btn w-50 btn-sign-up"
+                value="Зарегистрироватсья"
+                id="submitForm"
+              />
+              <button
+                className="btn ml-3 link-sign-up"
+                onClick={(e) => {
+                  e.preventDefault();
+                  redirectToUrl("user/sign-in");
+                }}
+              >
+                Я уже зарегистрирован
+              </button>
             </form>
           </div>
         </div>
+        <div className="sign-up-side-right">
+          <svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
+            <path
+              d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z"
+              className="path"
+            ></path>
+          </svg>
+        </div>
       </div>
+
     </div>
   );
 };
 export default SignUp;
-
