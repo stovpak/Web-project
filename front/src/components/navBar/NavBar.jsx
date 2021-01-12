@@ -4,6 +4,8 @@ import Cookies from "universal-cookie";
 import { redirectToUrl } from "../helpers/baseAPI";
 import { clearLikes } from "../../redux/reducers/userLikes";
 import { connect } from "react-redux";
+import { getJwt } from "../helpers/getJwt";
+import UserLabel from "../UserName/userLabel";
 const cookies = new Cookies();
 class NavBar extends Component {
   state = {
@@ -14,24 +16,14 @@ class NavBar extends Component {
     let name = cookies.get("username");
     this.setState({ username: name });
   };
-  onClick = () => {
-    cookies.remove("username");
-    cookies.remove("sessionToken");
-    this.props.clearLikes()
-    redirectToUrl("user/sign-in");
-  };
-  onUserInfo = (e) => {
-    e.preventDefault();
-    redirectToUrl("user/profile");
-  };
+
   onClickPage = (e) => {
     e.preventDefault();
-
     redirectToUrl("user/sign-in");
   };
   addTopic = (e) => {
     e.preventDefault();
-    if (cookies.get("username") == null) {
+    if (!cookies.get("username")) {
       redirectToUrl("user/sign-in");
     } else {
       redirectToUrl("topics/create-topic");
@@ -40,51 +32,9 @@ class NavBar extends Component {
 
   render() {
     const { username } = this.state;
-    let userName;
-
-    if (cookies.get("sessionToken")) {
-      userName = (
-        <div className="input-group mb-3 ">
-          <div className="dropdown open w-50">
-            <button
-              type="button"
-              className="btn btn-secondary dropdown-toggle "
-              type="button"
-              id="dropdownMenu3"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              {username}
-            </button>
-            <div className="dropdown-menu" x-placement="right-start">
-              <a className="dropdown-item" href="/#" onClick={this.onUserInfo}>
-                Профиль
-              </a>
-              <a className="dropdown-item" href="/#" onClick={this.userTopic}>
-                Мои темы
-              </a>
-              <div role="separator" className="dropdown-divider"></div>
-              <a className="dropdown-item" href="/#" onClick={this.onClick}>
-                Выход
-              </a>
-            </div>
-          </div>
-        </div>
-      );
-    } else {
-      userName = (
-        <button
-          className="btn btn-warning form-control"
-          onClick={this.onClickPage}
-        >
-          Войти
-        </button>
-      );
-    }
     return (
-      <div>
-        <nav className="navbar navbar-expand-md bg-dark navbar-dark ">
+      <div className="navbar navbar-expand-md bg-dark navbar-dark ">
+        <nav className="container">
           <a className="navbar-brand " href="/#">
             AvtoForum
           </a>
@@ -121,7 +71,16 @@ class NavBar extends Component {
             <ul className="navbar-nav navbar-align w-25">
               <li className="nav-item">
                 <a className="nav-link" href="/#">
-                  {userName}
+                  {username ? (
+                    <UserLabel username={this.state.username} />
+                  ) : (
+                    <button
+                      className="btn btn-warning form-control"
+                      onClick={this.onClickPage}
+                    >
+                      Войти
+                    </button>
+                  )}
                 </a>
               </li>
             </ul>
@@ -131,4 +90,4 @@ class NavBar extends Component {
     );
   }
 }
-export default connect(null, { clearLikes })(NavBar);
+export default NavBar;

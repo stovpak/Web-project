@@ -8,6 +8,10 @@ export function getCookiesName(name) {
 export function setCookiesName(name) {
   return cookies.set("username", name, options);
 }
+export  function removeCookie(name) {
+  return cookies.remove(name)
+
+}
 export const getJwt = () => {
   return cookies.get("sessionToken");
 };
