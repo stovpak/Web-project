@@ -98,22 +98,63 @@ body {
     width: 60%;
 }
 
-@media screen and (max-height: 450px) {
-    .sidenav {
-        padding-top: 15px;
+@media screen and (max-width: 500px) {
+    .sign-in-background .sign-in-form-image {
+        transform: translate(-50%, -100%);
+        height: 65vh;
+        width: 100vw;
     }
-}
 
-@media screen and (max-width: 450px) {
-    .login-form {
-        margin-top: 10%;
-        margin-left: 15%;
+    .sign-in-background {
+        height: 100vh;
+        width: 100%;
+        box-shadow: none;
+    }
+
+    .sign-in-background .sign-in-side-left {
+        background: none;
+        width: 100%;
+    }
+
+    .linear-background .sign-in-side-right {
+        display: inline-block;
+        position: relative;
+        height: 85%;
+        transform: translate(-10%, -40%) rotate(175deg);
+    }
+
+    .linear-background .sign-in-form {
+        margin-top: 10vh;
+        background: white;
+        width: 100%;
+        transform: translate(0%, 35%);
+    }
+
+    .sign-in-form form {
+        width: 85%;
+        margin: auto;
+    }
+
+    .sign-in-side-left .sign-in-form .btn-custom {
+        width: 100% !important;
+    }
+
+    form .btn-custom-link {
+        width: 100% !important;
+        color: black;
+        text-decoration: underline black;
+    }
+
+    form .btn-custom-link {
+        float: left;
+        margin-left: 0px !important;
+        margin-top: calc(1vh + 5px);
+        top: calc(36vh + 15px);
     }
 
     .fix-size {
         width: 100%;
     }
-
 }
 
 @media screen and (min-width: 768px) {

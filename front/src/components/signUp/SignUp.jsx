@@ -146,7 +146,7 @@ const SignUp = () => {
                   redirectToUrl("user/sign-in");
                 }}
               >
-                Я уже зарегистрирован
+                Уже есть аккаунт?
               </button>
             </form>
           </div>
