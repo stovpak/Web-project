@@ -8,9 +8,8 @@ export function getCookiesName(name) {
 export function setCookiesName(name) {
   return cookies.set("username", name, options);
 }
-export  function removeCookie(name) {
-  return cookies.remove(name)
-
+export function removeCookie(name) {
+  return cookies.remove(name);
 }
 export const getJwt = () => {
   return cookies.get("sessionToken");
@@ -26,4 +25,4 @@ export let EmailChanges = { email: "" };
 export let PasswordChanges = { password: "" };
 export let Data = { firstName: "", lastName: "", birthday: "" };
 export let restorePasswordInfo = { email: "", password: "", key: "" };
-export let arrayLikes=[];
+export let arrayLikes = [];

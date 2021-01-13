@@ -4,10 +4,6 @@ import { removeCookie } from "../helpers/userService";
 import { connect } from "react-redux";
 import { clearLikes } from "../../redux/reducers/userLikes";
 const UserLabel = ({ username, clearLikes }) => {
-  const onUserInfo = (e) => {
-    e.preventDefault();
-    redirectToUrl("user/profile");
-  };
 
   const onLogOut = () => {
     removeCookie("username");
@@ -30,10 +26,10 @@ const UserLabel = ({ username, clearLikes }) => {
           {username}
         </button>
         <div className="dropdown-menu" x-placement="right-start">
-          <a className="dropdown-item" href="/#" onClick={onUserInfo}>
+          <a className="dropdown-item" href="/user/profile">
             Профиль
           </a>
-          <a className="dropdown-item" href="/#">
+          <a className="dropdown-item" href="/user/my-topics">
             Мои темы
           </a>
           <div role="separator" className="dropdown-divider"/>

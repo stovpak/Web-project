@@ -12,6 +12,22 @@ class authApi {
       .post("user/sign-up", AuthRequest)
       .then((res) => res.data);
   }
+
+  async getUserTopics(token) {
+    return await httpClient
+      .post(
+        "topics/my-topics",
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Token: token,
+          },
+        }
+      )
+      .then((res) => res.data);
+  }
+
   async updateData(firstName, lastName, birth, token) {
     return httpClient
       .post(
