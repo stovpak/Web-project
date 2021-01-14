@@ -11,10 +11,13 @@ import {
 } from "../Material UI/materialStyle";
 import { CardContent, Divider, Fab, Grid } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { AlertDelete } from "../AlertWindow/AlertWindowDelete";
 
 class UserTopics extends Component {
   state = {
     userTopics: [],
+    isDelete: false,
+    deleteTopicId: null,
   };
 
   componentDidMount() {
@@ -25,7 +28,17 @@ class UserTopics extends Component {
       .catch((err) => console.log(err));
   }
   deleteTopic = (id) => {
-    console.log(id, "id");
+    this.setState({ isDelete: true, deleteTopicId: id });
+  };
+  handleClose = () => {
+    this.setState({ isDelete: false });
+  };
+  handleDelete = () => {
+    const { deleteTopicId: id } = this.state;
+    console.log("id", id);
+    AuthApi.deleteTopic(id).then((res) => {
+      this.setState({ isDelete: false });
+    }).catch(err=>console.log(err));
   };
 
   render() {
@@ -34,8 +47,8 @@ class UserTopics extends Component {
         <NavBar />
         <div className="container">
           {this.state.userTopics[0] &&
-            this.state.userTopics.map((item) => (
-              <div className="mb-5">
+            this.state.userTopics.map((item, key) => (
+              <div className="mb-5" key={key}>
                 <Card>
                   <Grid style={GridStyle}>
                     <Grid item xs={6}>
@@ -62,6 +75,14 @@ class UserTopics extends Component {
                     </Typography>
                   </CardContent>
                 </Card>
+                {this.state.isDelete && (
+                  <AlertDelete
+                    open={this.state.isDelete}
+                    topicName={item.topic_name}
+                    handleClose={this.handleClose}
+                    handleDelete={this.handleDelete}
+                  />
+                )}
               </div>
             ))}
         </div>

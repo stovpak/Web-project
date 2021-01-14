@@ -1,44 +1,57 @@
-import React, { Component } from "react";
+import React, {Component, useState} from "react";
 import { redirectToUrl } from "../helpers/baseAPI";
 import { removeCookie } from "../helpers/userService";
 import { connect } from "react-redux";
 import { clearLikes } from "../../redux/reducers/userLikes";
+import { Button, MenuItem, Menu } from "@material-ui/core";
+import { LabelStyle, MenuItemStyle } from "../Material UI/materialStyle";
 const UserLabel = ({ username, clearLikes }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isLogout, setIsLogout] = useState(false);
 
   const onLogOut = () => {
     removeCookie("username");
     removeCookie("sessionToken");
     clearLikes();
-    redirectToUrl("user/sign-in");
+    setIsLogout(true)
+  };
+  const handleClick = (event) => {
+    event.preventDefault();
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
-    <div className="input-group mb-3 ">
-      <div className="dropdown open w-50">
-        <button
-          className="btn btn-secondary dropdown-toggle "
-          type="button"
-          id="dropdownMenu3"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
+      <div className=" ">
+        <Button
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+            style={LabelStyle}
         >
           {username}
-        </button>
-        <div className="dropdown-menu" x-placement="right-start">
-          <a className="dropdown-item" href="/user/profile">
+        </Button>
+        <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+        >
+          <MenuItem onClick={()=>redirectToUrl( "user/profile")} style={MenuItemStyle}>
             Профиль
-          </a>
-          <a className="dropdown-item" href="/user/my-topics">
+          </MenuItem>
+          <MenuItem onClick={()=>redirectToUrl( "user/my-topics")} style={MenuItemStyle}>
             Мои темы
-          </a>
-          <div role="separator" className="dropdown-divider"/>
-          <a className="dropdown-item" href="/#" onClick={onLogOut}>
-            Выход
-          </a>
-        </div>
+          </MenuItem>
+          <MenuItem onClick={ onLogOut } style={MenuItemStyle}>
+            Выйти
+          </MenuItem>
+        </Menu>
       </div>
-    </div>
   );
 };
 
