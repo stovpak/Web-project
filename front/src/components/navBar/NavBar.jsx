@@ -68,7 +68,7 @@ class NavBar extends Component {
                 </a>
               </li>
             </ul>
-            <ul className="navbar-nav navbar-align w-25">
+            <ul className="navbar-nav navbar-align  ">
               <li className="nav-item">
                 <a className="nav-link" href="/#">
                   {username ? (
