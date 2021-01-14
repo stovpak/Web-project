@@ -2,14 +2,14 @@ import Cookies from "universal-cookie";
 
 let cookies = new Cookies();
 const options = { path: "/" };
-export function getCookiesName(name) {
+export function getCookiesName() {
   return cookies.get("username");
 }
 export function setCookiesName(name) {
   return cookies.set("username", name, options);
 }
 export function removeCookie(name) {
-  return cookies.remove(name);
+  return cookies.remove(name, options);
 }
 export const getJwt = () => {
   return cookies.get("sessionToken");

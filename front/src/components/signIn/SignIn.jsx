@@ -13,6 +13,7 @@ import { Redirect } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import { loadLikesList } from "../../redux/reducers/userLikes";
 import { getJwt } from "../helpers/getJwt";
+import { authorisation } from "../../redux/reducers/user";
 
 const SignIn = () => {
   const [isSubmit, setIsSubmit] = useState(true);
@@ -20,7 +21,9 @@ const SignIn = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (currentUserLikes) dispatch(loadLikesList(currentUserLikes));
+    if (currentUserLikes) {
+      dispatch(loadLikesList(currentUserLikes));
+    }
   });
 
   const formik = useFormik({
@@ -47,6 +50,7 @@ const SignIn = () => {
         .then((res) => {
           setCookiesName(values.login);
           setSession(res.token);
+          dispatch(authorisation());
           setCurrentUserLikes(res.likes);
           setIsSubmit(true);
         })
@@ -128,7 +132,7 @@ const SignIn = () => {
               </button>
             </form>
             <div className="sign-up-tab mt-3 ml-5 w-100">
-              <p className="mt-3 ml-5"> У вас ещё нет аккаунта? </p>
+              <p className="mt-3 ml-5"> У вас ещё нет аккаунта?</p>
               <button
                 onClick={(e) => {
                   e.preventDefault();
@@ -150,8 +154,9 @@ const SignIn = () => {
           </svg>
         </div>
       </div>
-      {/*  */}
     </div>
   );
 };
-export default connect((state) => ({ likes: state.userLikes.likes }))(SignIn);
+export default connect((state) => ({ likes: state.userLikes.likes }), {
+  authorisation,
+})(SignIn);
