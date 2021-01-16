@@ -6,6 +6,7 @@ const topicLikeService = require('../controllers/message_controllers/topic-like-
 
 
 router.delete('/', (request, response) => {
+  console.log("delete topic", request.body)
   const {topicId} = request.body;
   topicService.clearingTopic(topicId);
   topicLikeService.deleteLikes(topicId);

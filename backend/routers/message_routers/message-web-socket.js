@@ -14,7 +14,6 @@ function responseToClient(responseMessage, server) {
   server.clients.forEach((client) => {
     if (client.readyState === WebSocket.OPEN) {
       client.send(responseMessage);
-      console.log("responce message", responseMessage)
     }
   });
 }
@@ -35,7 +34,6 @@ server.on('connection', (ws) => {
           let messageObject = new Message(JSON.parse(message).topicId, login ,JSON.parse(message).text);
           messageService.createMessage(messageObject);
           responseToClient(message, server);
-          console.log(message,"responce to client")
           break;
         case 'Update':
           messageService.findMessage(JSON.parse(message).messageId).then((mgs) => {

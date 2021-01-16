@@ -5,6 +5,7 @@ const LoginRequest = require('../../../db/db_objects/user_db_objects/login-reque
 const signInValidation = require('../../../core/validations/user_validation/sign-in-validation.js');
 
 router.post('/', (request, response, next) => {
+  console.log(request.body,"requesr")
   const loginRequestData = new LoginRequest(request.body.login, request.body.password);
   if (signInValidation.validateSignIn(loginRequestData, response)) {
     return next();

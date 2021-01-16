@@ -5,6 +5,7 @@ require('dotenv').config();
 const router = express.Router();
 
 router.use('/', (req, res, next) => {
+  console.log("auth")
   const autHeader = req.get('Token');
   if (req.method==='OPTIONS'){
     res.status(200).send();
@@ -12,6 +13,5 @@ router.use('/', (req, res, next) => {
   {
     return next();
   }
-
 });
 module.exports = router;
