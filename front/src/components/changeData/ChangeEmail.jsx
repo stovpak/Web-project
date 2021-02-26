@@ -1,42 +1,42 @@
-import React from "react";
-import { getJwt } from "../helpers/getJwt";
-import NavBar from "../navBar/NavBar";
-import AuthApi from "../helpers/authApi";
-import { EmailChanges } from "../helpers/userService";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import "./updateInfoUser.css";
-import ErrorIndicator from "../errorIndicator/ErrorIndicator";
+import React from 'react';
+import { getJwt } from '../../utils/cookies';
+import NavBar from '../NavBar/NavBar';
+import AuthApi from '../../utils/authApi';
+import { EmailChanges } from '../../utils/cookies';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import './updateInfoUser.css';
+import Index from '../ErrorIndicator';
 
 const ChangeUserEmail = () => {
   const token = getJwt();
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      errorMessage: ""
+      email: '',
+      errorMessage: '',
     },
 
     validationSchema: Yup.object({
       email: Yup.string()
-        .email("Почта введена неправильно")
-        .required("Поле не должно быть пустым")
+        .email('Почта введена неправильно')
+        .required('Поле не должно быть пустым'),
     }),
 
     onSubmit: values => {
       EmailChanges.email = values.email;
       AuthApi.updateEmail(EmailChanges, token)
         .then(res => {
-          values.errorMessage = "Почта была успешно измененна";
+          values.errorMessage = 'Почта была успешно измененна';
         })
         .catch(err => {
           if (err.request.status === 400) {
-            values.errorMessage = "Проверьте правильность ввода данных";
+            values.errorMessage = 'Проверьте правильность ввода данных';
           } else if (err.request.status >= 500) {
-            return <ErrorIndicator />;
+            return <Index />;
           }
         });
-    }
+    },
   });
 
   return (

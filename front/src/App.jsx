@@ -1,30 +1,38 @@
-import React, { Component } from "react";
+import React from 'react';
 import {
   BrowserRouter as Router,
+  useHistory,
   Switch,
   Route,
   Redirect,
-} from "react-router-dom";
-import { createBrowserHistory } from "history";
-import SignIn from "./components/signIn/SignIn";
-import MainPage from "./components/mainPage/Home";
-import CreateTopic from "./components/topics/createTopic";
-import Profile from "./components/userProfile/Profile";
-import ChangeUserPassword from "./components/changeData/ChangePassword";
-import { getJwt } from "./components/helpers/userService";
-import ChangeData from "./components/changeData/ChangeData";
-import RestorePassword from "./components/restorePassword/RestorePassword";
-import ChangeUserEmail from "./components/changeData/ChangeEmail";
-import PasswordKey from "./components/restorePassword/passwordKey";
-import SignUp from "./components/signUp/SignUp";
-import TopicInfo from "./components/socketComment/topicInfo";
-import UserTopics from "./components/UserTopics/UserTopics";
+} from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import SignIn from './components/SignIn';
+import MainPage from './components/mainPage/Home';
+import CreateTopic from './components/topics/createTopic';
+import Profile from './components/userProfile/Profile';
+import ChangeUserPassword from './components/changeData/ChangePassword';
+import ChangeData from './components/changeData/ChangeData';
+import ChangeUserEmail from './components/changeData/ChangeEmail';
+import PasswordKey from './components/RestorePassword/components/Key';
+import SignUp from './components/signUp/SignUp';
+import Comments from './components/Comments';
+import UserTopics from './components/UserTopics';
+import RestorePassword from './components/RestorePassword';
+import NavBar from './components/NavBar';
+
 let history = new createBrowserHistory({
-  baseName: "/",
+  baseName: '/',
 });
-export default class App extends Component {
-  render() {
-    return (
+
+const App = () => {
+  const { pathname } = history.location;
+
+  return (
+    <>
+      {!pathname.includes('sign-in') && !pathname.includes('sign-up') && (
+        <NavBar />
+      )}
       <Router history={history}>
         <Switch>
           <Route exact path="/" component={() => <Redirect to="/topics" />} />
@@ -50,10 +58,11 @@ export default class App extends Component {
             path="/user/sign-in/restore-password/send-key"
             component={PasswordKey}
           />
-          <Route path="/topicId/show-comment" component={TopicInfo} />
+          <Route path="/topicId/show-comment" component={Comments} />
           <Route path="/user/my-topics" component={UserTopics} />
         </Switch>
       </Router>
-    );
-  }
-}
+    </>
+  );
+};
+export default App;

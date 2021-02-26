@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import "./home-page.css";
-import MessageList from "../socketComment/showMessage";
-import { getJwt } from "../helpers/getJwt";
-import { redirectToUrl } from "../helpers/baseAPI";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import './home-page.css';
+import MessageList from '../Comments/components/Messages';
+import { getJwt } from '../../utils/cookies';
+import { redirectToUrl } from '../../utils/baseAPI';
+import { Link } from 'react-router-dom';
 
-const ws = new WebSocket("ws://localhost:8081");
+const ws = new WebSocket('ws://localhost:8081');
 
 export default class TopicListItem extends Component {
   constructor() {
@@ -20,7 +20,7 @@ export default class TopicListItem extends Component {
   connect = (ws, id) => {
     ws.send(
       JSON.stringify({
-        type: "Like",
+        type: 'Like',
         topicId: id,
         token: getJwt(),
       })
@@ -37,7 +37,7 @@ export default class TopicListItem extends Component {
   commentItem = (e, id, author, text) => {
     e.preventDefault();
     this.setState({ isShow: !this.state.isShow });
-    redirectToUrl("/topicId/show-comment");
+    redirectToUrl('/topicId/show-comment');
   };
 
   render() {
@@ -47,7 +47,7 @@ export default class TopicListItem extends Component {
     const chatBox = [];
     chatBox.push(<MessageList content={this.state.getMessage} />);
 
-    let heartIsLike = isLikes ? "text-danger" : " ";
+    let heartIsLike = isLikes ? 'text-danger' : ' ';
     let countLikes = isLike ? 1 : 0;
     return (
       <div className="media text-muted pt-3">
@@ -70,12 +70,12 @@ export default class TopicListItem extends Component {
           <p className="d-inline">{topic_name}</p>
           <button
             className={`btn-likes float-right ${heartIsLike}`}
-            onClick={(e) => this.addLike(e, id)}
+            onClick={e => this.addLike(e, id)}
           >
             Понравилось : {likes + countLikes}
           </button>
           <Link
-            to={{ pathname: "/topicId/show-comment", state: this.props }}
+            to={{ pathname: '/topicId/show-comment', state: this.props }}
             className="float-right mr-2"
           >
             Обсудить

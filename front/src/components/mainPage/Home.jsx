@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import NavBar from "../navBar/NavBar";
-import "./home-page.css";
-import { withRouter } from "react-router-dom";
-import Paginate from "../helpers/paginate";
-import { getJwt } from "../helpers/getJwt";
-import AuthApi from "../helpers/authApi";
-import Loading from "../loading/Loading";
-import ErrorIndicator from "../errorIndicator/ErrorIndicator";
-import TopicList from "../tipicList/topicList";
-import SearchPanel from "../searchPanel/SearchPanel";
-import { createBrowserHistory } from "history";
+import React, { Component } from 'react';
+import NavBar from '../NavBar/NavBar';
+import './home-page.css';
+import { withRouter } from 'react-router-dom';
+import Paginate from '../../utils/paginate';
+import { getJwt } from '../../utils/cookies';
+import TopicAPI from '../../utils/authApi';
+import Loading from '../Loading/Loading';
+import Index from '../ErrorIndicator';
+import TopicList from '../tipicList/topicList';
+import SearchPanel from '../searchPanel/SearchPanel';
+import { createBrowserHistory } from 'history';
 const history = createBrowserHistory();
 
 class HomePage extends Component {
@@ -20,17 +20,17 @@ class HomePage extends Component {
     totalCount: 1,
     isAuth: false,
     isActiveButton: false,
-    currentUser: "",
+    currentUser: '',
     endPage: null,
     isLoading: true,
     isError: false,
-    search: "",
+    search: '',
   };
-  onClickLike = (e) => {
+  onClickLike = e => {
     e.preventDefault();
     this.setState({ isActiveButton: true });
   };
-  onError = (err) => {
+  onError = err => {
     this.setState({ isError: true, isLoading: false });
   };
 
@@ -39,8 +39,8 @@ class HomePage extends Component {
       ? this.setState({ isAuth: !this.state.isAuth })
       : this.setState({ isAuth: this.state.isAuth });
 
-    AuthApi.getAllTopics(this.state.page, getJwt())
-      .then((res) => {
+    TopicAPI.getAllTopics(this.state.page, getJwt())
+      .then(res => {
         if (res.length < 10) {
           this.setState({
             topicList: res,
@@ -61,12 +61,12 @@ class HomePage extends Component {
       .catch(this.onError);
   }
 
-  onSearchPanel = (search) => {
+  onSearchPanel = search => {
     this.setState({ search });
   };
-  nextPage = (value) => {
-    AuthApi.getAllTopics(value, getJwt)
-      .then((res) => {
+  nextPage = value => {
+    TopicAPI.getAllTopics(value, getJwt)
+      .then(res => {
         if (this.state.totalResult < 10) {
           this.setState({
             page: value,
@@ -91,7 +91,7 @@ class HomePage extends Component {
     if (text.length === 0) {
       return items;
     }
-    return items.filter((item) => {
+    return items.filter(item => {
       return item.topic_name.toLowerCase().indexOf(text.toLowerCase()) > -1;
     });
   };
@@ -125,7 +125,7 @@ class HomePage extends Component {
         <NavBar />
         <div className="exception">
           <SearchPanel onSearchPanel={this.onSearchPanel} />
-          {isError && <ErrorIndicator />}
+          {isError && <Index />}
           {isLoading && <Loading />}
           {content}
         </div>

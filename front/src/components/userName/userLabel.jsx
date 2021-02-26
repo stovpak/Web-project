@@ -1,32 +1,32 @@
-import React, { Component, useState } from "react";
-import { redirectToUrl } from "../helpers/baseAPI";
-import { removeCookie } from "../helpers/userService";
-import { connect } from "react-redux";
-import { clearLikes } from "../../redux/reducers/userLikes";
-import { Button, MenuItem, Menu } from "@material-ui/core";
-import { LabelStyle, MenuItemStyle } from "../Material UI/materialStyle";
-import { logOut } from "../../redux/reducers/user";
+import React, { Component, useState } from 'react';
+import { redirectToUrl } from '../../utils/baseAPI';
+import { removeCookie } from '../../utils/cookies';
+import { connect } from 'react-redux';
+import { clearLikes } from '../../redux/reducers/userLikes';
+import { Button, MenuItem, Menu } from '@material-ui/core';
+import { LabelStyle, MenuItemStyle } from '../Material UI/materialStyle';
+import { logOut } from '../../redux/reducers/user';
 
 const UserLabel = ({ username, isAuth, clearLikes, logOut }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isLogout, setIsLogout] = useState(false);
 
   const onLogOut = () => {
-    removeCookie("username");
-    removeCookie("sessionToken");
+    removeCookie('username');
+    removeCookie('sessionToken');
     setIsLogout(false);
     clearLikes();
     logOut();
   };
 
-  const handleClick = (event) => {
+  const handleClick = event => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
   };
 
-  const onClickPage = (e) => {
+  const onClickPage = e => {
     e.preventDefault();
-    redirectToUrl("user/sign-in");
+    redirectToUrl('user/sign-in');
   };
 
   const handleClose = () => {
@@ -52,13 +52,13 @@ const UserLabel = ({ username, isAuth, clearLikes, logOut }) => {
           onClose={handleClose}
         >
           <MenuItem
-            onClick={() => redirectToUrl("user/profile")}
+            onClick={() => redirectToUrl('user/profile')}
             style={MenuItemStyle}
           >
             Профиль
           </MenuItem>
           <MenuItem
-            onClick={() => redirectToUrl("user/my-topics")}
+            onClick={() => redirectToUrl('user/my-topics')}
             style={MenuItemStyle}
           >
             Мои темы
@@ -78,7 +78,7 @@ const UserLabel = ({ username, isAuth, clearLikes, logOut }) => {
   }
 };
 
-export default connect((state) => ({ isAuth: state.isAuth.isAuth }), {
+export default connect(state => ({ isAuth: state.isAuth.isAuth }), {
   clearLikes,
   logOut,
 })(UserLabel);

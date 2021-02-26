@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import MessageList from "./showMessage";
+import MessageList from "../components/Messages";
 
-import "./chatStyle.css";
+import "../chatStyle.css";
 
 export default class Socket extends Component {
   state = {

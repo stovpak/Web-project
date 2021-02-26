@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import userLikes from './reducers/userLikes';
-import isAuth from "./reducers/user"
+import user from './user/user';
 export default combineReducers({
-    userLikes,
-    isAuth
+  userLikes,
+  user,
 });

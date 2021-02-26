@@ -1,29 +1,29 @@
-import React from "react";
-import "./updateInfoUser.css";
-import { getJwt } from "../helpers/getJwt";
-import NavBar from "../navBar/NavBar";
-import AuthApi from "../helpers/authApi";
-import { PasswordChanges } from "../helpers/userService";
-import { validatePassword } from "../validateCheck/validateForm";
-import { useFormik } from "formik";
+import React from 'react';
+import './updateInfoUser.css';
+import { getJwt } from '../../utils/cookies';
+import NavBar from '../NavBar/NavBar';
+import AuthApi from '../../utils/authApi';
+import { PasswordChanges } from '../../utils/cookies';
+import { validatePassword } from '../validateCheck/validateForm';
+import { useFormik } from 'formik';
 
 const ChangeUserPassword = () => {
   const token = getJwt();
   const formik = useFormik({
     initialValues: {
-      password: "",
-      confirmPassword: "",
-      passwordMatch: ""
+      password: '',
+      confirmPassword: '',
+      passwordMatch: '',
     },
 
     validate: values => {
       const errors = {};
       if (!validatePassword(values.password)) {
-        errors.password = "пароль должен состоять из A-Z a-z 0-9";
+        errors.password = 'пароль должен состоять из A-Z a-z 0-9';
       } else if (!validatePassword(values.confirmPassword)) {
-        errors.confirmPassword = "пароль должен состоять из A-Z a-z 0-9";
+        errors.confirmPassword = 'пароль должен состоять из A-Z a-z 0-9';
       } else if (values.confirmPassword !== values.password) {
-        errors.passwordMatch = "Пароли должны совпадать";
+        errors.passwordMatch = 'Пароли должны совпадать';
       }
       return errors;
     },
@@ -35,7 +35,7 @@ const ChangeUserPassword = () => {
           console.log(res);
         })
         .catch(err => console.log(err));
-    }
+    },
   });
 
   return (
@@ -98,4 +98,3 @@ const ChangeUserPassword = () => {
   );
 };
 export default ChangeUserPassword;
-

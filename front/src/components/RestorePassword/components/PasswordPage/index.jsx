@@ -1,42 +1,42 @@
-import React from "react";
-import { useFormik } from "formik";
-import { useHistory } from "react-router-dom";
-import { validatePassword } from "../validateCheck/validateForm";
-import AuthApi from "../helpers/authApi";
-import { restorePasswordInfo } from "../helpers/userService";
+import React from 'react';
+import { useFormik } from 'formik';
+import { useHistory } from 'react-router-dom';
+import { validatePassword } from '../../../validateCheck/validateForm';
+import AuthApi from '../../../../utils/authApi';
+import { restorePasswordInfo } from '../../../../utils/cookies';
 
 export const PasswordPage = ({ email }) => {
   const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
-      password: "",
-      conformPassword: "",
-      passwordMatch: "",
+      password: '',
+      conformPassword: '',
+      passwordMatch: '',
       key: false,
     },
 
-    validate: (values) => {
+    validate: values => {
       const errors = {};
       if (!validatePassword(values.password)) {
-        errors.password = "пароль должен состоять из A-Z a-z 0-9";
+        errors.password = 'пароль должен состоять из A-Z a-z 0-9';
       } else if (!validatePassword(values.confirmPassword)) {
-        errors.confirmPassword = "пароль должен состоять из A-Z a-z 0-9";
+        errors.confirmPassword = 'пароль должен состоять из A-Z a-z 0-9';
       } else if (values.confirmPassword !== values.password) {
-        errors.passwordMatch = "Пароли должны совпадать";
+        errors.passwordMatch = 'Пароли должны совпадать';
       }
       return errors;
     },
 
-    onSubmit: (values) => {
+    onSubmit: values => {
       const errors = {};
       restorePasswordInfo.password = values.password;
       AuthApi.passwordKey(restorePasswordInfo.key, email, values.password)
-        .then((res) => {
+        .then(res => {
           errors.key = true;
-          history.push("/user/sign-in");
+          history.push('/user/sign-in');
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err)((errors.key = false));
         });
     },

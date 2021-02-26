@@ -1,7 +1,8 @@
-import React, { Component } from "react";
-import img from "./ErrorMan.png";
-import img2 from "./hz3.png";
-class ErrorIndicator extends Component {
+import React, { Component } from 'react';
+import img from '../../assets/image/ErrorMan.png';
+import img2 from '../../assets/image/hz3.png';
+
+class Index extends Component {
   render() {
     return (
       <div className="container text-center cnt ">
@@ -18,8 +19,8 @@ class ErrorIndicator extends Component {
                 onMouseOver={e => {
                   e.currentTarget.src = img2;
                 }}
-                onMouseOut={e=>{
-                    e.currentTarget.src=img;
+                onMouseOut={e => {
+                  e.currentTarget.src = img;
                 }}
               />
             </a>
@@ -30,4 +31,4 @@ class ErrorIndicator extends Component {
   }
 }
 
-export default ErrorIndicator;
+export default Index;

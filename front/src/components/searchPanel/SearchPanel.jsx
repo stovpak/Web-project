@@ -1,14 +1,15 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class SearchPanel extends Component {
   state = {
-    text: ""
+    text: '',
   };
   onChange = e => {
     const { onSearchPanel = () => {} } = this.props;
     this.setState({ text: e.target.value });
     onSearchPanel(e.target.value);
   };
+
   render() {
     return (
       <div>
@@ -25,4 +26,3 @@ class SearchPanel extends Component {
 }
 
 export default SearchPanel;
-

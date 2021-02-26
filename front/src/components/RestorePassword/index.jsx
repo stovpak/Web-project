@@ -1,31 +1,32 @@
-import React, { Component } from "react";
-import "./restorePasswordStyle.css";
-import img from "./passwordPNG.png";
-import AuthApi from "../helpers/authApi";
-import { Redirect } from "react-router-dom";
+import React, { Component } from 'react';
+import './style.css';
+import img from '../../assets/image/passwordPNG.png';
+
+import { Redirect } from 'react-router-dom';
+import UserAPI from '../../utils/API/UserApi';
 
 export default class RestorePassword extends Component {
   state = {
-    email: "",
+    email: '',
     errorEmail: null,
     isNextStep: false,
   };
 
-  handleChange = (event) => {
+  handleChange = event => {
     this.setState({ email: event.target.value });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     const { email } = this.state;
     e.preventDefault();
-    AuthApi.restorePassword(email)
-      .then((res) => {
-        this.setState({ errorEmail: "", isNextStep: true });
+    UserAPI.restorePassword(email)
+      .then(res => {
+        this.setState({ errorEmail: '', isNextStep: true });
       })
-      .catch((err) => {
+      .catch(err => {
         if (err.response.status >= 400) {
           this.setState({
-            errorEmail: "Такой почты не существует",
+            errorEmail: 'Такой почты не существует',
             isNextStep: false,
           });
         }
@@ -37,8 +38,9 @@ export default class RestorePassword extends Component {
     if (isNextStep)
       return (
         <Redirect
-          to={{ pathname: "/user/sign-in/restore-password/send-key",
-          state:{email:email}
+          to={{
+            pathname: '/user/sign-in/restore-password/send-key',
+            state: { email: email },
           }}
         />
       );
@@ -49,7 +51,7 @@ export default class RestorePassword extends Component {
             <img
               src={img}
               alt="passwordRestore"
-              className={"img-size text-center"}
+              className={'img-size text-center'}
             />
           </div>
           <div>
@@ -71,7 +73,7 @@ export default class RestorePassword extends Component {
               <button
                 type="submit"
                 className="btn btn-warning  w-75 phone-size"
-                onClick={(e) => this.handleSubmit(e)}
+                onClick={e => this.handleSubmit(e)}
               >
                 Выслать код
               </button>

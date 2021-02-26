@@ -1,24 +1,24 @@
-import React, { Component } from "react";
-import "./restorePasswordStyle.css";
+import React, { Component } from 'react';
+import '../../style.css';
 
-import { restorePasswordInfo } from "../helpers/userService";
-import { PasswordPage } from "./passwordPage";
+import { restorePasswordInfo } from '../../../../utils/cookies';
+import { PasswordPage } from '../PasswordPage';
 export default class PasswordKey extends Component {
   state = {
-    key: "",
+    key: '',
     keyMatch: true,
     keyMessage: null,
   };
-  handleUserInput = (e) => {
+  handleUserInput = e => {
     const name = e.target.name;
     const value = e.target.value;
     this.setState({ [name]: value });
   };
 
-  onKey = (e) => {
+  onKey = e => {
     e.preventDefault();
     if (this.state.key == null) {
-      this.setState({ keyMessage: "Пожалуйста введите ключ" });
+      this.setState({ keyMessage: 'Пожалуйста введите ключ' });
     } else {
       this.setState({ keyMatch: false, keyMessage: null });
       restorePasswordInfo.key = this.state.key;
@@ -67,4 +67,4 @@ export default class PasswordKey extends Component {
       </div>
     );
   }
-};
+}

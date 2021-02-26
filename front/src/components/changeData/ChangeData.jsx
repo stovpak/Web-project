@@ -1,28 +1,28 @@
-import React from "react";
-import { useFormik } from "formik";
-import authApi from "../helpers/authApi";
-import { getJwt } from "../helpers/userService";
-import { validateDate, validateName } from "../validateCheck/validateForm";
-import NavBar from "../navBar/NavBar";
+import React from 'react';
+import { useFormik } from 'formik';
+import authApi from '../../utils/authApi';
+import { getJwt } from '../../utils/cookies';
+import { validateDate, validateName } from '../validateCheck/validateForm';
+import NavBar from '../NavBar/NavBar';
 
 const ChangeData = () => {
   const Token = getJwt();
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      birth: ""
+      firstName: '',
+      lastName: '',
+      birth: '',
     },
     validate: values => {
       const errors = {};
       if (!validateName(values.firstName)) {
-        errors.firstName = "Данные введены неверно";
+        errors.firstName = 'Данные введены неверно';
       }
       if (!validateName(values.lastName)) {
-        errors.lastName = "Данные введены неверно";
+        errors.lastName = 'Данные введены неверно';
       }
       if (!validateDate(values.birth)) {
-        errors.birth = "Введите дату в формате гггг-мм-дд";
+        errors.birth = 'Введите дату в формате гггг-мм-дд';
       }
       return errors;
     },
@@ -32,7 +32,7 @@ const ChangeData = () => {
         .then(res => {
           console.log(res);
         });
-    }
+    },
   });
 
   return (

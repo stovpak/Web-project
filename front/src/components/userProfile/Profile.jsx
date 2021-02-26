@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import NavBar from "../navBar/NavBar";
-import "./profile.css";
-import { Link } from "react-router-dom";
-import Button from "../Button/Button";
+import React, { Component } from 'react';
+import NavBar from '../NavBar/NavBar';
+import './profile.css';
+import { Link } from 'react-router-dom';
+import Button from '../Button/Button';
 
 export default class Profile extends Component {
   state = {
-    userInfo: ["Имя", "Фамилия", "Дата рождения"],
+    userInfo: ['Имя', 'Фамилия', 'Дата рождения'],
   };
   render() {
     let { userInfo } = this.state;
@@ -24,15 +24,13 @@ export default class Profile extends Component {
         <NavBar />
         <div className="container">
           <div>
-            <Button/>
+            <Button />
             <h1 className=" container col-8">Профиль</h1>
             <ul className="list-group container col-8">
               <li className="list-group-item active"> Основные данные</li>
               {changeDataElement}
               <li className="list-group-item ">
-                <Link to="profile/change-data">
-                  Изменить
-                </Link>
+                <Link to="profile/change-data">Изменить</Link>
               </li>
             </ul>
           </div>

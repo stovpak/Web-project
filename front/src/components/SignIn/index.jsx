@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
-import "./signin-style.css";
-import { validateForm, validatePassword } from "../validateCheck/validateForm";
-import { redirectToUrl } from "../helpers/baseAPI";
-import {
-  AuthRequest,
-  setCookiesName,
-  setSession,
-} from "../helpers/userService";
-import AuthApi from "../helpers/authApi";
-import { useFormik } from "formik";
-import { Redirect } from "react-router-dom";
-import { connect, useDispatch } from "react-redux";
-import { loadLikesList } from "../../redux/reducers/userLikes";
-import { getJwt } from "../helpers/getJwt";
-import { authorisation } from "../../redux/reducers/user";
+import React, { useEffect, useState } from 'react';
+import './style.css';
+import { validateForm, validatePassword } from '../validateCheck/validateForm';
+import { redirectToUrl } from '../../utils/baseAPI';
+import { AuthRequest, setCookiesName, setSession } from '../../utils/cookies';
+
+import { useFormik } from 'formik';
+import { Redirect } from 'react-router-dom';
+import { connect, useDispatch } from 'react-redux';
+import { loadLikesList } from '../../redux/reducers/userLikes';
+import { getJwt } from '../../utils/cookies';
+import { authorisation } from '../../redux/user/user';
+import AthorApi from '../../utils/API/AuthApi';
 
 const SignIn = () => {
   const [isSubmit, setIsSubmit] = useState(true);
@@ -28,33 +25,33 @@ const SignIn = () => {
 
   const formik = useFormik({
     initialValues: {
-      login: "",
-      password: "",
-      email: "",
-      errorInfo: "",
+      login: '',
+      password: '',
+      email: '',
+      errorInfo: '',
     },
-    validate: (values) => {
+    validate: values => {
       const errors = {};
       if (!validatePassword(values.password)) {
-        errors.password = "Пароль должен состоять из A-Z a-z 0-9";
+        errors.password = 'Пароль должен состоять из A-Z a-z 0-9';
       }
       if (!validateForm(values.login)) {
-        errors.login = "Логин введен неправильно";
+        errors.login = 'Логин введен неправильно';
       }
       return errors;
     },
     onSubmit: (values, setErrors) => {
       AuthRequest.login = values.login;
       AuthRequest.password = values.password;
-      AuthApi.signIn(AuthRequest)
-        .then((res) => {
+      AthorApi.signIn(AuthRequest)
+        .then(res => {
           setCookiesName(values.login);
           setSession(res.token);
-          dispatch(authorisation());
+          dispatch(authorisation(values.login));
           setCurrentUserLikes(res.likes);
           setIsSubmit(true);
         })
-        .catch((error) => {
+        .catch(error => {
           if (error.response) {
             if (error.response.status === 400) setIsSubmit(false);
           } else {
@@ -66,7 +63,7 @@ const SignIn = () => {
   if (getJwt())
     return (
       <Redirect
-        to={{ pathname: "/topics", state: { likes: currentUserLikes } }}
+        to={{ pathname: '/topics', state: { likes: currentUserLikes } }}
       />
     );
   return (
@@ -123,9 +120,9 @@ const SignIn = () => {
               </button>
               <button
                 className="btn ml-3 btn-custom-link"
-                onClick={(e) => {
+                onClick={e => {
                   e.preventDefault();
-                  redirectToUrl("user/sign-in/forget-password");
+                  redirectToUrl('user/sign-in/forget-password');
                 }}
               >
                 Забыли пароль?
@@ -134,9 +131,9 @@ const SignIn = () => {
             <div className="sign-up-tab mt-3 ml-5 w-100">
               <p className="mt-3 ml-5"> У вас ещё нет аккаунта?</p>
               <button
-                onClick={(e) => {
+                onClick={e => {
                   e.preventDefault();
-                  redirectToUrl("user/sign-up");
+                  redirectToUrl('user/sign-up');
                 }}
                 className="btn btn-custom-link fix-size "
               >
@@ -157,6 +154,6 @@ const SignIn = () => {
     </div>
   );
 };
-export default connect((state) => ({ likes: state.userLikes.likes }), {
+export default connect(state => ({ likes: state.userLikes.likes }), {
   authorisation,
 })(SignIn);

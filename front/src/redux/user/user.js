@@ -1,6 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-const isAuth = createSlice({
-  name: "isAuth",
+import { createSlice } from '@reduxjs/toolkit';
+
+const user = createSlice({
+  name: 'user',
   initialState: { isAuth: null, username: null, email: null },
   reducers: {
     authorisation: (state, action) => {
@@ -13,5 +14,5 @@ const isAuth = createSlice({
   },
 });
 
-export const { authorisation, logOut } = isAuth.actions;
-export default isAuth.reducer;
+export const { authorisation, logOut } = user.actions;
+export default user.reducer;

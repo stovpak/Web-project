@@ -1,15 +1,14 @@
-import React, { Component } from "react";
-import NavBar from "../navBar/NavBar";
-import { getJwt } from "../helpers/getJwt";
-import AuthApi from "../helpers/authApi";
-import { TopicRequest } from "../helpers/userService";
+import React, { Component } from 'react';
+import NavBar from '../NavBar/NavBar';
+import { getJwt } from '../../utils/cookies';
+import TopicAPI from '../../utils/authApi';
+import { TopicRequest } from '../../utils/cookies';
 
-export default class CreateTopic extends Component {
+export default class Topics extends Component {
   state = {
-    topicTheme: "",
-    content: "",
-    username: "",
-
+    topicTheme: '',
+    content: '',
+    username: '',
   };
 
   onChangeInput = e => {
@@ -23,11 +22,10 @@ export default class CreateTopic extends Component {
     const token = getJwt();
     TopicRequest.login = this.state.username;
     TopicRequest.topicName = this.state.topicTheme;
-    AuthApi.createTopic(TopicRequest, token)
+    TopicAPI.createTopic(TopicRequest, token)
       .then(res => {
-        if(res.status===200){
-
-        };
+        if (res.status === 200) {
+        }
       })
       .catch(err => {
         console.log(err);
@@ -70,7 +68,7 @@ export default class CreateTopic extends Component {
               </div>
             </div>
           </form>
-          <button className={"btn btn-primary"} onClick={this.onSendTopic}>
+          <button className={'btn btn-primary'} onClick={this.onSendTopic}>
             Создать
           </button>
         </div>
@@ -78,4 +76,3 @@ export default class CreateTopic extends Component {
     );
   }
 }
-

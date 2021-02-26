@@ -3,7 +3,7 @@ body {
 }
 
 .sign-in-form-image {
-    background: url("../../../src/images/car-background.jpg");
+    background: url("../../assets/images/car-background.jpg");
     background-size: cover;
     background-blend-mode: multiply;
     background-position-y: 100%;

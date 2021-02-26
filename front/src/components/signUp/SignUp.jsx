@@ -1,61 +1,58 @@
-import React from "react";
-import "./signup-style.css";
+import React from 'react';
+import { useFormik } from 'formik';
+import './signup-style.css';
 import {
   validateEmail,
   validateForm,
   validatePassword,
-} from "../validateCheck/validateForm";
-import AuthApi from "../helpers/authApi";
-import { redirectToUrl } from "../helpers/baseAPI";
-import {
-  setCookiesName,
-  setSession,
-  SignUpRequest,
-} from "../helpers/userService";
-import { useFormik } from "formik";
+} from '../validateCheck/validateForm';
+
+import { redirectToUrl } from '../../utils/baseAPI';
+import { setCookiesName, setSession, SignUpRequest } from '../../utils/cookies';
+import AthorApi from '../../utils/API/AuthApi';
 
 const SignUp = () => {
   const formik = useFormik({
     initialValues: {
-      login: "",
-      email: "",
-      password: "",
-      errorInfo: "",
+      login: '',
+      email: '',
+      password: '',
+      errorInfo: '',
     },
 
-    validate: (values) => {
+    validate: values => {
       const errors = {};
       if (!validatePassword(values.password)) {
-        errors.password = "Пароль должен состоять из A-Z a-z 0-9";
+        errors.password = 'Пароль должен состоять из A-Z a-z 0-9';
       }
       if (!validateEmail(values.email)) {
-        errors.email = "Почта введене непраивльно";
+        errors.email = 'Почта введене непраивльно';
       }
       if (!validateForm(values.login)) {
-        errors.login = "Логин введен неправильно";
+        errors.login = 'Логин введен неправильно';
       }
       return errors;
     },
 
-    onSubmit: (values) => {
+    onSubmit: values => {
       SignUpRequest.email = values.email;
       SignUpRequest.password = values.password;
       SignUpRequest.login = values.login;
 
-      AuthApi.signUp(SignUpRequest)
-        .then((res) => {
+      AthorApi.signUp(SignUpRequest)
+        .then(res => {
           setCookiesName(values.login);
           setSession(res.token);
-          redirectToUrl("topics");
+          redirectToUrl('topics');
         })
-        .catch((error) => {
-          if (error.response.status === 409) {
+        .catch(error => {
+          if (error.status === 409) {
             this.setState({
-              alertMessage: "Такой пользователь уже зарегистрирован",
+              alertMessage: 'Такой пользователь уже зарегистрирован',
             });
           } else if (error.response.status === 400) {
             this.setState({
-              alertMessage: "Проверьте правильность введенных данных",
+              alertMessage: 'Проверьте правильность введенных данных',
             });
           } else {
             this.onError();
@@ -72,7 +69,9 @@ const SignUp = () => {
           <div className="sign-up-form">
             <h1 className="text-center mb-5">Регистрация</h1>
             <p className="text-danger font-italic position-fixed small-text mb-5">
-              {formik.values.errorInfo && <p>Проверьте правильность введенных данных </p>}
+              {formik.values.errorInfo && (
+                <p>Проверьте правильность введенных данных </p>
+              )}
             </p>
             <form className="mt-5" onSubmit={formik.handleSubmit}>
               <div className="form-group mb-5">
@@ -141,10 +140,8 @@ const SignUp = () => {
               />
               <button
                 className="btn ml-3 link-sign-up"
-                onClick={(e) => {
-                  e.preventDefault();
-                  redirectToUrl("user/sign-in");
-                }}
+                type="button"
+                onClick={() => redirectToUrl('user/sign-in')}
               >
                 Уже есть аккаунт?
               </button>
@@ -160,7 +157,6 @@ const SignUp = () => {
           </svg>
         </div>
       </div>
-
     </div>
   );
 };
