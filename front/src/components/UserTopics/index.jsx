@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import NavBar from '../NavBar/NavBar';
 import { getJwt } from '../../utils/cookies';
 import TopicAPI from '../../utils/authApi';
 
 import TopicsCard from './components/TopicsCard';
-import { AlertDelete } from '../AlertWindow';
+import { AlertDelete } from '../AlertWindow/Delete';
 import { httpClient } from '../../utils/httpClient';
 import axios from 'axios';
 
@@ -58,7 +57,6 @@ class UserTopics extends Component {
   render() {
     return (
       <div>
-        <NavBar />
         <div className="container">
           {this.state.userTopics[0] &&
             this.state.userTopics.map((item, key) => (

@@ -1,6 +1,6 @@
 import React from 'react';
 import { getJwt } from '../../utils/cookies';
-import NavBar from '../NavBar/NavBar';
+
 import AuthApi from '../../utils/authApi';
 import { EmailChanges } from '../../utils/cookies';
 import { useFormik } from 'formik';
@@ -41,7 +41,6 @@ const ChangeUserEmail = () => {
 
   return (
     <div>
-      <NavBar />
       <div>
         <h1 className="container text-center">Почта</h1>
         <ul className="list-group container col-4">

@@ -1,7 +1,7 @@
 import React from 'react';
 import './updateInfoUser.css';
 import { getJwt } from '../../utils/cookies';
-import NavBar from '../NavBar/NavBar';
+
 import AuthApi from '../../utils/authApi';
 import { PasswordChanges } from '../../utils/cookies';
 import { validatePassword } from '../validateCheck/validateForm';
@@ -40,7 +40,6 @@ const ChangeUserPassword = () => {
 
   return (
     <div>
-      <NavBar />
       <form onSubmit={formik.handleSubmit}>
         <div>
           <ul className="list-group container col-4 ">

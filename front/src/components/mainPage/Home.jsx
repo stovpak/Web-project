@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import NavBar from '../NavBar/NavBar';
 import './home-page.css';
 import { withRouter } from 'react-router-dom';
 import Paginate from '../../utils/paginate';
@@ -122,7 +121,6 @@ class HomePage extends Component {
 
     return (
       <div className="">
-        <NavBar />
         <div className="exception">
           <SearchPanel onSearchPanel={this.onSearchPanel} />
           {isError && <Index />}

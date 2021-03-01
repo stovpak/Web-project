@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import NavBar from '../NavBar/NavBar';
 import { getJwt } from '../../utils/cookies';
 import TopicAPI from '../../utils/authApi';
 import { TopicRequest } from '../../utils/cookies';
@@ -35,7 +34,6 @@ export default class Topics extends Component {
   render() {
     return (
       <div>
-        <NavBar />
         <div className="container">
           <h1>Создание новой темы</h1>
           <form action="">

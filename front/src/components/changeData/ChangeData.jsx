@@ -3,7 +3,6 @@ import { useFormik } from 'formik';
 import authApi from '../../utils/authApi';
 import { getJwt } from '../../utils/cookies';
 import { validateDate, validateName } from '../validateCheck/validateForm';
-import NavBar from '../NavBar/NavBar';
 
 const ChangeData = () => {
   const Token = getJwt();
@@ -37,7 +36,6 @@ const ChangeData = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <NavBar />
       <div className="form-group ">
         <ul className="list-group container col-4">
           <h1>Профиль</h1>

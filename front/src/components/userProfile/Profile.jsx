@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import NavBar from '../NavBar/NavBar';
 import './profile.css';
 import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
@@ -21,7 +20,6 @@ export default class Profile extends Component {
     });
     return (
       <div>
-        <NavBar />
         <div className="container">
           <div>
             <Button />
