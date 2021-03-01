@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import MessageList from "../components/Messages";
+import React, { Component } from 'react';
+import MessageList from '../components/Messages';
 
-import "../chatStyle.css";
+import '../style.css';
 
 export default class Socket extends Component {
   state = {
-    message: "",
-    getMessage: []
+    message: '',
+    getMessage: [],
   };
 
   render() {

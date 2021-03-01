@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { getJwt } from '../../utils/cookies';
-import TopicAPI from '../../utils/authApi';
-import { TopicRequest } from '../../utils/cookies';
+import { getJwt } from 'utils/cookies';
+import TopicAPI from 'utils/API/TopicsApi';
+import { TopicRequest } from 'utils/cookies';
 
 export default class Topics extends Component {
   state = {

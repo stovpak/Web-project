@@ -2,8 +2,8 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { validatePassword } from '../../../validateCheck/validateForm';
-import AuthApi from '../../../../utils/authApi';
-import { restorePasswordInfo } from '../../../../utils/cookies';
+import { restorePasswordInfo } from 'utils/cookies';
+import AuthApi from '../../../../utils/API/AuthApi';
 
 export const PasswordPage = ({ email }) => {
   const history = useHistory();

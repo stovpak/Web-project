@@ -1,8 +1,11 @@
 import React from 'react';
 import { useFormik } from 'formik';
-import authApi from '../../utils/authApi';
-import { getJwt } from '../../utils/cookies';
-import { validateDate, validateName } from '../validateCheck/validateForm';
+import UserApi from 'utils/API/UserApi';
+import { getJwt } from 'utils/cookies';
+import {
+  validateDate,
+  validateName,
+} from 'components/validateCheck/validateForm';
 
 const ChangeData = () => {
   const Token = getJwt();
@@ -26,11 +29,14 @@ const ChangeData = () => {
       return errors;
     },
     onSubmit: values => {
-      authApi
-        .updateData(values.firstName, values.lastName, values.birth, Token)
-        .then(res => {
-          console.log(res);
-        });
+      UserApi.updateData(
+        values.firstName,
+        values.lastName,
+        values.birth,
+        Token
+      ).then(res => {
+        console.log(res);
+      });
     },
   });
 

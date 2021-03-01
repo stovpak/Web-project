@@ -1,13 +1,13 @@
 .imageError{
     width: 500px;
     height: 300px;
-    background: url("../../assets/image/ErrorMan.png") ;
+    background: url("../../assets/images/ErrorMan.png") ;
 }
 a:hover img {
     opacity: 0;
 }
 a:hover{
-    background: url("../../assets/image/hz3.png") no-repeat 50% 50% ;
+    background: url("../../assets/images/hz3.png") no-repeat 50% 50% ;
 }
 .cnt {
     margin-top: 10%;

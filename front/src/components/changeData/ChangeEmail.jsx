@@ -1,12 +1,12 @@
 import React from 'react';
-import { getJwt } from '../../utils/cookies';
-
-import AuthApi from '../../utils/authApi';
-import { EmailChanges } from '../../utils/cookies';
-import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useFormik } from 'formik';
 import './updateInfoUser.css';
-import Index from '../ErrorIndicator';
+import Index from 'components/ErrorIndicator';
+
+import { getJwt } from 'utils/cookies';
+import UserApi from 'utils/API/UserApi';
+import { EmailChanges } from 'utils/cookies';
 
 const ChangeUserEmail = () => {
   const token = getJwt();
@@ -25,7 +25,7 @@ const ChangeUserEmail = () => {
 
     onSubmit: values => {
       EmailChanges.email = values.email;
-      AuthApi.updateEmail(EmailChanges, token)
+      UserApi.updateEmail(EmailChanges, token)
         .then(res => {
           values.errorMessage = 'Почта была успешно измененна';
         })

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import './style.css';
-import img from '../../assets/image/passwordPNG.png';
-
+import img from 'assets/images/passwordPNG.png';
 import { Redirect } from 'react-router-dom';
-import UserAPI from '../../utils/API/UserApi';
+import UserAPI from 'utils/API/UserApi';
 
 export default class RestorePassword extends Component {
   state = {

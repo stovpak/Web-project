@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
-import { validateForm, validatePassword } from '../validateCheck/validateForm';
-import { redirectToUrl } from '../../utils/baseAPI';
-import { AuthRequest, setCookiesName, setSession } from '../../utils/cookies';
+import {
+  validateForm,
+  validatePassword,
+} from 'components/validateCheck/validateForm';
+import { redirectToUrl } from 'utils/baseAPI';
+import { AuthRequest, setCookiesName, setSession } from 'utils/cookies';
 
 import { useFormik } from 'formik';
 import { Redirect } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
-import { loadLikesList } from '../../redux/reducers/userLikes';
-import { getJwt } from '../../utils/cookies';
-import { authorisation } from '../../redux/user/user';
-import AthorApi from '../../utils/API/AuthApi';
+import { loadLikesList } from 'redux/reducers/userLikes';
+import { getJwt } from 'utils/cookies';
+import { authorisation } from 'redux/user/user';
+import AthorApi from 'utils/API/AuthApi';
 
 const SignIn = () => {
   const [isSubmit, setIsSubmit] = useState(true);

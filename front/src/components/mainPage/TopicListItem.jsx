@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './home-page.css';
-import MessageList from '../Comments/components/Messages';
-import { getJwt } from '../../utils/cookies';
-import { redirectToUrl } from '../../utils/baseAPI';
+import MessageList from 'components/Comments/components/Messages';
+import { getJwt } from 'utils/cookies';
+import { redirectToUrl } from 'utils/baseAPI';
 import { Link } from 'react-router-dom';
 
 const ws = new WebSocket('ws://localhost:8081');

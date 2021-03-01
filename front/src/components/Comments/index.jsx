@@ -3,11 +3,11 @@ import { useLocation } from 'react-router-dom';
 
 import Form from './components/Form';
 import MessageList from './components/Messages';
-import TopicItem from '../topicItemComponent/topicItem';
-import Button from '../Button/Button';
+import TopicItem from 'components/topicItemComponent/topicItem';
+import Button from 'components/Button/Button';
 
 import Socket from './helpers/socket';
-import { getUsernameFromCookies, getJwt } from '../../utils/cookies';
+import { getUsernameFromCookies, getJwt } from 'utils/cookies';
 import moment from 'moment';
 
 const Comments = () => {

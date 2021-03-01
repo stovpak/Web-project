@@ -1,11 +1,14 @@
-import React, { Component, useState } from 'react';
-import { redirectToUrl } from '../../utils/baseAPI';
-import { removeCookie } from '../../utils/cookies';
+import React, { useState } from 'react';
+import { redirectToUrl } from 'utils/baseAPI';
+import { removeCookie } from 'utils/cookies';
 import { connect } from 'react-redux';
-import { clearLikes } from '../../redux/reducers/userLikes';
+import { clearLikes } from 'redux/reducers/userLikes';
 import { Button, MenuItem, Menu } from '@material-ui/core';
-import { LabelStyle, MenuItemStyle } from '../Material UI/materialStyle';
-import { logOut } from '../../redux/reducers/user';
+import {
+  LabelStyle,
+  MenuItemStyle,
+} from 'components/Material UI/materialStyle';
+import { logOut } from 'redux/user/user';
 
 const UserLabel = ({ username, isAuth, clearLikes, logOut }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -24,8 +27,7 @@ const UserLabel = ({ username, isAuth, clearLikes, logOut }) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const onClickPage = e => {
-    e.preventDefault();
+  const onClickPage = () => {
     redirectToUrl('user/sign-in');
   };
 
@@ -34,6 +36,7 @@ const UserLabel = ({ username, isAuth, clearLikes, logOut }) => {
   };
 
   if (isAuth) {
+    console.log('dadad');
     return (
       <div className=" ">
         <Button
@@ -71,14 +74,21 @@ const UserLabel = ({ username, isAuth, clearLikes, logOut }) => {
     );
   } else {
     return (
-      <button className="btn btn-warning form-control" onClick={onClickPage}>
+      <button
+        className="btn btn-warning form-control"
+        type="button"
+        onClick={onClickPage}
+      >
         Войти
       </button>
     );
   }
 };
 
-export default connect(state => ({ isAuth: state.isAuth.isAuth }), {
-  clearLikes,
-  logOut,
-})(UserLabel);
+export default connect(
+  state => ({ isAuth: state.user.isAuth, username: state.user.username }),
+  {
+    clearLikes,
+    logOut,
+  }
+)(UserLabel);

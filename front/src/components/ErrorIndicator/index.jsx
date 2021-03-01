@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import img from '../../assets/image/ErrorMan.png';
-import img2 from '../../assets/image/hz3.png';
+import img from 'assets/images/ErrorMan.png';
+import img2 from 'assets/images/hz3.png';
 
 class Index extends Component {
   render() {

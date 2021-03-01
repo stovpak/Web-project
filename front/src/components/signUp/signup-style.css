@@ -3,7 +3,7 @@ body {
 }
 
 .sign-up-form-image {
-    background: url("../../../src/images/sign-up-background.jpg");
+    background: url("../../assets/images/sign-up-background.jpg");
     background-size: cover;
     background-blend-mode: multiply;
     background-position-y: 100%;

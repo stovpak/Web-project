@@ -5,11 +5,10 @@ import {
   validateEmail,
   validateForm,
   validatePassword,
-} from '../validateCheck/validateForm';
-
-import { redirectToUrl } from '../../utils/baseAPI';
-import { setCookiesName, setSession, SignUpRequest } from '../../utils/cookies';
-import AthorApi from '../../utils/API/AuthApi';
+} from 'components/validateCheck/validateForm';
+import { redirectToUrl } from 'utils/baseAPI';
+import { setCookiesName, setSession, SignUpRequest } from 'utils/cookies';
+import AthorApi from 'utils/API/AuthApi';
 
 const SignUp = () => {
   const formik = useFormik({

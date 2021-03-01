@@ -1,10 +1,9 @@
 import React from 'react';
 import './updateInfoUser.css';
-import { getJwt } from '../../utils/cookies';
-
-import AuthApi from '../../utils/authApi';
-import { PasswordChanges } from '../../utils/cookies';
-import { validatePassword } from '../validateCheck/validateForm';
+import { getJwt } from 'utils/cookies';
+import UserApi from 'utils/API/UserApi';
+import { PasswordChanges } from 'utils/cookies';
+import { validatePassword } from 'components/validateCheck/validateForm';
 import { useFormik } from 'formik';
 
 const ChangeUserPassword = () => {
@@ -30,7 +29,7 @@ const ChangeUserPassword = () => {
 
     onSubmit: values => {
       PasswordChanges.password = values.password;
-      AuthApi.updatePassword(PasswordChanges, token)
+      UserApi.updatePassword(PasswordChanges, token)
         .then(res => {
           console.log(res);
         })

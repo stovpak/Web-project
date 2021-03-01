@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import './home-page.css';
 import { withRouter } from 'react-router-dom';
-import Paginate from '../../utils/paginate';
-import { getJwt } from '../../utils/cookies';
-import TopicAPI from '../../utils/authApi';
-import Loading from '../Loading/Loading';
-import Index from '../ErrorIndicator';
-import TopicList from '../tipicList/topicList';
-import SearchPanel from '../searchPanel/SearchPanel';
-import { createBrowserHistory } from 'history';
-const history = createBrowserHistory();
+import Paginate from 'utils/paginate';
+import { getJwt } from 'utils/cookies';
+import TopicAPI from 'utils/API/TopicsApi';
+import Loading from 'components/Loading/Loading';
+import Index from 'components/ErrorIndicator';
+import TopicList from 'components/tipicList/topicList';
+import SearchPanel from 'components/searchPanel/SearchPanel';
 
 class HomePage extends Component {
   state = {

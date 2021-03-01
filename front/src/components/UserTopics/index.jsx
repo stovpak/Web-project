@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { getJwt } from '../../utils/cookies';
-import TopicAPI from '../../utils/authApi';
+import { getJwt } from 'utils/cookies';
+import TopicAPI from 'utils/API/TopicsApi';
 
 import TopicsCard from './components/TopicsCard';
-import { AlertDelete } from '../AlertWindow/Delete';
-import { httpClient } from '../../utils/httpClient';
 import axios from 'axios';
 
 class UserTopics extends Component {
