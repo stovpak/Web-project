@@ -1,43 +1,37 @@
-import { httpClient } from './httpClient';
+import { httpClient, httpTopics } from './httpClient';
 import { getJwt } from './cookies';
 
+const headers = {
+  'Content-Type': 'application/json',
+  Token: getJwt(),
+};
+
 class TopicApi {
-  async getAllTopics(page, tokenResponse) {
-    return await httpClient
-      .get(`topics/${page}`, {
-        'Content-Type': 'application/json',
-        Token: tokenResponse,
-      })
-      .then(res => res.data);
+  async getAllTopics(page) {
+    return await httpTopics.get(`${page}`, headers).then(res => res.data);
   }
 
   async createTopic(data, token) {
-    return await httpClient
-      .post('topics/create-topic/', data, {
-        headers: {
-          'Content-Type': 'application/json',
-          Token: token,
-        },
+    return await httpTopics
+      .post('create-topic/', data, {
+        headers,
       })
       .then(res => res.data);
   }
 
-  async getUserTopics(token) {
-    return await httpClient
+  async getUserTopics() {
+    return await httpTopics
       .post(
-        'topics/my-topics',
+        'my-topics',
         {},
         {
-          headers: {
-            'Content-Type': 'application/json',
-            Token: token,
-          },
+          headers,
         }
       )
       .then(res => res.data);
   }
   async deleteTopic(id) {
-    return httpClient.delete('topics/delete-topic', {
+    return httpTopics.delete('delete-topic', {
       body: { topicId: id, type: 'Topic' },
       headers: {
         'Content-Type': 'application/json',
@@ -45,6 +39,10 @@ class TopicApi {
       },
     });
   }
+  async getTopTopics(type) {
+    return httpTopics.get(`top/${type}`).then(res => res.data);
+  }
 }
+
 const TopicAPI = new TopicApi();
 export default TopicAPI;
