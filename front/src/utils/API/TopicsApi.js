@@ -1,5 +1,5 @@
-import { httpClient, httpTopics } from './httpClient';
-import { getJwt } from './cookies';
+import { httpTopics } from '../httpClient';
+import { getJwt } from '../cookies';
 
 const headers = {
   'Content-Type': 'application/json',
