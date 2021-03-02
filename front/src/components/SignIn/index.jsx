@@ -10,21 +10,15 @@ import { AuthRequest, setCookiesName, setSession } from 'utils/cookies';
 import { useFormik } from 'formik';
 import { Redirect } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
-import { loadLikesList } from 'redux/reducers/userLikes';
+import { loadLikesList } from 'redux/reducers/reducers';
 import { getJwt } from 'utils/cookies';
 import { authorisation } from 'redux/user/user';
-import AthorApi from 'utils/API/AuthApi';
+import AuthApi from 'utils/API/AuthApi';
 
 const SignIn = () => {
   const [isSubmit, setIsSubmit] = useState(true);
   const [currentUserLikes, setCurrentUserLikes] = useState(null);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (currentUserLikes) {
-      dispatch(loadLikesList(currentUserLikes));
-    }
-  });
 
   const formik = useFormik({
     initialValues: {
@@ -43,15 +37,15 @@ const SignIn = () => {
       }
       return errors;
     },
-    onSubmit: (values, setErrors) => {
-      AuthRequest.login = values.login;
-      AuthRequest.password = values.password;
-      AthorApi.signIn(AuthRequest)
+    onSubmit: ({ login, password }) => {
+      AuthApi.signIn({ login, password })
         .then(res => {
-          setCookiesName(values.login);
+          setCookiesName(login);
           setSession(res.token);
-          dispatch(authorisation(values.login));
-          setCurrentUserLikes(res.likes);
+          dispatch(authorisation(login));
+          dispatch(
+            loadLikesList(res.likes.map(({ topic_id }) => ({ id: topic_id })))
+          );
           setIsSubmit(true);
         })
         .catch(error => {

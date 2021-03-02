@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { getJwt } from 'utils/cookies';
 import TopicAPI from 'utils/API/TopicsApi';
 import { TopicRequest } from 'utils/cookies';
+import { redirectToUrl } from '../../utils/baseAPI';
 
-export default class Topics extends Component {
+export default class CreateTopic extends Component {
   state = {
     topicTheme: '',
     content: '',
@@ -16,19 +17,14 @@ export default class Topics extends Component {
     this.setState({ [name]: value });
   };
 
-  onSendTopic = e => {
-    e.preventDefault();
+  onSendTopic = () => {
     const token = getJwt();
     TopicRequest.login = this.state.username;
     TopicRequest.topicName = this.state.topicTheme;
-    TopicAPI.createTopic(TopicRequest, token)
-      .then(res => {
-        if (res.status === 200) {
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    redirectToUrl('topics');
+    TopicAPI.createTopic(TopicRequest, token).catch(err => {
+      console.log(err);
+    });
   };
 
   render() {
@@ -39,34 +35,23 @@ export default class Topics extends Component {
           <form action="">
             <div className="form-group green-border-focus w-50">
               <div className="form-group green-border-focus ">
-                <label>
-                  Заголовок
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="topicTheme"
-                    onChange={this.onChangeInput}
-                    size={70}
-                  />
-                  <p className="text-black-50 font-italic ">
-                    количество символов {70 - this.state.topicTheme.length}
-                  </p>
-                </label>
-              </div>
-              <div className="form-group green-border-focus ">
                 <label htmlFor="exampleFormControlTextarea5">Описание</label>
                 <textarea
                   className="form-control"
                   id="exampleFormControlTextarea5"
                   rows="10"
                   cols="150"
-                  name="content"
+                  name="topicTheme"
                   onChange={this.onChangeInput}
-                ></textarea>
+                />
               </div>
             </div>
           </form>
-          <button className={'btn btn-primary'} onClick={this.onSendTopic}>
+          <button
+            className="btn btn-primary"
+            type="button"
+            onClick={this.onSendTopic}
+          >
             Создать
           </button>
         </div>

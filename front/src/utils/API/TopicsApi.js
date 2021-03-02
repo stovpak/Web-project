@@ -11,18 +11,18 @@ class TopicApi {
     return await httpTopics.get(`${page}`, headers).then(res => res.data);
   }
 
-  async createTopic(data, token) {
+  async createTopic(data) {
     return await httpTopics
-      .post('create-topic/', data, {
+      .post('create-topic', data, {
         headers,
       })
-      .then(res => res.data);
+      .then(res => console.log(res.data));
   }
 
   async getUserTopics() {
     return await httpTopics
       .post(
-        'my-topics',
+        'my-CreateTopic',
         {},
         {
           headers,

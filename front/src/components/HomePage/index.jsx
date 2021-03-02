@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import './home-page.css';
-import { withRouter } from 'react-router-dom';
+import './styled.css';
+import { withRouter, Switch } from 'react-router-dom';
 import Paginate from 'utils/paginate';
 import { getJwt } from 'utils/cookies';
 import TopicAPI from 'utils/API/TopicsApi';
-import Loading from 'components/Loading/Loading';
+import Loading from 'components/Loading';
 import Index from 'components/ErrorIndicator';
-import TopicList from 'components/tipicList/topicList';
-import SearchPanel from 'components/searchPanel/SearchPanel';
+import TopicList from 'components/Topics';
+import SearchPanel from 'components/SearchPanel';
 
 class HomePage extends Component {
   state = {
@@ -16,22 +16,18 @@ class HomePage extends Component {
     totalResult: 0,
     totalCount: 1,
     isAuth: false,
-    isActiveButton: false,
-    currentUser: '',
     endPage: null,
     isLoading: true,
     isError: false,
     search: '',
   };
-  onClickLike = e => {
-    e.preventDefault();
-    this.setState({ isActiveButton: true });
-  };
-  onError = err => {
+
+  onError = () => {
     this.setState({ isError: true, isLoading: false });
   };
 
   componentDidMount() {
+    console.log('aga');
     getJwt()
       ? this.setState({ isAuth: !this.state.isAuth })
       : this.setState({ isAuth: this.state.isAuth });
@@ -84,6 +80,17 @@ class HomePage extends Component {
       })
       .catch(this.onError);
   };
+
+  topTopics = type => {
+    console.log(type, 'type');
+    console.log(this.state.topicList);
+    TopicAPI.getTopTopics(type).then(topicList => {
+      this.setState({
+        topicList: topicList,
+      });
+    });
+  };
+
   searchItems = (items, text) => {
     if (text.length === 0) {
       return items;
@@ -103,28 +110,28 @@ class HomePage extends Component {
       isError,
     } = this.state;
     const hasData = !(isLoading || isError);
-    const content = hasData ? (
-      <div className="container">
-        <div className="row">
-          <TopicList topic={this.searchItems(topicList, search)} />
-        </div>
-        <Paginate
-          nextPage={this.nextPage}
-          pages={totalCount}
-          currentPage={page}
-          endPage={endPage}
-        />
-      </div>
-    ) : null;
 
     return (
-      <div className="">
-        <div className="exception">
-          <SearchPanel onSearchPanel={this.onSearchPanel} />
-          {isError && <Index />}
-          {isLoading && <Loading />}
-          {content}
-        </div>
+      <div className="exception">
+        <SearchPanel onSearchPanel={this.onSearchPanel} />
+        {isError && <Index />}
+        {isLoading && <Loading />}
+        {hasData && (
+          <div className="container">
+            <div className="row">
+              <TopicList
+                topic={this.searchItems(topicList, search)}
+                topTopics={this.topTopics}
+              />
+            </div>
+            <Paginate
+              nextPage={this.nextPage}
+              pages={totalCount}
+              currentPage={page}
+              endPage={endPage}
+            />
+          </div>
+        )}
       </div>
     );
   }

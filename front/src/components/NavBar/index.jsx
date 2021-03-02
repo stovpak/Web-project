@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './navBar.css';
+import './styled.css';
 import { redirectToUrl } from 'utils/baseAPI';
 import { useSelector } from 'react-redux';
 

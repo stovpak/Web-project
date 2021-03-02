@@ -1,16 +1,11 @@
 import React, { useEffect } from 'react';
-import { clearLikes } from 'redux/reducers/userLikes';
-import TopicListItem from 'components/mainPage/TopicListItem';
+import { clearLikes } from 'redux/reducers/reducers';
+import TopicListItem from 'components/HomePage/components/TopicItem';
 import { connect, useSelector } from 'react-redux';
 import { getJwt } from 'utils/cookies';
-import TopicAPI from 'utils/API/TopicsApi';
 
-const TopicList = ({ topic, clearLikes }) => {
+const Topics = ({ topic, clearLikes, topTopics }) => {
   const likeCount = useSelector(state => state.userLikes.likes);
-
-  const topTopics = type => {
-    TopicAPI.getTopTopics(type).then(res => console.log(res));
-  };
 
   useEffect(() => {
     if (!getJwt()) {
@@ -38,9 +33,7 @@ const TopicList = ({ topic, clearLikes }) => {
               key={key}
               topic_name={topic_name}
               id={id}
-              isLikes={likeCount
-                .map(({ topic_id }) => topic_id)
-                .find(i => i === id)}
+              isLikes={likeCount.map(({ id }) => id).find(item => item === id)}
               likes={likes}
               auth={creator_name}
               className="container"
@@ -54,4 +47,4 @@ const TopicList = ({ topic, clearLikes }) => {
 
 export default connect(state => ({ likeCount: state.userLikes.likes }), {
   clearLikes,
-})(TopicList);
+})(Topics);

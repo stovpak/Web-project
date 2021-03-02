@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormik } from 'formik';
-import './signup-style.css';
+import './styled.css';
 import {
   validateEmail,
   validateForm,

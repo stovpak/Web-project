@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './profile.css';
 import { Link } from 'react-router-dom';
-import Button from 'components/Button/Button';
+import BackButton from '../Button';
 
 export default class Profile extends Component {
   state = {
@@ -22,7 +22,7 @@ export default class Profile extends Component {
       <div>
         <div className="container">
           <div>
-            <Button />
+            <BackButton />
             <h1 className=" container col-8">Профиль</h1>
             <ul className="list-group container col-8">
               <li className="list-group-item active"> Основные данные</li>

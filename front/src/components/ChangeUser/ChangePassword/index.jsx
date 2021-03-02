@@ -1,5 +1,5 @@
 import React from 'react';
-import './updateInfoUser.css';
+import '../styled.css';
 import { getJwt } from 'utils/cookies';
 import UserApi from 'utils/API/UserApi';
 import { PasswordChanges } from 'utils/cookies';

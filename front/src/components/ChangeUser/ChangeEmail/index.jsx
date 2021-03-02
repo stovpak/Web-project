@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import './updateInfoUser.css';
+import '../styled.css';
 import Index from 'components/ErrorIndicator';
 
 import { getJwt } from 'utils/cookies';

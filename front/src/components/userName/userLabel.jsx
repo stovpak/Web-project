@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { redirectToUrl } from 'utils/baseAPI';
 import { removeCookie } from 'utils/cookies';
 import { connect } from 'react-redux';
-import { clearLikes } from 'redux/reducers/userLikes';
+import { clearLikes } from 'redux/reducers/reducers';
 import { Button, MenuItem, Menu } from '@material-ui/core';
 import {
   LabelStyle,

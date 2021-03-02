@@ -13,6 +13,7 @@ class UserTopics extends Component {
   };
 
   componentDidMount() {
+    console.log('lolol');
     TopicAPI.getUserTopics(getJwt())
       .then(res => {
         this.setState({ userTopics: res });
