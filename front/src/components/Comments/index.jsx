@@ -41,9 +41,9 @@ const Comments = () => {
       text: comments.text,
       topic_id: comments.topicId,
     };
-    comments.type
-      ? setComments(msg => msg.concat(configMessage))
-      : setComments(comments);
+    console.log('coments 2', comments);
+    if (comments.type) setComments(msg => msg.concat(configMessage));
+    if (comments[0]) setComments(comments);
   };
 
   const onSendMessage = text => {
@@ -67,6 +67,8 @@ const Comments = () => {
         token: getJwt(),
       })
     );
+
+    setComments(comments.filter(item => item.id !== id));
   };
 
   const editComments = (id, text) => {
@@ -101,6 +103,7 @@ const Comments = () => {
             <h6 className="border-bottom border-gray pb-2 mb-0">Комментарии</h6>
 
             <small className="d-block  mt-3 cc_cursor mb-3">
+              {console.log(comments, 'comme')}
               {comments.map(item => (
                 <>
                   <MessageList
