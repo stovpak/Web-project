@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
-import { redirectToUrl } from 'utils/baseAPI';
-import { removeCookie } from 'utils/cookies';
-import { connect } from 'react-redux';
+
+import { connect, useDispatch } from 'react-redux';
 import { clearLikes } from 'redux/reducers/reducers';
+import { logOut } from 'redux/user/user';
+
+import { redirectToUrl } from 'utils/baseAPI';
+import { getJwt, getUsernameFromCookies, removeCookie } from 'utils/cookies';
+
 import { Button, MenuItem, Menu } from '@material-ui/core';
 import {
   LabelStyle,
   MenuItemStyle,
 } from 'components/Material UI/materialStyle';
-import { logOut } from 'redux/user/user';
 
-const UserLabel = ({ username, isAuth, clearLikes, logOut }) => {
+const UserLabel = ({  clearLikes, logOut }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isLogout, setIsLogout] = useState(false);
+
+  const dispatch = useDispatch();
 
   const onLogOut = () => {
     removeCookie('username');
     removeCookie('sessionToken');
     setIsLogout(false);
-    clearLikes();
-    logOut();
+    dispatch(clearLikes());
+    dispatch(logOut());
   };
 
   const handleClick = event => {
@@ -35,8 +40,7 @@ const UserLabel = ({ username, isAuth, clearLikes, logOut }) => {
     setAnchorEl(null);
   };
 
-  if (isAuth) {
-    console.log('dadad');
+  if (getJwt()) {
     return (
       <div className=" ">
         <Button
@@ -45,7 +49,7 @@ const UserLabel = ({ username, isAuth, clearLikes, logOut }) => {
           onClick={handleClick}
           style={LabelStyle}
         >
-          {username}
+          {getUsernameFromCookies()}
         </Button>
         <Menu
           id="simple-menu"
@@ -61,7 +65,7 @@ const UserLabel = ({ username, isAuth, clearLikes, logOut }) => {
             Профиль
           </MenuItem>
           <MenuItem
-            onClick={() => redirectToUrl('user/my-topics')}
+            onClick={() => redirectToUrl('topics/my-topics')}
             style={MenuItemStyle}
           >
             Мои темы
@@ -73,6 +77,8 @@ const UserLabel = ({ username, isAuth, clearLikes, logOut }) => {
       </div>
     );
   } else {
+    dispatch(logOut());
+
     return (
       <button
         className="btn btn-warning form-control"

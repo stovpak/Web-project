@@ -5,15 +5,18 @@ import { Link } from 'react-router-dom';
 import LikeButton from '../ButtonLikes';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeLikeFromTopic, setLikeOnTopic } from 'redux/reducers/reducers';
+import UnAuthorized from '../../../AlertWindow/UnAuthorized';
 
 const ws = new WebSocket('ws://localhost:8081');
 
 const TopicItem = props => {
   const { likes, auth, id, topic_name, isLikes } = props;
+
   const userLikes = useSelector(state => state.userLikes);
   const dispatch = useDispatch();
   const [isLike, setIsLike] = useState(false);
   const [likesCount, setLikesCount] = useState(likes);
+  const [show, setShow] = useState(false);
 
   const connect = (ws, id) => {
     ws.send(
@@ -26,19 +29,28 @@ const TopicItem = props => {
   };
 
   const addLike = idTopic => {
-    connect(ws, idTopic);
-    setIsLike(!isLike);
-    if (userLikes.likes.map(({ id }) => id).includes(Number(idTopic))) {
-      setLikesCount(likesCount - 1);
-      dispatch(removeLikeFromTopic(id));
+    if (getJwt()) {
+      connect(ws, idTopic);
+      setIsLike(!isLike);
+      if (userLikes.likes.map(({ id }) => id).includes(Number(idTopic))) {
+        setLikesCount(likesCount - 1);
+        dispatch(removeLikeFromTopic(id));
+      } else {
+        setLikesCount(likesCount + 1);
+        dispatch(setLikeOnTopic({ id }));
+      }
     } else {
-      setLikesCount(likesCount + 1);
-      dispatch(setLikeOnTopic({ id }));
+      setShow(true);
     }
+  };
+
+  const handleOpenModal = () => {
+    setShow(!show);
   };
 
   return (
     <div className="media text-muted pt-3">
+      <UnAuthorized open={show} handleClose={handleOpenModal} />
       <svg
         className="bd-placeholder-img mr-2 rounded"
         xmlns="http://www.w3.org/2000/svg"

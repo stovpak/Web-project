@@ -17,14 +17,18 @@ export default class CreateTopic extends Component {
     this.setState({ [name]: value });
   };
 
-  onSendTopic = () => {
+  onSendTopic = e => {
+    e.preventDefault();
     const token = getJwt();
     TopicRequest.login = this.state.username;
     TopicRequest.topicName = this.state.topicTheme;
+
+    TopicAPI.createTopic(TopicRequest, token)
+      .then(res => res)
+      .catch(err => {
+        console.log(err);
+      });
     redirectToUrl('topics');
-    TopicAPI.createTopic(TopicRequest, token).catch(err => {
-      console.log(err);
-    });
   };
 
   render() {

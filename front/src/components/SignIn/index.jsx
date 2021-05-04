@@ -8,16 +8,13 @@ import { redirectToUrl } from 'utils/baseAPI';
 import { AuthRequest, setCookiesName, setSession } from 'utils/cookies';
 
 import { useFormik } from 'formik';
-import { Redirect } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 import { loadLikesList } from 'redux/reducers/reducers';
-import { getJwt } from 'utils/cookies';
 import { authorisation } from 'redux/user/user';
 import AuthApi from 'utils/API/AuthApi';
 
 const SignIn = () => {
   const [isSubmit, setIsSubmit] = useState(true);
-  const [currentUserLikes, setCurrentUserLikes] = useState(null);
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -29,12 +26,14 @@ const SignIn = () => {
     },
     validate: values => {
       const errors = {};
+
       if (!validatePassword(values.password)) {
         errors.password = 'Пароль должен состоять из A-Z a-z 0-9';
       }
       if (!validateForm(values.login)) {
         errors.login = 'Логин введен неправильно';
       }
+
       return errors;
     },
     onSubmit: ({ login, password }) => {
@@ -47,6 +46,7 @@ const SignIn = () => {
             loadLikesList(res.likes.map(({ topic_id }) => ({ id: topic_id })))
           );
           setIsSubmit(true);
+          redirectToUrl('topics');
         })
         .catch(error => {
           if (error.response) {
@@ -57,12 +57,7 @@ const SignIn = () => {
         });
     },
   });
-  if (getJwt())
-    return (
-      <Redirect
-        to={{ pathname: '/topics', state: { likes: currentUserLikes } }}
-      />
-    );
+
   return (
     <div className="linear-background">
       <div className="sign-in-background">
@@ -70,7 +65,7 @@ const SignIn = () => {
         <div className="sign-in-side-left auth-form">
           <div className="sign-in-form">
             <h1 className="text-center mb-5">Вход</h1>
-            <div className="text-danger font-italic position-fixed small-text mb-5">
+            <div className="text-danger font-italic small-text mb-5">
               {!isSubmit && <p>Проверьте правильность введенных данных </p>}
             </div>
             <form onSubmit={formik.handleSubmit} className="mt-5">
@@ -79,7 +74,9 @@ const SignIn = () => {
                   Логин
                   <input
                     type="text"
-                    className="form-control"
+                    className={`form-control ${formik.touched.login &&
+                      formik.errors.login &&
+                      'border-error'}`}
                     placeholder="Логин"
                     name="login"
                     onChange={formik.handleChange}
@@ -98,7 +95,9 @@ const SignIn = () => {
                   Пароль
                   <input
                     type="password"
-                    className="form-control mb-2"
+                    className={`form-control mb-2 ${formik.touched.password &&
+                      formik.errors.password &&
+                      'border-error'}`}
                     placeholder="Пароль"
                     name="password"
                     onChange={formik.handleChange}

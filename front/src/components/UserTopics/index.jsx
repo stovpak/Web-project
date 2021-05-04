@@ -1,78 +1,79 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getJwt } from 'utils/cookies';
 import TopicAPI from 'utils/API/TopicsApi';
-
+import Delete from 'components/AlertWindow/Delete';
+import { isEmptyArray } from 'formik';
 import TopicsCard from './components/TopicsCard';
-import axios from 'axios';
+import Loading from '../Loading';
+import Container from '../Container';
 
-class UserTopics extends Component {
-  state = {
-    userTopics: [],
-    isDelete: false,
-    deleteTopicId: null,
+const UserTopics = () => {
+  const [loading, setLoading] = useState(false);
+  const [userTopics, setUserTopics] = useState(null);
+  const [isConfirmDelete, setIsConfirmDelete] = useState(false);
+  const [currentTopic, setCurrentTopic] = useState({ id: null, name: null });
+
+  const openConfirmDelete = (id, name) => {
+    setIsConfirmDelete(true);
+    setCurrentTopic({ id, name });
   };
 
-  componentDidMount() {
-    console.log('lolol');
+  const handleClose = () => {
+    setIsConfirmDelete(false);
+  };
+
+  const handleDelete = () => {
+    TopicAPI.deleteTopic(currentTopic.id)
+      .then(() => {
+        setIsConfirmDelete(false);
+        setCurrentTopic({ id: null, name: null });
+        setUserTopics(userTopics.filter(topic => topic.id !== currentTopic.id));
+      })
+      .catch(err => console.log(err, 'err'));
+  };
+
+  useEffect(() => {
+    setLoading(true);
     TopicAPI.getUserTopics(getJwt())
       .then(res => {
-        this.setState({ userTopics: res });
+        setLoading(false);
+        setUserTopics(res);
       })
-      .catch(err => console.log(err));
-  }
+      .catch(err => {
+        setLoading(false);
+        console.log(err);
+      });
+  }, [setUserTopics]);
 
-  deleteTopic = id => {
-    this.setState({ isDelete: true, deleteTopicId: id });
-  };
-
-  handleClose = () => {
-    this.setState({ isDelete: false });
-  };
-
-  handleDelete = id => {
-    axios({
-      method: 'delete',
-      url: 'http://localhost:3001/topics/delete-topic',
-      data: {
-        body: { topicId: id, type: 'Topic' },
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers':
-            'Origin, X-Requested-With, Content-Type, Accept',
-          Token: getJwt(),
-        },
-      },
-    })
-      .then(re => console.log(re))
-      .catch(e => console.log(e));
-    /*TopicAPI.deleteTopic(id)
-      .then(res => {
-        this.setState({ isDelete: false });
-      })
-      .catch(err => console.log(err, 'err'));*/
-  };
-
-  render() {
-    return (
-      <div>
-        <div className="container">
-          {this.state.userTopics[0] &&
-            this.state.userTopics.map((item, key) => (
+  return (
+    <Container>
+      {loading ? (
+        <Loading/>
+      ) : (
+        <div>
+          {!userTopics ? (
+            <h2 className="mb-5">Ничего не найдено</h2>
+          ) : userTopics.length != 0 ? (
+            userTopics.map((item, key) => (
               <div className="mb-5" key={key}>
-                <TopicsCard
-                  item={item}
-                  isDelete={this.state.isDelete}
-                  deleteTopic={this.deleteTopic}
-                  handleClose={this.handleClose}
-                  handleDelete={this.handleDelete}
-                />
+                <TopicsCard item={item} openConfirmDelete={openConfirmDelete} />
               </div>
-            ))}
+            ))
+          ) : (
+            <h2 className="mb-5">Ничего не найдено</h2>
+          )}
+          {isConfirmDelete && (
+            <Delete
+              topicName={currentTopic.name}
+              open={isConfirmDelete}
+              handleClose={handleClose}
+              handleDelete={handleDelete}
+            />
+          )}
         </div>
-      </div>
-    );
-  }
-}
+      )}
+    </Container>
+  );
+};
 
 export default UserTopics;

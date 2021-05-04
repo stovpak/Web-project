@@ -30,6 +30,8 @@ export default class RestorePassword extends Component {
           });
         }
       });
+
+    this.setState({ errorEmail: '', isNextStep: true });
   };
 
   render() {

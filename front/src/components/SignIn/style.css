@@ -198,3 +198,6 @@ body {
     background-color: #000 !important;
     color: #fff;
 }
+.border-error{
+    border: 1px solid red;
+}

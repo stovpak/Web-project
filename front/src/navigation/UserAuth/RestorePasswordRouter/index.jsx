@@ -10,9 +10,14 @@ const SignInRouter = () => {
 
   return (
     <Switch>
-      <Route path={`${url}`} component={SignIn} />
-      <Route path={`${url}/forget-password`} component={RestorePassword} />
+      <Route exact path={`${url}`} component={SignIn} />
       <Route
+        exact
+        path={`${url}/forget-password`}
+        component={RestorePassword}
+      />
+      <Route
+        exact
         path={`${url}/restore-password/send-key`}
         component={PasswordKey}
       />

@@ -1,11 +1,15 @@
 import React from 'react';
-import { createBrowserHistory } from 'history';
-const history = createBrowserHistory();
 
-const BackButton = () => {
+const BackButton = ({className, onClick}) => {
   return (
-    <div>
-      <button onClick={() => history.back()}>Back</button>
+    <div className={className}>
+      <button
+      onClick={onClick}
+      className="btn btn-primary mb-4"
+      type="button"
+    >
+      Назад
+    </button>
     </div>
   );
 };

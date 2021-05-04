@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import './styled.css';
 import { redirectToUrl } from 'utils/baseAPI';
 import { useSelector } from 'react-redux';
-
 import UserLabel from 'components/UserName/userLabel';
 import UnAuthorized from 'components/AlertWindow/UnAuthorized';
+import { LabelStyle, MenuItemStyle } from '../Material UI/materialStyle';
+import { getUsernameFromCookies } from '../../utils/cookies';
 
 const NavBar = () => {
   const { isAuth } = useSelector(state => state.user);
@@ -30,41 +31,67 @@ const NavBar = () => {
           AvtoForum
         </a>
         <button
-          className="navbar-toggler"
+          className="navbar-toggler desktop-hide navbar-label-username"
+          type="button"
+          data-toggle="collapse"
+          data-target="#collapsibleNavbar"
+          style={LabelStyle}
+        >
+          {getUsernameFromCookies()}
+        </button>
+        <button
+          className="navbar-toggler mobile-hide"
           type="button"
           data-toggle="collapse"
           data-target="#collapsibleNavbar"
         >
           <span className="navbar-toggler-icon" />
         </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-          <ul className="navbar-nav ">
-            <li className="nav-item ">
+        <div className="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul className="navbar-nav d-flex align-items-center">
+            <li className="nav-item active">
               <a className="nav-link" href="/topics">
-                Главная <span className="sr-only">(current)</span>
+                Главная
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">
-                Обсуждения
+                <button
+                  name="addTopic"
+                  type="button"
+                  className="ml-auto btn btn-warning m-50 nav-button"
+                  onClick={addTopic}
+                >
+                  Добавить тему
+                </button>
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                <form className="form-inline form-group my-2 my-lg-0 float-right">
-                  <button
-                    name="addTopic"
-                    type="button"
-                    className="ml-auto btn btn-warning m-50"
-                    onClick={addTopic}
-                  >
-                    Добавить тему
-                  </button>
-                </form>
+            <li className="nav-item active">
+              <a
+                className="nav-link"
+                onClick={() => redirectToUrl('user/profile')}
+              >
+                Профиль
+              </a>
+            </li>
+            <li className="nav-item active">
+              <a
+                className="nav-link"
+                onClick={() => redirectToUrl('topics/my-topics')}
+              >
+                Мои темы
+              </a>
+            </li>
+            <li style={MenuItemStyle} className="nav-link active">
+              <a
+                className="nav-link"
+                onClick={() => redirectToUrl('topics/my-topics')}
+              >
+                Выйти
               </a>
             </li>
           </ul>
-          <ul className="navbar-nav navbar-align w-25">
+          <ul className="navbar-nav navbar-align w-25 mobile-hide">
             <li className="nav-item">
               <a className="nav-link" href="#">
                 <UserLabel />
