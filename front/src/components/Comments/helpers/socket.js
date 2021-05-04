@@ -1,25 +1,64 @@
-import React, { Component } from 'react';
-import MessageList from '../components/Messages';
+import { getJwt, getUsernameFromCookies } from 'utils/cookies';
+import moment from 'moment';
 
-import '../style.css';
+const ws = new WebSocket('ws://localhost:8081');
 
-export default class Socket extends Component {
-  state = {
-    message: '',
-    getMessage: [],
+export const connect = id => {
+  ws.onopen = () => {
+    connectMessage(id);
   };
 
-  render() {
-    let chatBox = [];
-    chatBox.push(
-      <div className="w-100">
-        <MessageList content={this.state.getMessage} />
-      </div>
-    );
-    return (
-      <div w-100>
-        <div className="d-flex flex-wrap align-content-start  ">{chatBox}</div>
-      </div>
-    );
-  }
-}
+  ws.onclose = () => {
+    setTimeout(() => connect(), 1000);
+  };
+};
+
+export const connectMessage = id => {
+  ws.send(
+    JSON.stringify({
+      type: 'Connect',
+      topicId: id,
+    })
+  );
+};
+
+export const onMessage = () => {
+  ws.onmessage = message => message;
+
+  return ws.onmessage;
+};
+
+export const sendMessage = (id, text) => {
+  ws.send(
+    JSON.stringify({
+      type: 'Message',
+      topicId: id,
+      text: text,
+      login: getUsernameFromCookies(),
+      date: new Date(),
+      token: getJwt(),
+    })
+  );
+};
+
+export const deleteMessage = id => {
+  ws.send(
+    JSON.stringify({
+      type: 'Delete',
+      messageId: id,
+      token: getJwt(),
+    })
+  );
+};
+
+export const editMessage = (id, text) => {
+  ws.send(
+    JSON.stringify({
+      type: 'Update',
+      messageId: id,
+      date: moment(),
+      token: getJwt(),
+      text: text,
+    })
+  );
+};

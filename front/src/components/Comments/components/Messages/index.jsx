@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { userSelector } from 'redux/user/selector';
 import avatarLabel from 'assets/images/avatar.svg';
+import img from '../../../../assets/images/edit.svg';
+import deleteIcon from '../../../../assets/images/delete.svg';
 
 const Messages = ({ comments, editComments, deleteComments }) => {
   const user = useSelector(userSelector);
   const [isShow, setIsShow] = useState();
-  const [newComments, setNewComments] = useState(null);
+  const [newComments, setNewComments] = useState(comments.text);
 
   const handleSaveMessage = (id, newMessage) => {
     setIsShow(false);
@@ -31,7 +33,7 @@ const Messages = ({ comments, editComments, deleteComments }) => {
             onChange={e => setNewComments(e.target.value)}
           />
         ) : (
-          comments.text
+          newComments
         )}
         <small className="text-muted float-right">
           {comments.author_name === user.username && (
@@ -39,17 +41,28 @@ const Messages = ({ comments, editComments, deleteComments }) => {
               {isShow ? (
                 <button
                   type="button"
+                  className="btn btn-lin "
                   onClick={() => handleSaveMessage(comments.id, newComments)}
                 >
                   Сохранить
                 </button>
               ) : (
-                <button type="button" onClick={setIsShow}>
-                  Редактировать
+                <button
+                  type="button"
+                  className="btn btn-lin "
+                  onClick={setIsShow}
+                >
+                  <span className="mobile-hide">Редактировать</span>
+                  <img src={img} alt="edit" className="desktop-hide" />
                 </button>
               )}
-              <button type="button" onClick={() => deleteComments(comments.id)}>
-                Удалить
+              <button
+                type="button"
+                className="btn btn-lin"
+                onClick={() => deleteComments(comments.id)}
+              >
+                <span className="mobile-hide"> Удалить</span>
+                <img src={deleteIcon} alt="delete" className="desktop-hide" />
               </button>
             </>
           )}

@@ -1,29 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import Form from './components/Form';
 import MessageList from './components/Messages';
 import TopicItem from 'components/Topics/components/TopicItem';
 
 import { getUsernameFromCookies, getJwt } from 'utils/cookies';
-import moment from 'moment';
-import BackButton from '../Button';
 
-const ws = new WebSocket('ws://localhost:8081');
+import BackButton from 'components/Button';
+import { editMessage } from './helpers/socket';
 
 const Comments = () => {
   const location = useLocation().state;
   const [comments, setComments] = useState([]);
   const [isEdit, setIsEdit] = useState(null);
+  const history =  useHistory()
+
+  const ws = new WebSocket('ws://localhost:8081');
 
   const connect = () => {
     ws.onopen = () => {
-      ws.send(
-        JSON.stringify({
-          type: 'Connect',
-          topicId: location.id,
-        })
-      );
+      localStorage.setItem( 'currentId', location.id )
+      updateData(location.id);
       ws.onmessage = recieveMsg;
     };
 
@@ -41,7 +39,6 @@ const Comments = () => {
       text: comments.text,
       topic_id: comments.topicId,
     };
-    console.log('coments 2', comments);
     if (comments.type) setComments(msg => msg.concat(configMessage));
     if (comments[0]) setComments(comments);
   };
@@ -66,19 +63,21 @@ const Comments = () => {
         messageId: id,
         token: getJwt(),
       })
-    );
-
+    );updateData();
     setComments(comments.filter(item => item.id !== id));
+
   };
 
   const editComments = (id, text) => {
+    editMessage(id, text);
+    updateData();
+  };
+
+  const updateData = id => {
     ws.send(
       JSON.stringify({
-        type: 'Update',
-        messageId: id,
-        date: moment(),
-        token: getJwt(),
-        text: text,
+        type: 'Connect',
+        topicId: id || localStorage.getItem('currentId'),
       })
     );
   };
@@ -87,12 +86,14 @@ const Comments = () => {
     if (comments.map(item => item.id === id)) setIsEdit(!isEdit);
   };
 
-  useEffect(() => connect());
+  useEffect(() => {
+    connect(location.id);
+  }, [location.id]);
 
   return (
     <div>
       <div className=" container ">
-        <BackButton />
+        <BackButton onClick={()=>history.goBack()}/>
         <TopicItem
           auth={location.auth}
           topic_name={location.topic_name}
@@ -103,19 +104,22 @@ const Comments = () => {
             <h6 className="border-bottom border-gray pb-2 mb-0">Комментарии</h6>
 
             <small className="d-block  mt-3 cc_cursor mb-3">
-              {console.log(comments, 'comme')}
-              {comments.map(item => (
-                <>
-                  <MessageList
-                    key={item.id}
-                    comments={item}
-                    editComments={editComments}
-                    deleteComments={deleteComments}
-                    handleEdit={handleEdit}
-                    isEdit={isEdit}
-                  />
-                </>
-              ))}
+              {!comments.length ? (
+                <h5>Будьте первым кто напишей комментарий</h5>
+              ) : (
+                comments?.map(item => (
+                  <>
+                    <MessageList
+                      key={item.id}
+                      comments={item}
+                      editComments={editComments}
+                      deleteComments={deleteComments}
+                      handleEdit={handleEdit}
+                      isEdit={isEdit}
+                    />
+                  </>
+                ))
+              )}
             </small>
           </div>
         </div>
