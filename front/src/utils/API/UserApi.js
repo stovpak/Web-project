@@ -8,17 +8,23 @@ class UserApi {
       })
       .then(res => res.data);
   }
+
   async passwordKey(key, email, password) {
     return await httpClient
       .post('user/sign-in/restore-password/send-key', { key, password, email })
       .then(res => res.data);
   }
 
-  async updateData(firstName, lastName, birth, token) {
+  async updateData(login, firstName, lastName, birth, token) {
     return httpClient
       .post(
         'user/profile/change-data/send',
-        { firstName: firstName, secondName: lastName, birthday: birth },
+        {
+          login: login,
+          firstName: firstName,
+          secondName: lastName,
+          birthday: birth,
+        },
         {
           headers: {
             'Content-Type': 'application/json',

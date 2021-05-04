@@ -12,17 +12,15 @@ class TopicApi {
   }
 
   async createTopic(data) {
-    return await httpTopics
-      .post('create-topic', data, {
-        headers,
-      })
-      .then(res => console.log(res.data));
+    return await httpTopics.post('create-topic', data, {
+      headers,
+    });
   }
 
   async getUserTopics() {
     return await httpTopics
       .post(
-        'my-CreateTopic',
+        'my-topics',
         {},
         {
           headers,
@@ -32,7 +30,7 @@ class TopicApi {
   }
   async deleteTopic(id) {
     return httpTopics.delete('delete-topic', {
-      body: { topicId: id, type: 'Topic' },
+      data: { topicId: id },
       headers: {
         'Content-Type': 'application/json',
         Token: getJwt(),
