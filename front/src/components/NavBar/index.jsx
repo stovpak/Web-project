@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './styled.css';
 import { redirectToUrl } from 'utils/baseAPI';
 import { useSelector } from 'react-redux';
-import UserLabel from 'components/UserName/userLabel';
+import LabelForUsername from 'components/LabelForUsername';
 import UnAuthorized from 'components/AlertWindow/UnAuthorized';
 import { LabelStyle, MenuItemStyle } from '../Material UI/materialStyle';
 import { getUsernameFromCookies } from '../../utils/cookies';
@@ -94,7 +94,7 @@ const NavBar = () => {
           <ul className="navbar-nav navbar-align w-25 mobile-hide">
             <li className="nav-item">
               <a className="nav-link" href="#">
-                <UserLabel />
+                <LabelForUsername />
               </a>
             </li>
           </ul>
