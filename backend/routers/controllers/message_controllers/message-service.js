@@ -1,43 +1,46 @@
-const messageModel = require('../../../db/models/message_models/message-model.js');
+const messageModel = require("../../../db/models/message_models/message-model.js");
 
 function createMessage(message) {
   messageModel.create({
     author_name: message.authorName,
     topic_id: message.topicId,
     date: message.creationDate,
-    text: message.text,
+    text: message.text
   });
 }
 function showOldMessages(topicId) {
   return messageModel.findAll({
     raw: true,
     where: {
-      topic_id: topicId,
-    },
+      topic_id: topicId
+    }
   });
 }
 function deleteMessage(messageToDeleteId) {
-  messageModel.destroy({
+  return messageModel.destroy({
     raw: true,
     where: {
-      id: messageToDeleteId,
-    },
+      id: messageToDeleteId
+    }
   });
 }
 function updateMessage(messageToUpdateId, messageText) {
-  messageModel.update({text: messageText}, {
-    raw: true,
-    where: {
-      id: messageToUpdateId,
-    },
-  });
+  return messageModel.update(
+    { text: messageText },
+    {
+      raw: true,
+      where: {
+        id: messageToUpdateId
+      }
+    }
+  );
 }
 function findMessage(messageId) {
   return messageModel.findOne({
     raw: true,
     where: {
-      id: messageId,
-    },
+      id: messageId
+    }
   });
 }
 module.exports.createMessage = createMessage;
