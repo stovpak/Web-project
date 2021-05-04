@@ -10,6 +10,8 @@ const user = createSlice({
     },
     logOut: (state, action) => {
       state.isAuth = false;
+      state.username = null;
+      state.email = null;
     },
   },
 });
