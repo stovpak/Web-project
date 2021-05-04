@@ -20,7 +20,7 @@ const App = () => {
 
   return (
     <>
-      {!pathname.includes('sign-in') && !pathname.includes('sign-up') && (
+      {pathname.includes('sign-in') || pathname.includes('sign-up') ? null : (
         <NavBar />
       )}
       <Router history={history}>
@@ -29,10 +29,11 @@ const App = () => {
           <Route path="/topics" component={TopicsRouter} />
           <Route path="/user" component={UserRouter} />
           <Route path="/topicId/show-comment" component={Comments} />
-          {/*  <Route path="/topics/my-topics" component={UserTopics} />*/}
+          <Route path="*" render={() => <div>Page not Found</div>} />
         </Switch>
       </Router>
     </>
   );
 };
+
 export default App;

@@ -7,8 +7,8 @@ import {
   validatePassword,
 } from 'components/validateCheck/validateForm';
 import { redirectToUrl } from 'utils/baseAPI';
-import { setCookiesName, setSession, SignUpRequest } from 'utils/cookies';
-import AthorApi from 'utils/API/AuthApi';
+import { setCookiesName } from 'utils/cookies';
+import AuthApi from 'utils/API/AuthApi';
 
 const SignUp = () => {
   const formik = useFormik({
@@ -25,7 +25,7 @@ const SignUp = () => {
         errors.password = 'Пароль должен состоять из A-Z a-z 0-9';
       }
       if (!validateEmail(values.email)) {
-        errors.email = 'Почта введене непраивльно';
+        errors.email = 'Почта введена неправильно';
       }
       if (!validateForm(values.login)) {
         errors.login = 'Логин введен неправильно';
@@ -34,15 +34,16 @@ const SignUp = () => {
     },
 
     onSubmit: values => {
-      SignUpRequest.email = values.email;
-      SignUpRequest.password = values.password;
-      SignUpRequest.login = values.login;
+      const SignUpRequest = {
+        email: values.email,
+        password: values.password,
+        login: values.login,
+      };
 
-      AthorApi.signUp(SignUpRequest)
+      AuthApi.signUp(SignUpRequest)
         .then(res => {
           setCookiesName(values.login);
-          setSession(res.token);
-          redirectToUrl('topics');
+          redirectToUrl('user/sign-in');
         })
         .catch(error => {
           if (error.status === 409) {
@@ -78,7 +79,9 @@ const SignUp = () => {
                   Логин
                   <input
                     type="text"
-                    className="form-control"
+                    className={`form-control ${formik.touched.login &&
+                      formik.errors.login &&
+                      'border-error'}`}
                     name="login"
                     placeholder="Логин"
                     onChange={formik.handleChange}
@@ -97,7 +100,9 @@ const SignUp = () => {
                   Почта
                   <input
                     type="email"
-                    className="form-control"
+                    className={`form-control ${formik.touched.email &&
+                      formik.errors.email &&
+                      'border-error'}`}
                     name="email"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -116,7 +121,9 @@ const SignUp = () => {
                   Пароль
                   <input
                     type="password"
-                    className="form-control"
+                    className={`form-control ${formik.touched.password &&
+                      formik.errors.password &&
+                      'border-error'}`}
                     name="password"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
