@@ -7,6 +7,10 @@ import Index from 'components/ErrorIndicator';
 import { getJwt } from 'utils/cookies';
 import UserApi from 'utils/API/UserApi';
 import { EmailChanges } from 'utils/cookies';
+import { redirectToUrl } from '../../../utils/baseAPI';
+import BackButton from '../../Button';
+import Container from '../../Container';
+import '../styled.css'
 
 const ChangeUserEmail = () => {
   const token = getJwt();
@@ -24,10 +28,11 @@ const ChangeUserEmail = () => {
     }),
 
     onSubmit: values => {
+      console.log('f', token);
       EmailChanges.email = values.email;
-      UserApi.updateEmail(EmailChanges, token)
-        .then(res => {
-          values.errorMessage = 'Почта была успешно измененна';
+      UserApi.updateEmail(values.email, token)
+        .then(() => {
+          redirectToUrl('user/profile');
         })
         .catch(err => {
           if (err.request.status === 400) {
@@ -39,14 +44,18 @@ const ChangeUserEmail = () => {
     },
   });
 
+  const onClick = () => {
+    redirectToUrl('user/profile');
+  };
+
   return (
-    <div>
-      <div>
-        <h1 className="container text-center">Почта</h1>
-        <ul className="list-group container col-4">
-          <li className="list-group-item bg-dark text-center text-white">
-            Изменение почты
-          </li>
+    <Container>
+      <div className='form-profile m-auto'>
+        <div className="p-0 d-flex">
+          <BackButton className="p-0" onClick={onClick} />
+          <h1 className="m-0 text-center col-md-8">Почта</h1>
+        </div>
+        <ul className="list-group w-100">
           <li className="list-group-item">
             Ведите почту
             <input
@@ -64,8 +73,8 @@ const ChangeUserEmail = () => {
             </p>
             <div>
               <button
-                className="btn btn-dark mt-2 float-right"
-                onClick={e => this.onClick(e)}
+                className="btn btn-dark mt-4 float-right"
+                onClick={formik.handleSubmit}
               >
                 Изменить
               </button>
@@ -73,7 +82,7 @@ const ChangeUserEmail = () => {
           </li>
         </ul>
       </div>
-    </div>
+    </Container>
   );
 };
 export default ChangeUserEmail;
