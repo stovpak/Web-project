@@ -66,7 +66,7 @@ const NavBar = () => {
                 </button>
               </a>
             </li>
-            <li className="nav-item active">
+            <li className="nav-item active desktop-hide">
               <a
                 className="nav-link"
                 onClick={() => redirectToUrl('user/profile')}
@@ -74,7 +74,7 @@ const NavBar = () => {
                 Профиль
               </a>
             </li>
-            <li className="nav-item active">
+            <li className="nav-item active desktop-hide">
               <a
                 className="nav-link"
                 onClick={() => redirectToUrl('topics/my-topics')}
@@ -82,7 +82,7 @@ const NavBar = () => {
                 Мои темы
               </a>
             </li>
-            <li style={MenuItemStyle} className="nav-link active">
+            <li style={MenuItemStyle} className="nav-link active desktop-hide">
               <a
                 className="nav-link"
                 onClick={() => redirectToUrl('topics/my-topics')}

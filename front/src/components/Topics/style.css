@@ -1,0 +1,26 @@
+
+@media screen and (max-width: 756px){
+    .mobile-scroll {
+        overflow: scroll;
+        white-space: nowrap;
+    }
+
+    .title-topics{
+        margin-right: 15px;
+    }
+
+    .mobile-flex-button{
+        display: flex;
+    }
+    .border-bottom{
+        border-bottom: 2px saddlebrown solid;
+    }
+    .mobile-scroll .btn,.mobile-scroll .btn:hover{
+        background: transparent;
+        border: none;
+        color: black;
+        font-size: 18px;
+        padding: 0 15px;
+        margin: 0;
+    }
+}

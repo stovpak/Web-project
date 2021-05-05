@@ -66,7 +66,7 @@ const TopicItem = props => {
       </svg>
       <div className="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <strong className="d-block text-gray-dark">{auth}</strong>
-        <p className="d-inline">{topic_name}</p>
+        <span className="d-inline">{topic_name}</span>
         <LikeButton
           className={`btn-likes float-right ${isLikes && 'text-danger'}`}
           onClick={() => addLike(id)}

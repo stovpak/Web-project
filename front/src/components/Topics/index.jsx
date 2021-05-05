@@ -3,6 +3,7 @@ import { clearLikes } from 'redux/reducers/reducers';
 import TopicListItem from 'components/HomePage/components/TopicItem';
 import { connect, useSelector } from 'react-redux';
 import { getJwt } from 'utils/cookies';
+import './style.css';
 
 const Topics = ({ topic, clearLikes, topTopics }) => {
   const likeCount = useSelector(state => state.userLikes.likes);
@@ -16,9 +17,9 @@ const Topics = ({ topic, clearLikes, topTopics }) => {
   return (
     <div className="col-md-8 order-md-1 cc_cursor ">
       <div className="my-3 p-3 bg-white rounded shadow-sm">
-        <h4 className="border-bottom border-gray pb-2 mb-0 d-flex align-items-center justify-content-between">
-          <span>Актуальные темы</span>
-          <div className="justify-content-end">
+        <h4 className="border-bottom border-gray pb-2 mb-0 d-flex align-items-center justify-content-between mobile-scroll">
+          <span className="title-topics">Актуальные темы</span>
+          <div className="justify-content-end mobile-flex-button">
             <button
               onClick={() => topTopics('weekly-top')}
               className="btn btn-warning mr-5"

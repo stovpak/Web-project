@@ -13,6 +13,7 @@
     .nav-button{
         background: transparent;
         border: transparent;
+        padding: 0;
     }
     .mobile-hide{
         display: none;

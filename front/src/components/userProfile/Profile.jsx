@@ -10,9 +10,9 @@ export default class Profile extends Component {
     userInfo: ['Имя', 'Фамилия', 'Дата рождения'],
   };
 
-  onClick=()=>{
-   redirectToUrl('topics')
-  }
+  onClick = () => {
+    redirectToUrl('topics');
+  };
   render() {
     let { userInfo } = this.state;
     const changeDataElement = userInfo.map((listData, i) => {
@@ -25,11 +25,11 @@ export default class Profile extends Component {
       );
     });
     return (
-      <Container>
+      <>
         <div>
           <div className="d-flex m-auto row">
             <div className="col-8 m-auto p-0">
-              <BackButton className="col-md-2 p-0" onClick={this.onClick}/>
+              <BackButton className="col-md-2 p-0" onClick={this.onClick} />
               <h1 className="col-md-8 m-0 text-center">Профиль</h1>
             </div>
           </div>
@@ -69,7 +69,7 @@ export default class Profile extends Component {
             </li>
           </ul>
         </div>
-      </Container>
+      </>
     );
   }
 }
