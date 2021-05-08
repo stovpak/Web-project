@@ -3,6 +3,7 @@ import '../../style.css';
 
 import { restorePasswordInfo } from '../../../../utils/cookies';
 import { PasswordPage } from '../PasswordPage';
+import { redirectToUrl } from '../../../../utils/baseAPI';
 export default class PasswordKey extends Component {
   state = {
     key: '',
@@ -26,12 +27,12 @@ export default class PasswordKey extends Component {
   };
   keyComponent = () => {
     return (
-      <div>
+      <div className="restore-pass-wrapper">
         <form className="form-group text-center center-component mt-lg-5 phone-size">
           <div>
-            <h1 className="text-center">
+            <h2 className="text-center">
               Введите ключ, который пришел к вам на почту
-            </h1>
+            </h2>
             <input
               type="text"
               name="key"
@@ -42,8 +43,15 @@ export default class PasswordKey extends Component {
             <p className="text-danger font-italic position-fixed small-text">
               {this.state.keyMessage}
             </p>
-            <button className="btn btn-warning mt-4 w-50" onClick={this.onKey}>
+            <button className="btn btn-warning mt-4 w-100" onClick={this.onKey}>
               Далее
+            </button>
+            <button
+              type="submit"
+              className="btn btn-outlined-warning w-100 phone-size"
+              onClick={() => redirectToUrl('user/sign-in')}
+            >
+              Вернуться
             </button>
           </div>
         </form>
@@ -61,7 +69,7 @@ export default class PasswordKey extends Component {
     );
     return (
       <div>
-        <div className=" p-3 mb-5 bg-light rounded container w-35 display-center">
+        <div className="p-3 mb-5 rounded container w-35 display-center">
           <div>{showNextStep}</div>
         </div>
       </div>

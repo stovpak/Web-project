@@ -60,91 +60,93 @@ const SignIn = () => {
 
   return (
     <div className="linear-background">
-      <div className="sign-in-background">
-        <div className="sign-in-form-image" />
-        <div className="sign-in-side-left auth-form">
-          <div className="sign-in-form">
-            <h1 className="text-center mb-5">Вход</h1>
-            <div className="text-danger font-italic small-text mb-5">
-              {!isSubmit && <p>Проверьте правильность введенных данных </p>}
-            </div>
-            <form onSubmit={formik.handleSubmit} className="mt-5">
-              <div className="form-group mb-5">
-                <label className="label-width w-100">
-                  Логин
-                  <input
-                    type="text"
-                    className={`form-control ${formik.touched.login &&
-                      formik.errors.login &&
-                      'border-error'}`}
-                    placeholder="Логин"
-                    name="login"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.login}
-                  />
-                </label>
-                <div className="text-danger font-italic position-fixed small-text">
-                  {formik.touched.login && formik.errors.login ? (
-                    <p>{formik.errors.login}</p>
-                  ) : null}
-                </div>
+      <div style={{ maxWidth: '1440px' }}>
+        <div className="sign-in-background">
+          <div className="sign-in-form-image" />
+          <div className="sign-in-side-left auth-form">
+            <div className="sign-in-form">
+              <h1 className="text-center mb-5">Вход</h1>
+              <div className="text-danger font-italic small-text mb-5">
+                {!isSubmit && <p>Проверьте правильность введенных данных </p>}
               </div>
-              <div className="form-group mb-5">
-                <label className="label-width w-100">
-                  Пароль
-                  <input
-                    type="password"
-                    className={`form-control mb-2 ${formik.touched.password &&
-                      formik.errors.password &&
-                      'border-error'}`}
-                    placeholder="Пароль"
-                    name="password"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.password}
-                  />
-                </label>
-                <div className="text-danger font-italic position-fixed small-text">
-                  {formik.touched.password && formik.errors.password ? (
-                    <p>{formik.errors.password}</p>
-                  ) : null}
+              <form onSubmit={formik.handleSubmit} className="mt-5">
+                <div className="form-group mb-5">
+                  <label className="label-width w-100">
+                    Логин
+                    <input
+                      type="text"
+                      className={`form-control ${formik.touched.login &&
+                        formik.errors.login &&
+                        'border-error'}`}
+                      placeholder="Логин"
+                      name="login"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.login}
+                    />
+                  </label>
+                  <div className="text-danger font-italic position-fixed small-text">
+                    {formik.touched.login && formik.errors.login ? (
+                      <p>{formik.errors.login}</p>
+                    ) : null}
+                  </div>
                 </div>
+                <div className="form-group mb-5">
+                  <label className="label-width w-100">
+                    Пароль
+                    <input
+                      type="password"
+                      className={`form-control mb-2 ${formik.touched.password &&
+                        formik.errors.password &&
+                        'border-error'}`}
+                      placeholder="Пароль"
+                      name="password"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.password}
+                    />
+                  </label>
+                  <div className="text-danger font-italic position-fixed small-text">
+                    {formik.touched.password && formik.errors.password ? (
+                      <p>{formik.errors.password}</p>
+                    ) : null}
+                  </div>
+                </div>
+                <button type="submit" className="btn w-50 btn-custom">
+                  Войти
+                </button>
+                <button
+                  className="btn ml-3 btn-custom-link"
+                  onClick={e => {
+                    e.preventDefault();
+                    redirectToUrl('user/sign-in/forget-password');
+                  }}
+                >
+                  Забыли пароль?
+                </button>
+              </form>
+              <div className="sign-up-tab mt-3 w-100">
+                <p className="mt-3 ml-5"> У вас ещё нет аккаунта?</p>
+                <button
+                  onClick={e => {
+                    e.preventDefault();
+                    redirectToUrl('user/sign-up');
+                  }}
+                  className="btn btn-custom-link fix-size "
+                >
+                  Зарегистрироваться
+                </button>
               </div>
-              <button type="submit" className="btn w-50 btn-custom">
-                Войти
-              </button>
-              <button
-                className="btn ml-3 btn-custom-link"
-                onClick={e => {
-                  e.preventDefault();
-                  redirectToUrl('user/sign-in/forget-password');
-                }}
-              >
-                Забыли пароль?
-              </button>
-            </form>
-            <div className="sign-up-tab mt-3 ml-5 w-100">
-              <p className="mt-3 ml-5"> У вас ещё нет аккаунта?</p>
-              <button
-                onClick={e => {
-                  e.preventDefault();
-                  redirectToUrl('user/sign-up');
-                }}
-                className="btn btn-custom-link fix-size "
-              >
-                Зарегистрироваться
-              </button>
             </div>
           </div>
-        </div>
-        <div className="sign-in-side-right">
-          <svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
-            <path
-              d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z"
-              className="path"
-            ></path>
-          </svg>
+          <div className="sign-in-side-right">
+            <svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
+              <path
+                d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z"
+                className="path"
+              ></path>
+            </svg>
+          </div>
         </div>
       </div>
     </div>

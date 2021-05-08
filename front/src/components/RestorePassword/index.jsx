@@ -3,6 +3,7 @@ import './style.css';
 import img from 'assets/images/passwordPNG.png';
 import { Redirect } from 'react-router-dom';
 import UserAPI from 'utils/API/UserApi';
+import { redirectToUrl } from '../../utils/baseAPI';
 
 export default class RestorePassword extends Component {
   state = {
@@ -47,7 +48,7 @@ export default class RestorePassword extends Component {
       );
     return (
       <div className="main-bg">
-        <div className=" p-3 mb-5 bg-light rounded container w-35 display-center ">
+        <div className="p-3 mb-5 rounded container w-35 display-center ">
           <div>
             <img
               src={img}
@@ -61,7 +62,7 @@ export default class RestorePassword extends Component {
               Введите почту, чтобы востановить пароль
             </h5>
             <form className="form-group text-center center-component mt-lg-5 phone-size">
-              <div className="mb-5 ">
+              <div className="mb-5">
                 <input
                   type="email"
                   name="email"
@@ -73,10 +74,17 @@ export default class RestorePassword extends Component {
               {errorEmail}
               <button
                 type="submit"
-                className="btn btn-warning  w-75 phone-size"
+                className="btn btn-warning w-100 phone-size"
                 onClick={e => this.handleSubmit(e)}
               >
                 Выслать код
+              </button>
+              <button
+                type="submit"
+                className="btn btn-outlined-warning w-100 phone-size"
+                onClick={() => redirectToUrl('user/sign-in')}
+              >
+                Вернуться
               </button>
             </form>
           </div>

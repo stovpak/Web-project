@@ -20,3 +20,13 @@
         font-size: 24px;
     }
 }
+
+@media (min-width: 991px) {
+    .desktop-size-50 {
+        max-width: 50%;
+    }
+}
+
+.btn-ghost {
+    background: transparent;
+}

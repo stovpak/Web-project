@@ -19,6 +19,7 @@ body {
 .sign-up-background {
     content: " ";
     z-index: 1000;
+    max-width: 1085px;
     width: 81vw;
     height: 80vh;
     position: absolute;
@@ -44,7 +45,7 @@ svg {
 .sign-up-side-right {
     display: inline-block;
     position: relative;
-    transform: translate(25%, 0%) rotate(90deg);
+    transform: translate(30%, 0%) rotate(90deg);
 }
 
 .sign-up-side-left {
@@ -61,7 +62,7 @@ svg {
     margin: auto;
     width: 75%;
     height: 100%;
-    transform: translate(-10%, calc(6vh + 60px));
+    transform: translate(-10%, 30px);
 }
 
 .btn-sign-up {
@@ -110,7 +111,7 @@ svg {
 
 @media screen and (max-width: 500px) {
     .sign-up-background .sign-up-side-right {
-        transform: translate(-20%, -35%) rotate(175deg);
+        transform: translate(-5%, -35%) rotate(180deg);
     }
 
     .sign-up-linear-background .sign-up-background {

@@ -3,6 +3,8 @@ import { getJwt } from 'utils/cookies';
 import TopicAPI from 'utils/API/TopicsApi';
 import { TopicRequest } from 'utils/cookies';
 import { redirectToUrl } from '../../utils/baseAPI';
+import BackButton from '../Button';
+import './style.css';
 
 export default class CreateTopic extends Component {
   state = {
@@ -31,20 +33,30 @@ export default class CreateTopic extends Component {
     redirectToUrl('topics');
   };
 
+  handleRedirect = () => {
+    redirectToUrl('topics');
+  };
+
   render() {
     return (
-      <div>
-        <div className="container">
-          <h1>Создание новой темы</h1>
-          <form action="">
-            <div className="form-group green-border-focus w-50">
-              <div className="form-group green-border-focus ">
-                <label htmlFor="exampleFormControlTextarea5">Описание</label>
+      <section>
+        <article className="container">
+          <div className="d-inline-flex w-100">
+            <BackButton
+              className="align-self-center"
+              onClick={this.handleRedirect}
+            />
+            <h1 className="text-center topic-title">Создание новой темы</h1>
+          </div>
+          <form>
+            <div className="form-group green-border-focus w-100">
+              <div className="form-group green-border-focus">
                 <textarea
                   className="form-control"
                   id="exampleFormControlTextarea5"
                   rows="10"
                   cols="150"
+                  placeholder="Начните дискуссию прямо сейчас!"
                   name="topicTheme"
                   onChange={this.onChangeInput}
                 />
@@ -58,8 +70,8 @@ export default class CreateTopic extends Component {
           >
             Создать
           </button>
-        </div>
-      </div>
+        </article>
+      </section>
     );
   }
 }

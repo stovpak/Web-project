@@ -10,7 +10,7 @@ import { EmailChanges } from 'utils/cookies';
 import { redirectToUrl } from '../../../utils/baseAPI';
 import BackButton from '../../Button';
 import Container from '../../Container';
-import '../styled.css'
+import '../styled.css';
 
 const ChangeUserEmail = () => {
   const token = getJwt();
@@ -50,12 +50,9 @@ const ChangeUserEmail = () => {
 
   return (
     <Container>
-      <div className='form-profile m-auto'>
-        <div className="p-0 d-flex">
-          <BackButton className="p-0" onClick={onClick} />
-          <h1 className="m-0 text-center col-md-8">Почта</h1>
-        </div>
-        <ul className="list-group w-100">
+      <div className="form-profile m-auto">
+        <BackButton className="p-0" onClick={onClick} title="Почта" />
+        <ul className="list-group w-100 p-0">
           <li className="list-group-item">
             Ведите почту
             <input

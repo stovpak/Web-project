@@ -93,12 +93,10 @@ class HomePage extends Component {
         {isLoading && <Loading />}
         {hasData && (
           <div className="container">
-            <div className="row">
-              <TopicList
-                topic={this.searchItems(topicList, search)}
-                topTopics={this.topTopics}
-              />
-            </div>
+            <TopicList
+              topic={this.searchItems(topicList, search)}
+              topTopics={this.topTopics}
+            />
             <Pagination
               totalItems={totalResult}
               currentPage={page}

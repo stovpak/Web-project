@@ -140,12 +140,12 @@ const SignUp = () => {
               </div>
               <input
                 type="submit"
-                className="btn w-50 btn-sign-up"
+                className="btn w-100 btn-sign-up"
                 value="Зарегистрироватсья"
                 id="submitForm"
               />
               <button
-                className="btn ml-3 link-sign-up"
+                className="btn link-sign-up w-100"
                 type="button"
                 onClick={() => redirectToUrl('user/sign-in')}
               >

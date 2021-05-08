@@ -15,7 +15,7 @@ const Topics = ({ topic, clearLikes, topTopics }) => {
   }, [clearLikes]);
 
   return (
-    <div className="col-md-8 order-md-1 cc_cursor ">
+    <section>
       <div className="my-3 p-3 bg-white rounded shadow-sm">
         <h4 className="border-bottom border-gray pb-2 mb-0 d-flex align-items-center justify-content-between mobile-scroll">
           <span className="title-topics">Актуальные темы</span>
@@ -54,7 +54,7 @@ const Topics = ({ topic, clearLikes, topTopics }) => {
           <h2 className="mb-5">Ничего не найдено</h2>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

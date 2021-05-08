@@ -43,19 +43,20 @@ const ChangeUserPassword = () => {
         });
     },
   });
-  const onClick=()=>{
-    redirectToUrl('user/profile')
-  }
+  const onClick = () => {
+    redirectToUrl('user/profile');
+  };
 
   return (
-    <div>
+    <div className="container desktop-size-50">
       <form onSubmit={formik.handleSubmit}>
         <div>
-          <ul className="list-group container col-4 ">
-            <div className="p-0">
-              <BackButton className="col-md-2 p-0" onClick={onClick}/>
-              <h1 className="col-md-8 m-0 text-center">Пароль</h1>
-            </div>
+          <BackButton
+            className="align-self-center"
+            onClick={onClick}
+            title="Пароль"
+          />
+          <ul className="list-group container col-4 p-0">
             <li className="list-group-item bg-dark text-center text-white">
               Изменение пароля
             </li>

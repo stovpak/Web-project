@@ -25,24 +25,21 @@ export default class Profile extends Component {
       );
     });
     return (
-      <>
-        <div>
+      <section className="container desktop-size-50">
+        <section>
           <div className="d-flex m-auto row">
-            <div className="col-8 m-auto p-0">
-              <BackButton className="col-md-2 p-0" onClick={this.onClick} />
-              <h1 className="col-md-8 m-0 text-center">Профиль</h1>
-            </div>
+            <BackButton onClick={this.onClick} title="Профиль" />
           </div>
-          <ul className="list-group container col-8">
+          <ul className="list-group col-8 p-0">
             <li className="list-group-item active">Основные данные</li>
             {changeDataElement}
             <li className="list-group-item ">
               <Link to="profile/change-data">Изменить</Link>
             </li>
           </ul>
-        </div>
+        </section>
         <div>
-          <ul className="list-group container col-8">
+          <ul className="list-group col-8 p-0">
             <li className="list-group-item active">Пароль</li>
             <li className="list-group-item">
               Пароль
@@ -56,7 +53,7 @@ export default class Profile extends Component {
           </ul>
         </div>
         <div>
-          <ul className="list-group container col-8">
+          <ul className="list-group col-8 p-0">
             <li className="list-group-item active">Контактная информаци</li>
             <li className="list-group-item">
               Электронная почта
@@ -69,7 +66,7 @@ export default class Profile extends Component {
             </li>
           </ul>
         </div>
-      </>
+      </section>
     );
   }
 }
