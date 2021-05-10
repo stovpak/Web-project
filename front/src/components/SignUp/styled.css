@@ -39,13 +39,13 @@ body {
 
 svg {
     display: inline-block;
-    width: 80vh;
+    width: 100vh;
 }
 
 .sign-up-side-right {
     display: inline-block;
     position: relative;
-    transform: translate(30%, 0%) rotate(90deg);
+    transform: translate(-20%, -10%) rotate(90deg);
 }
 
 .sign-up-side-left {
@@ -61,8 +61,8 @@ svg {
 .sign-up-form {
     margin: auto;
     width: 75%;
-    height: 100%;
-    transform: translate(-10%, 30px);
+
+    transform: translate(-10%, 115px);
 }
 
 .btn-sign-up {
@@ -109,9 +109,9 @@ svg {
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 768px) {
     .sign-up-background .sign-up-side-right {
-        transform: translate(-5%, -35%) rotate(180deg);
+        transform: translate(-5%, -45%) rotate(180deg);
     }
 
     .sign-up-linear-background .sign-up-background {

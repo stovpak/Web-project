@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import '../styled.css';
@@ -11,9 +11,11 @@ import { redirectToUrl } from '../../../utils/baseAPI';
 import BackButton from '../../Button';
 import Container from '../../Container';
 import '../styled.css';
+import { Alert } from '../../AlertWindow/Alert';
 
 const ChangeUserEmail = () => {
   const token = getJwt();
+  const [showModal, setShowModal] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -27,17 +29,16 @@ const ChangeUserEmail = () => {
         .required('Поле не должно быть пустым'),
     }),
 
-    onSubmit: values => {
-      console.log('f', token);
-      EmailChanges.email = values.email;
+    onSubmit: (values, { resetForm }) => {
       UserApi.updateEmail(values.email, token)
         .then(() => {
-          redirectToUrl('user/profile');
+          setShowModal(true);
+          resetForm();
         })
         .catch(err => {
-          if (err.request.status === 400) {
+          if (err.status === 400) {
             values.errorMessage = 'Проверьте правильность ввода данных';
-          } else if (err.request.status >= 500) {
+          } else if (err.status >= 500) {
             return <Index />;
           }
         });
@@ -51,6 +52,11 @@ const ChangeUserEmail = () => {
   return (
     <Container>
       <div className="form-profile m-auto">
+        {showModal && (
+          <Alert severity="success" onClose={() => setShowModal(false)}>
+            Данные успемшно изменены
+          </Alert>
+        )}
         <BackButton className="p-0" onClick={onClick} title="Почта" />
         <ul className="list-group w-100 p-0">
           <li className="list-group-item">

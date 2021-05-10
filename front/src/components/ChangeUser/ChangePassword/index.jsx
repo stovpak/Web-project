@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styled.css';
 import { getJwt } from 'utils/cookies';
 import UserApi from 'utils/API/UserApi';
@@ -7,9 +7,12 @@ import { useFormik } from 'formik';
 import Index from '../../ErrorIndicator';
 import { redirectToUrl } from '../../../utils/baseAPI';
 import BackButton from '../../Button';
+import { Alert } from '../../AlertWindow/Alert';
 
 const ChangeUserPassword = () => {
   const token = getJwt();
+  const [showModal, setShowModal] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       password: '',
@@ -29,10 +32,11 @@ const ChangeUserPassword = () => {
       }
       return errors;
     },
-    onSubmit: values => {
+    onSubmit: (values, { resetForm }) => {
       UserApi.updatePassword(values.password, token)
         .then(() => {
-          redirectToUrl('user/profile');
+          resetForm();
+          setShowModal(true);
         })
         .catch(err => {
           if (err.request.status === 400) {
@@ -51,6 +55,11 @@ const ChangeUserPassword = () => {
     <div className="container desktop-size-50">
       <form onSubmit={formik.handleSubmit}>
         <div>
+          {showModal && (
+            <Alert severity="success" onClose={() => setShowModal(false)}>
+              Пароль был успешно изменен
+            </Alert>
+          )}
           <BackButton
             className="align-self-center"
             onClick={onClick}

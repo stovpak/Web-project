@@ -68,7 +68,6 @@ const ChangeData = () => {
 
           <ul className="list-group container w-100 p-0">
             <BackButton onClick={onClick} title="Основные данные" />
-            <li className="list-group-item active">Основные данные</li>
             <li className="list-group-item">
               Имя
               <input
