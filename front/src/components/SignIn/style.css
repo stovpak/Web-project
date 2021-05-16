@@ -40,14 +40,14 @@ body {
 
 .sign-in-side-right svg {
     display: inline-block;
-    width: 100vh;
+    width: 100vw;
 }
 
 .linear-background .sign-in-side-right {
     display: inline-block;
     position: relative;
 
-    transform: translate(-15%, -10%) rotate(
+    transform: translate(-50%, -25%) rotate(
             90deg
     );
 }
@@ -123,7 +123,7 @@ body {
         display: inline-block;
         position: relative;
         height: 85%;
-        transform: translate(-10%, -30%) rotate(180deg);
+        transform: translate(0, -30%) rotate(180deg);
     }
 
     .linear-background .sign-in-form {

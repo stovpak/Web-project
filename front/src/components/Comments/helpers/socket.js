@@ -46,18 +46,20 @@ export const deleteMessage = id => {
     JSON.stringify({
       type: 'Delete',
       messageId: id,
+      author_name: getUsernameFromCookies(),
       token: getJwt(),
     })
   );
 };
 
-export const editMessage = (id, text) => {
+export const editMessage = (id, text, author_name) => {
   ws.send(
     JSON.stringify({
       type: 'Update',
       messageId: id,
       date: moment(),
       token: getJwt(),
+      author_name: author_name,
       text: text,
     })
   );

@@ -9,18 +9,21 @@ import { getUsernameFromCookies, getJwt } from 'utils/cookies';
 
 import BackButton from 'components/Button';
 import { editMessage } from './helpers/socket';
+import { useSelector } from 'react-redux';
+import { userSelector } from '../../redux/user/selector';
 
 const Comments = () => {
   const location = useLocation().state;
+  const { username } = useSelector(userSelector);
   const [comments, setComments] = useState([]);
   const [isEdit, setIsEdit] = useState(null);
-  const history =  useHistory()
+  const history = useHistory();
 
   const ws = new WebSocket('ws://localhost:8081');
 
   const connect = () => {
     ws.onopen = () => {
-      localStorage.setItem( 'currentId', location.id )
+      localStorage.setItem('currentId', location.id);
       updateData(location.id);
       ws.onmessage = recieveMsg;
     };
@@ -31,7 +34,8 @@ const Comments = () => {
   };
 
   const recieveMsg = message => {
-    const comments = JSON.parse(message.data);
+    const comments =
+      message.data !== 'object' ? JSON.parse(message.data) : message.data;
     const configMessage = {
       id: comments.id,
       author_name: comments.login,
@@ -39,6 +43,9 @@ const Comments = () => {
       text: comments.text,
       topic_id: comments.topicId,
     };
+    if (JSON.parse(message.data) === 1) {
+      updateData(location.id);
+    }
     if (comments.type) setComments(msg => msg.concat(configMessage));
     if (comments[0]) setComments(comments);
   };
@@ -47,8 +54,9 @@ const Comments = () => {
     ws.send(
       JSON.stringify({
         type: 'Message',
-        topicId: location.id,
+        topicId: localStorage.getItem('currentId'),
         text: text,
+        author_name: comments.login,
         login: getUsernameFromCookies(),
         date: new Date(),
         token: getJwt(),
@@ -61,15 +69,17 @@ const Comments = () => {
       JSON.stringify({
         type: 'Delete',
         messageId: id,
+        author_name: getUsernameFromCookies(),
         token: getJwt(),
       })
-    );updateData();
+    );
+    updateData();
     setComments(comments.filter(item => item.id !== id));
-
   };
 
   const editComments = (id, text) => {
-    editMessage(id, text);
+    editMessage(id, text, username);
+    handleEdit();
     updateData();
   };
 
@@ -87,13 +97,23 @@ const Comments = () => {
   };
 
   useEffect(() => {
-    connect(location.id);
-  }, [location.id]);
+    if (ws?.readyState !== 1) {
+      connect();
+    }
+    if (ws?.readyState === 1) {
+      ws.send(
+        JSON.stringify({
+          type: 'Connect',
+          topicId: localStorage.getItem('currentId'),
+        })
+      );
+    }
+  }, [ws.readyState]);
 
   return (
     <div>
       <div className=" container ">
-        <BackButton onClick={()=>history.goBack()}/>
+        <BackButton onClick={() => history.goBack()} />
         <TopicItem
           auth={location.auth}
           topic_name={location.topic_name}
@@ -108,16 +128,14 @@ const Comments = () => {
                 <h5>Будьте первым кто напишей комментарий</h5>
               ) : (
                 comments?.map(item => (
-                  <>
-                    <MessageList
-                      key={item.id}
-                      comments={item}
-                      editComments={editComments}
-                      deleteComments={deleteComments}
-                      handleEdit={handleEdit}
-                      isEdit={isEdit}
-                    />
-                  </>
+                  <MessageList
+                    key={item.id}
+                    comments={item}
+                    editComments={editComments}
+                    deleteComments={deleteComments}
+                    handleEdit={handleEdit}
+                    isEdit={isEdit}
+                  />
                 ))
               )}
             </small>

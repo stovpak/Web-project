@@ -14,7 +14,6 @@ function responseToClient(responseMessage, server) {
   server.clients.forEach(client => {
     if (client.readyState === WebSocket.OPEN) {
       client.send(responseMessage);
-       console.log(responseMessage, 'resp')
     }
   });
 }
@@ -23,6 +22,7 @@ server.on("connection", ws => {
   ws.on("message", message => {
     const messageType = JSON.parse(message).type;
     const autHeader = JSON.parse(message).token;
+
     if (messageType === "Connect") {
       messageService
         .showOldMessages(JSON.parse(message).topicId)
@@ -56,7 +56,6 @@ server.on("connection", ws => {
                     JSON.parse(message).text
                   )
                   .then(responseMessage => {
-                    console.log(responseMessage, 'this is unsver update')
                     responseToClient(responseMessage, server);
                   });
               } else {
@@ -75,7 +74,6 @@ server.on("connection", ws => {
                 messageService
                   .deleteMessage(JSON.parse(message).messageId)
                   .then(responseMessage => {
-                    console.log(responseMessage, 'responce messgwe delete')
                     responseToClient(responseMessage, server);
                   });
               } else {

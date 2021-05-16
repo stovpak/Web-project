@@ -61,7 +61,7 @@ const Messages = ({ comments, editComments, deleteComments }) => {
                 className="btn btn-lin"
                 onClick={() => deleteComments(comments.id)}
               >
-                <span className="mobile-hide"> Удалить</span>
+                <span className="mobile-hide">Удалить</span>
                 <img src={deleteIcon} alt="delete" className="desktop-hide" />
               </button>
             </>

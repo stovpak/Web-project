@@ -28,7 +28,6 @@ const NavBar = () => {
       {isOpenModal && <UnAuthorized open={true} handleClose={handleClose} />}
       <nav className="navbar navbar-expand-md bg-dark navbar-dark  d-flex justify-content-end">
         <ul className="container ">
-          {' '}
           <a className="navbar-brand " href="#">
             AvtoForum
           </a>

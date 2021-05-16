@@ -39,13 +39,15 @@ body {
 
 svg {
     display: inline-block;
-    width: 100vh;
 }
 
 .sign-up-side-right {
-    display: inline-block;
     position: relative;
-    transform: translate(-20%, -10%) rotate(90deg);
+    display: flex;
+    align-items: flex-end;
+    transform: translate(-30%, 0%) rotate(
+            90deg
+    );
 }
 
 .sign-up-side-left {
@@ -61,8 +63,8 @@ svg {
 .sign-up-form {
     margin: auto;
     width: 75%;
+    margin-top: 10rem;
 
-    transform: translate(-10%, 115px);
 }
 
 .btn-sign-up {

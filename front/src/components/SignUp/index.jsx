@@ -155,7 +155,12 @@ const SignUp = () => {
           </div>
         </div>
         <div className="sign-up-side-right">
-          <svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
+          <svg
+            viewBox="0 0 500 500"
+            preserveAspectRatio="xMinYMin meet"
+            width="100%"
+            height="100%"
+          >
             <path
               d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z"
               className="path"

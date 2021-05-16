@@ -21,10 +21,6 @@ export const setSession = token => {
 };
 
 export let AuthRequest = { login: '', password: '' };
-export let SignUpRequest = { login: '', password: '', email: '' };
 export let TopicRequest = { login: '', topicName: '' };
 export let EmailChanges = { email: '' };
-export let PasswordChanges = { password: '' };
-export let Data = { firstName: '', lastName: '', birthday: '' };
 export let restorePasswordInfo = { email: '', password: '', key: '' };
-export let arrayLikes = [];
