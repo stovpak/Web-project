@@ -8,9 +8,10 @@ import TopicItem from 'components/Topics/components/TopicItem';
 import { getUsernameFromCookies, getJwt } from 'utils/cookies';
 
 import BackButton from 'components/Button';
-import { editMessage } from './helpers/socket';
+//import { editMessage } from './helpers/socket';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../../redux/user/selector';
+import moment from 'moment';
 
 const Comments = () => {
   const location = useLocation().state;
@@ -78,9 +79,24 @@ const Comments = () => {
   };
 
   const editComments = (id, text) => {
-    editMessage(id, text, username);
+    ws.send(
+      JSON.stringify({
+        type: 'Update',
+        messageId: id,
+        date: moment(),
+        token: getJwt(),
+        author_name: username,
+        text: text,
+      })
+    );
     handleEdit();
     updateData();
+    ws.send(
+      JSON.stringify({
+        type: 'Connect',
+        topicId: id || localStorage.getItem('currentId'),
+      })
+    );
   };
 
   const updateData = id => {
