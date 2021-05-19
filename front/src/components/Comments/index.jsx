@@ -44,11 +44,13 @@ const Comments = () => {
       text: comments.text,
       topic_id: comments.topicId,
     };
+
     if (JSON.parse(message.data) === 1) {
       updateData(location.id);
     }
+
     if (comments.type) setComments(msg => msg.concat(configMessage));
-    if (comments[0]) setComments(comments);
+    else setComments(comments);
   };
 
   const onSendMessage = text => {
