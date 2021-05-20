@@ -1,0 +1,11 @@
+.btn-right{
+    position: absolute;
+    top: 7%;
+    right: 0%;
+}
+
+.list-group{
+    max-width: 100%;
+    padding-left: 15px;
+
+}

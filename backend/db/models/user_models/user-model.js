@@ -1,6 +1,6 @@
 const dataConnection = require('../../user_db/data-connection.js');
 
-const {sequelizeConnection} = dataConnection;
+const { sequelizeConnection } = dataConnection;
 const sequrlizeType = sequelizeConnection.Sequelize;
 const user = sequelizeConnection.define('users', {
   id: {

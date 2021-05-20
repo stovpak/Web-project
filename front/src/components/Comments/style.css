@@ -1,0 +1,16 @@
+.div-height{
+    min-height: 75vh;
+    height: auto;
+}
+
+@media screen and (max-width: 756px ){
+    .mobile-hide{
+        display: none;
+    }
+}
+
+@media screen and (min-width: 757px ){
+    .desktop-hide{
+        display: none;
+    }
+}

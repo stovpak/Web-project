@@ -113,7 +113,7 @@ function countLikes(topicId) {
   return topicModel.findOne({
     raw: true,
     where: {
-      topic_id: topicId,
+      id: topicId,
     },
   });
 }

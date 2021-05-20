@@ -41,26 +41,35 @@ function findUserTopics(userLogin) {
   return topicModel.findAll({
     raw: true,
     where: {
-      creator_name: userLogin,
-    },
+      creator_name: userLogin
+    }
   });
 }
+
 function findTopicsOnPage(page) {
-  const limit = 10;
-  const offset = (page-1) * limit;
-  return topicModel.findAll({
-    offset,
-    limit,
-    raw: true,
-  });
+  return topicModel
+    .findAll({
+      raw: true
+    })
+    .then(users => {
+      const limit = 10;
+      const offset = (page - 1) * limit;
+      return {
+        users: topicModel.findAll({
+          offset,
+          limit,
+          raw: true
+        }),
+        count: users.length
+      };
+    });
 }
+
 function findTopTopics(type) {
   const limit = 10;
   return topicModel.findAll({
     limit,
-    order: [[
-      type, 'DESC'],
-    ],
+    order: [[type, "DESC"]]
   });
 }
 module.exports.findTopTopics = findTopTopics;

@@ -1,13 +1,17 @@
-const express = require('express');
-const authorizationService = require('../../controllers/user_controllers/authorization-service.js');
-require('dotenv').config();
+const express = require("express");
+const authorizationService = require("../../controllers/user_controllers/authorization-service.js");
+require("dotenv").config();
 
 const router = express.Router();
 
-router.use('/', (req, res, next) => {
-  const autHeader = req.get('Token');
-  if (authorizationService(autHeader)) {
-    return next();
-  }
+router.use("/", (req, res, next) => {
+  const autHeader = req.get("Token");
+    if (req.method === "OPTIONS") {
+      res.status(200).send();
+    }
+    else if (authorizationService(autHeader)) {
+      return next();
+    }
+
 });
 module.exports = router;

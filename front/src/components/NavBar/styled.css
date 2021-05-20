@@ -1,0 +1,33 @@
+.content-center{
+    margin-top: 15px;
+}
+.navbar-align{
+    align-items: inherit;
+    float: right
+}
+
+@media screen and (max-width: 756px ){
+    .navbar-nav li{
+        place-self: flex-end;
+    }
+    .nav-button{
+        background: transparent;
+        border: transparent;
+        padding: 0;
+    }
+    .mobile-hide{
+        display: none;
+    }
+    .navbar-brand{
+        flex: 2;
+    }
+    .navbar-label-username{
+        padding: 10px;
+    }
+}
+
+@media screen and (min-width: 757px ){
+   .desktop-hide{
+       display: none;
+   }
+}

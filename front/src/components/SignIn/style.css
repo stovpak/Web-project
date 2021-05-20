@@ -1,0 +1,207 @@
+body {
+    font-family: "Lato", sans-serif;
+}
+
+.sign-in-form-image {
+    background: url("../../assets/images/car-background.jpg");
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-position-y: 100%;
+    background-position-x: center;
+    width: 81vw;
+    height: 80vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-70%, -50%);
+}
+
+.sign-in-background {
+    content: " ";
+    max-width: 1130px;
+    z-index: 1000;
+    width: 81vw;
+    height: 80vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: -35px 35px 20px 0px rgba(0, 0, 0, 0.3);
+}
+
+.linear-background {
+    background: linear-gradient(35deg, transparent 50%, #F3BF7F 50%);
+    height: 100vh;
+    position: relative;
+
+}
+
+.sign-in-side-right svg {
+    display: inline-block;
+    width: 100vw;
+}
+
+.linear-background .sign-in-side-right {
+    display: inline-block;
+    position: relative;
+
+    transform: translate(-50%, -25%) rotate(
+            90deg
+    );
+}
+
+.linear-background .sign-in-side-left {
+    position: absolute;
+    background: white;
+    height: 100%;
+    width: 45%;
+    float: right;
+    z-index: 1000;
+    right: 0;
+}
+
+.linear-background .sign-in-form {
+    width: 75%;
+    transform: translate(0%,
+    40%);
+}
+
+.linear-background .btn-custom {
+    color: white;
+    background: #F3BF7F;
+}
+
+.linear-background .btn-custom-link {
+    width: 45%;
+    color: #e9c61b;
+    text-decoration: underline #e9c61b;
+}
+
+.linear-background .btn-custom-link:hover {
+    color: black;
+    text-decoration: underline black;
+}
+
+.linear-background .path {
+    stroke: none;
+    fill: white;
+}
+
+.linear-background .sign-up-tab {
+    display: inline-flex;
+}
+
+.linear-background .fix-size {
+    text-align-last: justify;
+}
+
+.linear-background .w-60 {
+    width: 60%;
+}
+
+@media screen and (max-width: 768px) {
+    .sign-in-background .sign-in-form-image {
+        transform: translate(-50%, -100%);
+        height: 65vh;
+        width: 100vw;
+    }
+
+    .sign-in-background {
+        height: 100vh;
+        width: 100%;
+        box-shadow: none;
+    }
+
+    .sign-in-background .sign-in-side-left {
+        background: none;
+        width: 100%;
+    }
+
+    .linear-background .sign-in-side-right {
+        display: inline-block;
+        position: relative;
+        height: 85%;
+        transform: translate(0, -30%) rotate(180deg);
+    }
+
+    .linear-background .sign-in-form {
+        margin-top: 10vh;
+        background: white;
+        height: 100%;
+        width: 100%;
+        transform: translate(0%, 35%);
+    }
+
+    .sign-in-form form {
+        width: 85%;
+        margin: auto;
+    }
+
+    .sign-in-side-left .sign-in-form .btn-custom {
+        width: 100% !important;
+    }
+
+    form .btn-custom-link {
+        width: 100% !important;
+        color: black;
+        text-decoration: underline black;
+    }
+
+    form .btn-custom-link {
+        float: left;
+        margin-left: 0px !important;
+        margin-top: calc(1vh + 5px);
+        top: calc(36vh + 15px);
+    }
+
+    .fix-size {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .main {
+        margin-left: 40%;
+        margin-left: 15%;
+    }
+
+    .sidenav {
+        width: 40%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+    }
+
+    .login-form {
+        margin-top: 80%;
+    }
+
+
+    .register-form {
+        margin-top: 20%;
+    }
+}
+
+
+.sidebar-main-text {
+    margin-top: 30%;
+    padding: 60px;
+    color: #fff;
+    font-size: large;
+}
+
+.login-main-text h2 {
+    font-weight: 300;
+    font-size: xx-large;
+}
+
+.btn-black {
+    background-color: #000 !important;
+    color: #fff;
+}
+.border-error{
+    border: 1px solid red;
+}

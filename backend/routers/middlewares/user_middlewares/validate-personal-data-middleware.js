@@ -9,6 +9,6 @@ router.post('/', (request, response, next) => {
   if (userPersonalDataValidation(PersonalData)) {
     return next();
   }
-  response.status(400).send('Данные введены неправильно');
+  response.status(400).send();
 });
 module.exports = router;

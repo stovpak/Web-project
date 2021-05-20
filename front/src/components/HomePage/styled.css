@@ -1,0 +1,49 @@
+.count-likes {
+    font-size: 19px;
+    padding-top: 0.5%;
+}
+.media svg{
+    width: 32px;
+    height: 32px;
+}
+.media svg rect{
+    width:100%;
+    height:100%;
+    fill:#ffc800;
+}
+.media svg text{
+    fill:#fff;
+
+}
+.btn-likes {
+    text-decoration: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.active {
+    color: red;
+}
+
+.onclick-heart {
+    color: #fff;
+    background: #000;
+    padding: 1.2rem 2rem;
+    cursor: pointer;
+    user-select: none;
+    border: none;
+    outline: none;
+    transition: background 9999999s;
+}
+
+.onclick-heart:active {
+    background: red;
+    transition: background 0s;
+}
+
+.creator-name {
+    margin-top: 1%;
+    font-size: initial;
+}
+

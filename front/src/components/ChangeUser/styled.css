@@ -1,0 +1,32 @@
+.small-text{
+    font-size: small;
+}
+
+.form-profile {
+    width: 100%;
+}
+
+.text-large{
+    font-size: 34px;
+}
+
+@media (min-width: 785px) {
+    .form-profile {
+        width: 500px;
+    }
+}
+@media (max-width: 784px) {
+    .text-large{
+        font-size: 24px;
+    }
+}
+
+@media (min-width: 991px) {
+    .desktop-size-50 {
+        max-width: 50%;
+    }
+}
+
+.btn-ghost {
+    background: transparent;
+}
