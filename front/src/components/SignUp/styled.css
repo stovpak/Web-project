@@ -113,7 +113,7 @@ svg {
 
 @media screen and (max-width: 768px) {
     .sign-up-background .sign-up-side-right {
-        transform: translate(-5%, -45%) rotate(180deg);
+        transform: translate(0%, 0%) rotate(180deg);
     }
 
     .sign-up-linear-background .sign-up-background {
@@ -135,6 +135,7 @@ svg {
 
     .sign-up-form {
         transform: none;
+        margin-top: 0;
     }
 
     .sign-up-form form div {
