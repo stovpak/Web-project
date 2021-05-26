@@ -8,6 +8,7 @@ const headers = {
 
 class TopicApi {
   async getAllTopics(page) {
+    console.log(headers, 'headers', page);
     return await httpTopics.get(`${page}`, headers).then(res => res.data);
   }
 

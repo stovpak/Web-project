@@ -36,7 +36,10 @@ const Comments = () => {
 
   const recieveMsg = message => {
     const comments =
-      message.data !== 'object' ? JSON.parse(message.data) : message.data;
+      typeof message.data !== 'object'
+        ? JSON.parse(message.data)
+        : message.data;
+
     const configMessage = {
       id: comments.id,
       author_name: comments.login,
@@ -44,11 +47,9 @@ const Comments = () => {
       text: comments.text,
       topic_id: comments.topicId,
     };
-
-    if (JSON.parse(message.data) === 1) {
-      updateData(location.id);
+    if (!comments[0]) {
+      updateData();
     }
-
     if (comments.type) setComments(msg => msg.concat(configMessage));
     else setComments(comments);
   };
@@ -93,12 +94,6 @@ const Comments = () => {
     );
     handleEdit();
     updateData();
-    ws.send(
-      JSON.stringify({
-        type: 'Connect',
-        topicId: id || localStorage.getItem('currentId'),
-      })
-    );
   };
 
   const updateData = id => {
@@ -126,7 +121,7 @@ const Comments = () => {
         })
       );
     }
-  }, [ws.readyState]);
+  }, [ws.readyState, ws.onmessage, ws.onopen]);
 
   return (
     <div>

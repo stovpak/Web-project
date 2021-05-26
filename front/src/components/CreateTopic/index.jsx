@@ -46,7 +46,9 @@ export default class CreateTopic extends Component {
               className="align-self-center"
               onClick={this.handleRedirect}
             />
-            <h1 className="text-center topic-title">Создание новой темы</h1>
+            <h1 className="text-center topic-title w-100">
+              Создание новой темы
+            </h1>
           </div>
           <form>
             <div className="form-group green-border-focus w-100">
